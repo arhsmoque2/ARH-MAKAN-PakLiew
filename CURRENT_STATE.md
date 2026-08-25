@@ -1,9 +1,9 @@
 # CURRENT_STATE.md — Pak Liew Chinese Muslim Restaurant PWA
 
-**Last Verified Timestamp:** 2026-08-25T19:20:00+08:00  
+**Last Verified Timestamp:** 2026-08-26T00:10:00+08:00  
 **Project Path:** `D:\ARH-GITHUB\arhsmoque2\ARH-MAKAN-PakLiew\`  
 **GitHub Remote:** `https://github.com/arhsmoque2/ARH-MAKAN-PakLiew`  
-**Operational Status:** 🟢 ACTIVE & SERVING LIVE (Cloudflare Edge + Local Bootstrap)  
+**Operational Status:** 🟢 ACTIVE & SERVING LIVE (Cloudflare Edge + Portable Node Preview + 6-Gate Quality Suite)  
 
 ---
 
@@ -11,8 +11,8 @@
 
 | Ingress Target | URI / URL | Status | Response |
 | :--- | :--- | :--- | :--- |
-| **Cloudflare Edge (Global)** | `https://arh-makan-pakliew.arh-homelab.workers.dev` | 🟢 Active | `HTTP/2 200 OK` — verified via CI's edge probe (GitHub Actions runner) 2026-08-25. Probing from some third-party sandboxed environments returns `HTTP 403`, most likely a Cloudflare WAF/bot rule scoped to certain outbound IP ranges rather than an app-level auth gate (`worker.mjs` has none) — not a real outage |
-| **Local Preview** | `http://localhost:8091` | 🟢 Active | `HTTP/1.1 200 OK` |
+| **Cloudflare Edge (Global)** | `https://arh-makan-pakliew.arh-homelab.workers.dev` | 🟢 Active | `HTTP/2 200 OK` — verified via CI's edge probe (GitHub Actions runner). Probing from some third-party sandboxed environments returns `HTTP 403`, most likely a Cloudflare WAF/bot rule scoped to certain outbound IP ranges rather than an app-level auth gate (`worker.mjs` has none) — not a real outage |
+| **Local Preview** | `http://localhost:8091` | 🟢 Active | `HTTP/1.1 200 OK` (via portable `scripts/preview.mjs`) |
 | **Tailscale Network** | `http://100.85.219.219:8091` | 🟢 Active | `HTTP/1.1 200 OK` |
 
 To redeploy or update edge assets in future sessions:
@@ -32,9 +32,24 @@ ARH-MAKAN-PakLiew/
 ├── worker.mjs          # Cloudflare Workers Static Assets edge router
 ├── wrangler.toml       # Cloudflare Workers environment and asset configuration
 ├── guide.html          # Operator reference runbook
+├── playwright.config.mjs # Multi-viewport test harness (Desktop, Tablet, Mobile)
+├── package.json        # Clean dependency manifest with Playwright & Axe-Core
 ├── CURRENT_STATE.md    # Verified continuation snapshot (this document)
 ├── AGENTS.md           # Developer & store-forking runbook
 ├── websearch-findings.md # External intelligence & multi-channel ground truth report
+├── tests/              # End-to-end rendering, viewport responsiveness & a11y specs
+│   ├── dom-and-rendering.spec.mjs
+│   ├── accessibility.spec.mjs
+│   └── viewport-responsiveness.spec.mjs
+├── scripts/            # 6-Gate Quality Doctor Suite
+│   ├── quality-gate.mjs
+│   ├── preview.mjs     # Zero-dependency portable local preview server
+│   ├── doctor-docs.mjs
+│   ├── doctor-code.mjs
+│   ├── doctor-ui.mjs
+│   ├── doctor-secrets.mjs
+│   ├── doctor-edge.mjs
+│   └── doctor-render.mjs
 ├── docs/decisions/
 │   ├── 0001-pak-liew-frontend-redesign-and-nanyang-chinese-muslim-realignment.md # Accepted ADR
 │   └── 0002-deployment-platform-selection-and-cloudflare-workers-convergence.md # Accepted ADR
@@ -44,7 +59,6 @@ ARH-MAKAN-PakLiew/
 ├── .agents/skills/     # Antigravity/Gemini agent skills (malaysian-localized-copy-register)
 ├── .claude/skills/     # Claude Code agent skills (malaysian-localized-copy-register)
 └── images/             # 5 High-resolution authentic photographic snapshots
-```
     ├── snap-breakfast-buffet.jpg
     ├── snap-lunch-buffet.jpg
     ├── snap-dinner-buffet.jpg
@@ -72,19 +86,19 @@ ARH-MAKAN-PakLiew/
 
 ---
 
-## 4. Architectural Guarantees & Non-Regressions
+## 4. Architectural Guarantees & Verification Receipts
 
-1. **Zero Woodfire Coupling:** The repository operates in complete isolation from `D:\ARH-GITHUB\arh-fnb-tier-showroom\` and `ARH-FNB-Webapp`.
-2. **Zero Build Step:** 100% standard Vanilla HTML5 / CSS3 / ES Modules. No bundlers or Node build steps required for deployment.
-3. **Declarative Reusability:** Store identity is driven entirely by `data/store.json`, menu by `data/menu.json`, and theme by `:root` custom properties in `styles.css`.
-4. **Governing Standards:** Conforms to `arh-frontend-design-v1.0.0` (Proof-Led, Class Without Distance) and `malaysian-localized-copy-register` (Object Collocation, Gated Slang).
+1. **Multi-Viewport & Headless Rendering (Playwright):** 36/36 tests passing across Desktop (1440x900), Tablet (768x1024), and Mobile iPhone (375x667).
+2. **WCAG 2.1 / 2.2 AA Accessibility (`@axe-core/playwright`):** 0 accessibility violations detected on both `index.html` and `guide.html`.
+3. **Zero Layout Overflow:** `scrollWidth <= clientWidth` across all breakpoints with mobile text-wrapping enabled.
+4. **Portable Preview:** Standalone Node.js static server on port 8091 without platform-specific dependencies.
+5. **Zero Build Step:** 100% standard Vanilla HTML5 / CSS3 / ES Modules.
 
 ---
 
 ## 5. Cold-Start Single Next Action
 
 👉 **When picking up this project in a new session:**
-1. Verify live server responsiveness on `http://localhost:8091` or relaunch via `arh-server-deploy-bootstrap`.
-2. Open in browser to inspect the renovated Nanyang Chinese-Muslim aesthetic.
-3. If ready for production deployment: Run `wrangler deploy` using Workers Assets under target domain.
-3. If ready for production deployment: Initialize standalone Cloudflare Workers project (`wrangler deploy` using Workers Assets) under account domain.
+1. Start local preview: `npm run preview`.
+2. Run quality doctor suite: `node scripts/quality-gate.mjs`.
+3. If deploying changes to production: `npx wrangler deploy`.

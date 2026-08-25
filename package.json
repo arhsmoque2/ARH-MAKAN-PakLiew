@@ -4,14 +4,21 @@
   "private": true,
   "description": "Pak Liew Chinese Muslim Restaurant PWA - Nanyang Heritage Storefront",
   "type": "module",
+  "packageManager": "pnpm@9.15.9",
   "scripts": {
     "doctor": "node scripts/quality-gate.mjs",
     "doctor:docs": "node scripts/doctor-docs.mjs",
     "doctor:code": "node scripts/doctor-code.mjs",
     "doctor:ui": "node scripts/doctor-ui.mjs",
+    "doctor:render": "node scripts/doctor-render.mjs",
     "doctor:secrets": "node scripts/doctor-secrets.mjs",
     "doctor:edge": "node scripts/doctor-edge.mjs",
+    "test": "playwright test",
     "deploy": "wrangler deploy",
-    "preview": "node D:/_ARH-AGENT-OS/_AGENT-CAPABILITIES/arh-server-bootstrap/bin/arh-server-deploy-bootstrap.mjs ."
+    "preview": "node scripts/preview.mjs"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.62.1"
   }
 }

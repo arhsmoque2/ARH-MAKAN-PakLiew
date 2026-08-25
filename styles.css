@@ -1109,6 +1109,10 @@ h1, h2, h3, h4, .brand-name {
 }
 
 /* Modal Lightbox */
+[hidden] {
+  display: none !important;
+}
+
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -1119,6 +1123,10 @@ h1, h2, h3, h4, .brand-name {
   align-items: center;
   justify-content: center;
   padding: 20px;
+}
+
+.modal-backdrop[hidden] {
+  display: none !important;
 }
 
 .modal-card {
@@ -1198,5 +1206,37 @@ h1, h2, h3, h4, .brand-name {
   }
   .main-nav {
     display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .frame {
+    width: calc(100% - 24px);
+  }
+  .input-row {
+    grid-template-columns: 1fr;
+  }
+  .calc-box {
+    padding: 16px;
+  }
+  .button {
+    white-space: normal;
+    text-align: center;
+  }
+  .hero-cta-group {
+    flex-direction: column;
+  }
+  .header-actions .button-primary {
+    display: none;
+  }
+  .demo-banner {
+    padding: 6px 10px;
+    font-size: 0.75rem;
+  }
+  .demo-banner span {
+    word-break: break-word;
+  }
+  .sessions-grid {
+    grid-template-columns: 1fr;
   }
 }
