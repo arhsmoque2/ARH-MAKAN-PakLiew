@@ -1,0 +1,11 @@
+node_modules
+.git
+.github
+scripts
+docs
+.agents
+.claude
+.wrangler
+package.json
+package-lock.json
+pnpm-lock.yaml
