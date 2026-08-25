@@ -1,24 +1,23 @@
 # CURRENT_STATE.md — Pak Liew Chinese Muslim Restaurant PWA
 
-**Last Verified Timestamp:** 2026-08-25T18:05:00+08:00  
-**Project Path:** `D:\_ARH-AGENT-OS\_AGENT-WORKSPACE\projects\pak-liew-chinese-muslim-pwa\`  
-**Operational Status:** 🟢 ACTIVE & SERVING LIVE (via `arh-server-deploy-bootstrap`)  
+**Last Verified Timestamp:** 2026-08-25T19:20:00+08:00  
+**Project Path:** `D:\ARH-GITHUB\arhsmoque2\ARH-MAKAN-PakLiew\`  
+**GitHub Remote:** `https://github.com/arhsmoque2/ARH-MAKAN-PakLiew`  
+**Operational Status:** 🟢 ACTIVE & SERVING LIVE (Cloudflare Edge + Local Bootstrap)  
 
 ---
 
 ## 1. Live Deployment & Ingress Status
 
-The standalone storefront is active on the local network and private Tailnet:
-
 | Ingress Target | URI / URL | Status | Response |
 | :--- | :--- | :--- | :--- |
+| **Cloudflare Edge (Global)** | `https://arh-makan-pakliew.arh-homelab.workers.dev` | 🟢 Active | `HTTP/2 200 OK` (0ms cold start) |
 | **Local Preview** | `http://localhost:8091` | 🟢 Active | `HTTP/1.1 200 OK` |
 | **Tailscale Network** | `http://100.85.219.219:8091` | 🟢 Active | `HTTP/1.1 200 OK` |
-| **Process Model** | Background Task / Dynamic Port Ingress | 🟢 Running | Port `8091` verified |
 
-To restart or supervise the server in future sessions:
+To redeploy or update edge assets in future sessions:
 ```powershell
-node D:/_ARH-AGENT-OS/_AGENT-CAPABILITIES/arh-server-bootstrap/bin/arh-server-deploy-bootstrap.mjs D:/_ARH-AGENT-OS/_AGENT-WORKSPACE/projects/pak-liew-chinese-muslim-pwa
+npx wrangler deploy
 ```
 
 ---
@@ -26,22 +25,26 @@ node D:/_ARH-AGENT-OS/_AGENT-CAPABILITIES/arh-server-bootstrap/bin/arh-server-de
 ## 2. Delivered Artifacts & Workspace Structure
 
 ```
-pak-liew-chinese-muslim-pwa/
+ARH-MAKAN-PakLiew/
 ├── index.html          # Renovated 2-column Nanyang Chinese-Muslim storefront
-├── styles.css          # Pine Jade & Terracotta Wok Flame design tokens (WCAG 2.2 AA compliant)
+├── styles.css          # Pine Jade & Terracotta Wok Flame design tokens (WCAG 2.2 AA)
 ├── app.js              # Live session detector, dual-language search, modal & WA booking generator
+├── worker.mjs          # Cloudflare Workers Static Assets edge router
+├── wrangler.toml       # Cloudflare Workers environment and asset configuration
 ├── guide.html          # Operator reference runbook
 ├── CURRENT_STATE.md    # Verified continuation snapshot (this document)
 ├── AGENTS.md           # Developer & store-forking runbook
 ├── websearch-findings.md # External intelligence & multi-channel ground truth report
 ├── docs/decisions/
-│   └── 0001-pak-liew-frontend-redesign-and-nanyang-chinese-muslim-realignment.md # Accepted ADR
+│   ├── 0001-pak-liew-frontend-redesign-and-nanyang-chinese-muslim-realignment.md # Accepted ADR
+│   └── 0002-deployment-platform-selection-and-cloudflare-workers-convergence.md # Accepted ADR
 ├── data/
 │   ├── store.json      # Verified contact, hours, location, Waze, FoodPanda (4.9⭐) & pricing matrix
 │   └── menu.json       # Nanyang Chinese-Muslim dishes (Live Wok, Dim Sum, Mains, FoodPanda sets)
 ├── .agents/skills/     # Antigravity/Gemini agent skills (malaysian-localized-copy-register)
 ├── .claude/skills/     # Claude Code agent skills (malaysian-localized-copy-register)
 └── images/             # 5 High-resolution authentic photographic snapshots
+```
     ├── snap-breakfast-buffet.jpg
     ├── snap-lunch-buffet.jpg
     ├── snap-dinner-buffet.jpg
