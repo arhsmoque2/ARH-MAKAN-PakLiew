@@ -1,0 +1,49 @@
+schema_version: 0.1
+artifact: forbidden-and-gated-phrases
+role: safety_and_quality_gate
+core_principle: "A phrase may be grammatical but still wrong. Reject or gate phrases that overclaim, mismatch register, misuse loanwords, sound generic, or create locally awkward copy."
+forbidden_phrases:
+  phrase_level:
+    - {phrase: laman peribadi, repair: laman tertutup}
+    - {phrase: kolam eksklusif, repair: kolam renang persendirian}
+    - {phrase: ruang private, repair_options: [ruang tertutup, ruang eksklusif, ruang perbincangan tertutup]}
+    - {phrase: perkarangan rumah, repair: pekarangan rumah}
+    - {phrase: tandas eksklusif, repair_options: [bilik air bersih, bilik air selesa]}
+    - {phrase: dapur eksklusif, repair: dapur lengkap}
+    - {phrase: parking premium, repair_options: [parking mudah, ruang parking luas]}
+    - {phrase: healing korporat, repair_options: [retreat korporat, sesi offsite, ruang santai selepas sesi]}
+    - {phrase: port meeting, repair_options: [ruang mesyuarat kecil, ruang perbincangan tertutup]}
+    - {phrase: business lepak, repair_options: [sesi networking, jaringan perniagaan]}
+unsupported_grandeur:
+  forbidden_unless_true:
+    - {phrase: conference centre, repair: ruang seminar kecil}
+    - {phrase: dewan persidangan, repair: ruang seminar kecil}
+    - {phrase: grand ballroom, repair: ruang majlis tertutup}
+    - {phrase: five-star venue, repair: ruang eksklusif}
+    - {phrase: luxury event hall, repair: ruang majlis tertutup}
+gated_phrases:
+  luxury:
+    allowed_when: [property has strong visual proof, service level supports luxury, target segment expects luxury language]
+    preferred_alternatives: [eksklusif, tenang, selesa, terjaga, bercita rasa]
+  premium:
+    allowed_when: [describing package tier, describing supported elevated offering, commercial copy needs market category signal]
+    require_proof: [private pool, enclosed compound, curated setup, event-ready space, service or catering support]
+  eksklusif:
+    allowed_with: [ruang, penginapan, akses, pakej, majlis]
+    avoid_with: [kolam, tandas, dapur, katil_basic]
+  healing:
+    allowed_surfaces: [instagram_caption, tiktok_caption, casual_whatsapp]
+    forbidden_surfaces: [corporate_page, official_invitation, GLC_facing_copy, premium_hero]
+    repair: [santai, tenang, berehat, ruang santai]
+weak_phrases:
+  peace_comfort_tranquility: {repairs: [tenang, selesa, privasi keluarga, ruang santai, hujung minggu yang santai]}
+  affordable_luxury: {repairs: [berbaloi, sesuai untuk tempahan keluarga, pakej weekday]}
+  basic_amenities: {repairs: [kemudahan lengkap, kemudahan penting tersedia, kemudahan untuk majlis kecil]}
+agent_checklist:
+  before_final_copy:
+    - Did I classify the register?
+    - Did I map private by object?
+    - Did I avoid generic luxury stacking?
+    - Did I avoid social slang on corporate/institutional surfaces?
+    - Did I avoid unsupported venue-scale claims?
+    - Did I use proof instead of vague adjectives?

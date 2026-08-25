@@ -1,0 +1,12 @@
+request:
+  task: ""
+  surface: "website_hero | section_body | amenity_card | CTA | whatsapp | social_caption | corporate_page | official_notice"
+  audience: "family | SME | GLC | agency | association | book_club | vendor | client | guests"
+  event_or_use_case: ""
+  language_mode: "English-base | Malay-dominant | mixed | social-local"
+  tone_target: "warm | premium | corporate | institutional-light | casual"
+  must_include: []
+  must_avoid: []
+  known_facilities: []
+  proof_points: []
+  booking_action: ""

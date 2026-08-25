@@ -1,0 +1,12 @@
+register_decision:
+  surface: ""
+  audience: ""
+  intent: ""
+  selected_register: ""
+  secondary_register: ""
+  allowed_terms: []
+  gated_terms: []
+  forbidden_terms: []
+  retained_english_terms: []
+  phrase_families: []
+  reason: ""

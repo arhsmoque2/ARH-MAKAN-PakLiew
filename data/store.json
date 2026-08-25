@@ -1,0 +1,61 @@
+{
+  "store": {
+    "slug": "pak-liew-chinese-muslim",
+    "name": "Pak Liew Chinese Muslim Restaurant",
+    "chineseName": "柏刘清真餐厅",
+    "tagline": "Bufet Kulinari Cina Muslim & Masakan Kuali Panas Berapi • Titiwangsa Sentral KL",
+    "phone": "+60162493449",
+    "whatsapp": "60162493449",
+    "address": "60, Jalan Lumut, Titiwangsa Sentral, 50400 Kuala Lumpur",
+    "landmark": "Sebaris Hokkaido Seafood KL & Grand Seasons vicinity (5 minit jalan kaki dari Stesen LRT/Monorail Titiwangsa)",
+    "waze": "PAK LIEW CHINESE MUSLIM TITIWANGSA",
+    "wazeUrl": "https://waze.com/ul?q=Pak%20Liew%20Chinese%20Muslim%20Titiwangsa",
+    "googleMapsUrl": "https://maps.app.goo.gl/opNSdeX3zQ9toviQ6",
+    "foodpandaUrl": "https://www.foodpanda.my/restaurant/n87e/pak-liew-chinese-muslim-laman-baginda",
+    "instagram": "https://instagram.com/pak_liew_cm_restaurant",
+    "tiktok": "https://tiktok.com/@pakliewbuffet",
+    "closedDay": "Friday (Cuti Solat Jumaat & Sanitasi Mingguan)",
+    "diningLimit": "1 Jam setiap sesi (Waktu Puncak)",
+    "walkInPolicy": "Individu & keluarga dialu-alukan terus datang (walk-in) tanpa tempahan meja. Tempahan WhatsApp disediakan khas untuk rombongan melebihi 10 orang.",
+    "halalNote": "100% Halal & Bersih: Resipi tradisi Cina Muslim sifar alkohol, sifar minyak khinzir, pembekal daging ayam sembelihan halal disahkan.",
+    "amenities": "Ruang Solat / Surau selesa, Penghawa Dingin, dan Kemudahan Mesra Keluarga.",
+    "currency": "RM",
+    "locale": "ms-MY",
+    "timezone": "Asia/Kuala_Lumpur",
+    "sessions": [
+      {
+        "id": "breakfast",
+        "name": "Bufet Sarapan Pagi (Breakfast Buffet)",
+        "chineseSub": "周末早市自助",
+        "badge": "Sabtu & Ahad Sahaja",
+        "days": "Saturday & Sunday",
+        "timeRange": "6:00 AM - 11:00 AM",
+        "priceAdult": 15.9,
+        "priceChild": 12.9,
+        "description": "Nasi lemak sambal wangi, ayam rendang, paru sambal berlado, dim sum kukus panas, mantou buttermilk, roti sarang burung & mee kari."
+      },
+      {
+        "id": "lunch",
+        "name": "Bufet Makan Tengah Hari (Lunch Buffet)",
+        "chineseSub": "经典午市自助",
+        "badge": "Sabtu – Khamis (Cuti Jumaat)",
+        "days": "Saturday - Thursday",
+        "timeRange": "12:00 PM - 4:00 PM",
+        "priceAdult": 19.9,
+        "priceChild": 15.9,
+        "description": "Udang nestum rangup, daging black pepper, ikan masak sweet & sour, kari sayur nyonya, ayam gepuk sambal padu, spaghetti bolognese, dim sum & pencuci mulut."
+      },
+      {
+        "id": "dinner",
+        "name": "Bufet Makan Malam & Live Wok (Dinner Buffet)",
+        "chineseSub": "晚市热炒锅气自助",
+        "badge": "Sabtu – Khamis (Cuti Jumaat)",
+        "days": "Saturday - Thursday",
+        "timeRange": "5:00 PM - 10:00 PM",
+        "priceAdult": 19.9,
+        "priceChild": 15.9,
+        "description": "Live cooking stations: Char Koay Teow kuali berapi wok hei, Char Koay Kak, Chee Cheong Fun goreng, Satay ayam bakar & kuah kacang, sup cendawan & aiskrim."
+      }
+    ]
+  }
+}

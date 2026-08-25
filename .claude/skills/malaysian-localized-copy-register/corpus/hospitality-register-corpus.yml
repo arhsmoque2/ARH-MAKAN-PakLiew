@@ -1,0 +1,67 @@
+schema_version: 0.1
+artifact: hospitality-register-corpus
+role: source_of_truth
+use_for: [greenfield hospitality copy design, family gathering positioning, premium private stay copy, weekday-to-leisure bridge copy, phrase compatibility checks]
+avoid_using_for: [official agency announcements, high-formality GLC invitations, pure social captions without gating]
+core_principle: "Hospitality copy should compose intent, object, audience, surface, and register. Do not translate words one by one."
+registers:
+  hospitality_refined:
+    tone: [warm, calm, private, softly_premium, grounded]
+    suitable_surfaces: [website_hero, about_section, premium_space_description, family_gathering_page]
+    avoid: [over_slang, hard_corporate_jargon, empty_luxury_claims, official_ministry_style]
+  hospitality_family:
+    tone: [warm, practical, togetherness, food_and_pool_oriented, intergenerational]
+    suitable_surfaces: [family_day_page, weekend_stay_page, amenity_cards, whatsapp_booking, package_description]
+    avoid: [corporate_formality, over_premium_language, vague_peace_comfort_tranquility]
+object_collocations:
+  pool:
+    preferred: [kolam renang persendirian, private pool, ruang santai tepi kolam, akses ke kolam renang]
+    allowed_when_social: [pool vibe, port tepi pool]
+    avoid: [kolam eksklusif, kolam peribadi, kolam luxury]
+  courtyard_yard:
+    preferred: [laman tertutup, laman lapang, halaman rumah, laman bergambar, laman untuk aktiviti keluarga]
+    avoid: [laman peribadi, kawasan kosong, perkarangan rumah]
+  compound:
+    preferred: [pekarangan rumah, kawasan rumah, halaman rumah]
+    avoid: [perkarangan rumah]
+  gathering_space:
+    preferred: [ruang berkumpul, ruang berkumpul keluarga, ruang bersama, ruang makan bersama, ruang santai, ruang majlis tertutup]
+    avoid: [ruang umum keluarga, ruang private, ruang event luxury]
+  dining:
+    preferred: [ruang makan bersama, jamuan keluarga, jamuan kecil, susun atur makan bersama]
+    social_allowed: [makan-makan]
+  bbq:
+    preferred: [ruang BBQ, sudut BBQ, kawasan BBQ]
+    avoid: [BBQ eksklusif, port BBQ premium]
+  photo_corner:
+    preferred: [sudut bergambar, laman bergambar, photo corner]
+    social_allowed: [OOTD corner]
+  privacy:
+    preferred: [privasi keluarga, privasi sepenuhnya, suasana lebih tertutup, ruang tertutup, laman tertutup]
+    avoid: [privasi peribadi, laman peribadi, ruang peribadi]
+audience_segments:
+  family_weekend:
+    phrase_families: [ruang berkumpul keluarga, ruang makan bersama, kolam renang persendirian, laman tertutup, laman lapang, privasi keluarga, hujung minggu yang santai, sesuai untuk seisi keluarga]
+    avoid: [majlis rasmi keluarga, perhimpunan amanat keluarga, luxury family tranquility]
+  small_family_event:
+    phrase_families: [majlis kecil keluarga, majlis tertutup, ruang majlis tertutup, laman bergambar, ruang makan bersama, ruang santai tepi kolam, suasana intim]
+    avoid: [grand ballroom, dewan besar, luxury event hall]
+  premium_private_stay:
+    phrase_families: [penginapan eksklusif, ruang eksklusif, privasi sepenuhnya, laman tertutup, kolam renang persendirian, suasana tenang, ruang santai, sentuhan lokal, ruang yang terjaga]
+    avoid: [luxurious tranquility, premium peace comfort, kolam eksklusif, laman peribadi]
+phrase_patterns:
+  refined_hero:
+    examples:
+      - "A private stay with a private pool, enclosed courtyard and room for the whole family to gather."
+      - "Penginapan eksklusif dengan kolam renang persendirian, laman tertutup dan ruang berkumpul keluarga."
+      - "Lebih privasi untuk majlis kecil dengan laman tertutup, ruang makan bersama dan suasana yang selesa."
+rewrite_rules:
+  generic_luxury_to_grounded_proof:
+    detect: [luxury, luxurious, premium, tranquility, perfect getaway]
+    repair_strategy: [replace abstract claim with sensory or facility proof, use eksklusif only for whole-space/access/package/event, use selesa/tenang/tertutup/persendirian for experience]
+  awkward_private_translation:
+    detect: [laman peribadi, ruang private, kolam peribadi]
+    repair_strategy: [identify object, map to persendirian/tertutup/peribadi based on object]
+  social_to_refined:
+    detect: [healing, port, vibe, lepak]
+    repair_strategy: [retain warmth but remove casual slang, use santai/tenang/ruang berkumpul/sudut bergambar]

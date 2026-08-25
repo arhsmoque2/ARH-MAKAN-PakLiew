@@ -1,0 +1,32 @@
+schema_version: 0.1
+artifact: register-router
+role: runtime_and_corpus_router
+surface_rules:
+  website_hero:
+    choose: [hospitality_refined, weekday_event_venue, corporate_refined]
+    avoid: [social_slang, institutional_overkill]
+  amenity_card:
+    choose: [practical_trust]
+    examples: [kolam renang persendirian, ruang makan bersama, laman tertutup, parking mudah]
+  cta_button:
+    choose: [concise_commercial, light_local]
+    examples: [Check Weekday Availability, Tanya Pakej Hari Bekerja, Plan a Private Event]
+  corporate_page:
+    choose: [corporate_refined]
+    avoid: [leisure_staycation, social_slang]
+  instagram_caption:
+    choose: [social_caption]
+    allow: [jom, vibe, healing, OOTD]
+    require: [do_not_overdo_slang]
+  official_invitation_copy:
+    choose: [institutional_light]
+    avoid: [casual_hospitality_phrasing]
+intent_rules:
+  privacy: [privasi, tertutup, persendirian_by_object]
+  prestige: [eksklusif]
+  relaxation: [santai, tenang, nyaman]
+  business_formality: [sesi, majlis, program, taklimat, bengkel]
+  appreciation: [majlis penghargaan, majlis apresiasi]
+  learning: [seminar kecil, bengkel, sesi latihan]
+  networking: [jaringan perniagaan, sesi networking]
+  small_ceremony: [majlis tertutup, majlis kecil keluarga]

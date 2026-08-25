@@ -1,0 +1,46 @@
+schema_version: 0.1
+artifact: weekday-event-register-corpus
+role: source_of_truth
+core_principle: "Weekday copy should not sound like discounted holiday copy. It should position the venue as a private, purposeful, flexible event space."
+register:
+  id: weekday_event_venue
+  tone: [purposeful, private, organized, flexible, warm_but_not_leisure_heavy, practical]
+  avoid_tone: [vacation_first, overly_social, overly_institutional, ballroom_overclaim, budget_homestay]
+audience_segments:
+  sme_team:
+    suitable_events: [SME meeting, team offsite, vendor briefing, client briefing, internal discussion, small strategy session, business luncheon]
+    preferred_phrases: [ruang tempahan hari bekerja, ruang perbincangan tertutup, ruang mesyuarat kecil, team offsite, luncheon korporat, jamuan korporat kecil, sesi separuh hari, sesi sehari penuh]
+    avoid: [port meeting, lepak corporate, healing korporat, cuti-cuti company, staycation korporat]
+  seminar_training:
+    suitable_events: [seminar kecil, bengkel, sesi latihan, kursus dalaman, masterclass, coaching session, knowledge sharing]
+    preferred_phrases: [ruang seminar kecil, ruang bengkel, ruang latihan, sesi perkongsian ilmu, meja pendaftaran, sudut penceramah, susun atur seminar, pakej tea break, pakej makan tengah hari]
+  association_community:
+    suitable_events: [mesyuarat persatuan, perjumpaan komuniti, mesyuarat jawatankuasa, book club, alumni gathering, koperasi meeting]
+    preferred_phrases: [ruang perjumpaan persatuan, ruang komuniti, mesyuarat persatuan, perjumpaan book club, sesi dialog kecil, jamuan persatuan, ruang berkumpul tertutup]
+  luncheon_appreciation:
+    suitable_events: [corporate luncheon, SME luncheon, client appreciation lunch, staff appreciation day, vendor appreciation, farewell lunch, retirement lunch, mini award ceremony]
+    preferred_phrases: [luncheon korporat, jamuan tengah hari, jamuan korporat kecil, majlis penghargaan, majlis apresiasi, jamuan penghargaan, majlis perpisahan, ruang makan bersama, ruang bergambar]
+  intimate_ceremony:
+    suitable_events: [majlis tunang, akad nikah, nikah lunch, small wedding, family reception, hantaran session, doa selamat, aqiqah kecil, birthday lunch]
+    preferred_phrases: [majlis tunang, majlis akad nikah, majlis kecil keluarga, majlis tertutup, suasana intim, laman bergambar, ruang makan keluarga, ruang majlis tertutup]
+event_type_map:
+  meeting: {preferred_phrases: [mesyuarat kecil, sesi perbincangan, sesi perbincangan tertutup, mesyuarat jawatankuasa], venue_phrase: [ruang mesyuarat kecil, ruang perbincangan tertutup]}
+  briefing: {preferred_phrases: [sesi taklimat, sesi penerangan, vendor briefing, client briefing], venue_phrase: [ruang taklimat tertutup, ruang perbincangan tertutup]}
+  seminar: {preferred_phrases: [seminar kecil, sesi perkongsian ilmu, sesi perkongsian, forum kecil], venue_phrase: [ruang seminar kecil, ruang seminar tertutup], avoid: [conference centre, dewan persidangan]}
+  workshop: {preferred_phrases: [bengkel, sesi latihan, kursus dalaman, bengkel dalaman], venue_phrase: [ruang bengkel, ruang latihan, susun atur bengkel]}
+  luncheon: {preferred_phrases: [luncheon korporat, jamuan tengah hari, jamuan korporat kecil, jamuan penghargaan], venue_phrase: [ruang jamuan korporat, ruang makan bersama, ruang majlis tertutup]}
+  appreciation: {preferred_phrases: [majlis penghargaan, majlis apresiasi, jamuan penghargaan, majlis perpisahan, majlis meraikan warga kerja], venue_phrase: [ruang majlis tertutup, ruang penghargaan, ruang makan bersama]}
+slot_and_package_language:
+  time_slots: [slot pagi, slot petang, slot malam, sesi separuh hari, sesi sehari penuh, tempahan half-day, tempahan full-day]
+  package_labels: [pakej hari bekerja, pakej weekday, pakej mesyuarat kecil, pakej seminar kecil, pakej luncheon korporat, pakej majlis kecil]
+weekday_copy_patterns:
+  examples:
+    - "Bukan sekadar untuk hujung minggu. Ruang ini juga sesuai untuk tempahan hari bekerja seperti mesyuarat kecil, seminar, luncheon korporat dan majlis penghargaan."
+    - "A private weekday venue for meetings, seminars, luncheons and appreciation events - more private than a restaurant and more relaxed than the office."
+    - "Ruang tempahan hari bekerja untuk mesyuarat kecil, seminar, luncheon dan majlis tertutup, dengan suasana yang lebih privasi dan selesa."
+safe_default_lines:
+  malay:
+    - "Ruang tempahan hari bekerja untuk mesyuarat kecil, seminar, luncheon dan majlis tertutup."
+    - "Sesuai untuk sesi separuh hari atau sehari penuh, dengan ruang perbincangan, ruang makan dan suasana yang lebih privasi."
+  english_base:
+    - "A private weekday venue for meetings, seminars, luncheons and small gatherings."

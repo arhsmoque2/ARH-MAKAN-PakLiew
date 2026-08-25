@@ -1,0 +1,66 @@
+schema_version: 0.1
+artifact: loanword-collocation-corpus
+role: source_of_truth
+core_principle: "Loanwords are useful when they improve recognition, market fit, prestige, searchability, or clarity. They are harmful when they create awkward word-for-word phrases or empty luxury claims."
+loanword_policy:
+  use_loanword_when: [common_in_malaysian_market, audience_expects_term, Malay alternative is longer or less natural, term is branded/event/business format, term helps SEO or booking clarity]
+  prefer_malay_when: [Malay phrase is more natural and polished, official register requires BM dominance, English term sounds lazy or low-effort]
+collocation_entries:
+  exclusive:
+    malay_form: eksklusif
+    best_with: {space: ruang eksklusif, stay: penginapan eksklusif, package: pakej eksklusif, access: akses eksklusif, event: majlis eksklusif}
+    avoid_with:
+      pool: {bad: kolam eksklusif, repair: kolam renang persendirian}
+      kitchen: {bad: dapur eksklusif, repair: dapur lengkap}
+      toilet: {bad: tandas eksklusif, repair: bilik air bersih / selesa}
+  private:
+    direct_english_allowed: [private pool, private event, private weekday venue]
+    mapping_by_object:
+      pool: kolam renang persendirian
+      room: bilik persendirian
+      house_or_property: penginapan persendirian / seluruh rumah untuk anda
+      courtyard: laman tertutup
+      event: majlis tertutup
+      discussion: perbincangan tertutup
+      data: maklumat peribadi
+      belongings: barangan peribadi
+  premium:
+    use_when: [package has clear proof, venue has feature advantage, market-facing copy needs category signal]
+    require_proof: [private pool, whole-space access, curated setup, event-ready facilities, catering or service support]
+    best_with: [pakej premium, pengalaman premium, kemudahan premium]
+    avoid: [premium toilet, premium parking, premium tranquility, premium lepak]
+  luxury:
+    status: high_risk
+    prefer_replacements: [eksklusif, selesa, tenang, terjaga, bercita rasa, sentuhan mewah]
+  package:
+    best_with: [pakej family day, pakej korporat, pakej seminar kecil, pakej weekday, pakej majlis kecil, pakej half-day, pakej full-day]
+  facility:
+    malay_preferred: kemudahan
+    market_common: fasiliti
+    policy: {formal_or_refined: use_kemudahan, casual_market: fasiliti_allowed}
+  service:
+    mapping: {hospitality_care: layanan mesra, formal_service: perkhidmatan, casual_operational: servis}
+  staycation:
+    status: social_or_commercial
+    avoid_for: [corporate_event_page, official_invitation, institutional_register]
+    repair: {corporate_context: tempahan hari bekerja / ruang acara, family_context: hujung minggu keluarga / penginapan keluarga}
+  vibe: {status: social_only, formal_repairs: [suasana, rasa, mood, gaya]}
+  healing: {status: social_only, formal_repairs: [berehat, santai, tenang, melepaskan penat]}
+  port: {status: social_only, formal_repairs: [tempat, ruang, sudut, lokasi]}
+  lepak: {status: social_or_casual, formal_repairs: [bersantai, berkumpul, berehat, meluangkan masa]}
+retained_english_policy:
+  generally_allowed_in_english_base_copy: [private pool, weekday event, corporate luncheon, team retreat, offsite, book club, family day, check-in, booking, slot]
+  translate_or_localize_in_malay_dominant_copy:
+    private_pool: kolam renang persendirian
+    weekday_event: acara hari bekerja / tempahan hari bekerja
+    corporate_luncheon: luncheon korporat / jamuan korporat
+    team_retreat: retreat korporat / sesi offsite
+    book_club: book club / perjumpaan book club
+    booking: tempahan
+    check_in: daftar masuk
+compatibility_tests:
+  - {input: exclusive pool, expected: kolam renang persendirian / private pool, reject: kolam eksklusif}
+  - {input: private courtyard, expected: laman tertutup, reject: laman peribadi}
+  - {input: premium toilet, expected: bilik air bersih / selesa, reject: tandas premium}
+  - {input: corporate healing space, expected: ruang retreat korporat / ruang santai selepas sesi, reject: ruang healing korporat}
+  - {input: business lepak, expected: sesi networking / jaringan perniagaan, reject: lepak bisnes}

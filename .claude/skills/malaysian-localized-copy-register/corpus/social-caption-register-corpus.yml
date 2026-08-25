@@ -1,0 +1,27 @@
+schema_version: 0.1
+artifact: social-caption-register-corpus
+role: source_of_truth
+use_for: [Instagram captions, TikTok captions, WhatsApp blasts, short promo lines, casual SME/family event promos]
+avoid_using_for: [official invitation, corporate webpage hero, GLC-facing proposal, formal about section, premium brand statement]
+core_principle: "Social copy may use casual local slang, retained English, and punchy Malaysian rhythm, but slang must stay gated by surface."
+allowed_terms:
+  jom: {role: warm_invitation, strength: high, surfaces: [cta, social_caption, whatsapp, promo_banner]}
+  healing: {role: casual_rest_or_escape, strength: medium, surfaces: [tiktok_caption, instagram_caption, casual_whatsapp], avoid_surfaces: [corporate_page, GLC_copy, official_invitation], formal_repairs: [santai, berehat, tenang, melepaskan penat]}
+  vibe: {role: atmosphere, strength: medium, surfaces: [social_caption, casual_promo], formal_repairs: [suasana, rasa, gaya, mood]}
+  port: {role: casual_place, strength: medium, surfaces: [social_caption, tiktok_caption], formal_repairs: [ruang, tempat, sudut, lokasi]}
+  lepak: {role: casual_gathering, strength: medium, surfaces: [casual_caption, whatsapp], formal_repairs: [berkumpul, bersantai, meluangkan masa]}
+  ootd: {role: photo_moment, strength: low_to_medium, surfaces: [instagram_caption, tiktok_caption, event_photo_promo], formal_repairs: [sudut bergambar, laman bergambar, photo corner]}
+  best: {role: casual_positive, strength: low, caution: Use sparingly. Avoid best giler in refined copy., formal_repairs: [menarik, selesa, sesuai, berbaloi]}
+caption_registers:
+  family_social:
+    examples: ["Jom plan family day - private pool, ruang makan, laman tertutup, semua dalam satu tempat.", "Nak buat reunion kecil? Ada kolam, ruang makan dan tempat bergambar."]
+  weekday_social:
+    examples: ["Weekday slot available untuk luncheon, book club dan majlis kecil.", "Jom buat meeting kecil luar pejabat - private, selesa, siap boleh makan bersama."]
+social_to_formal_repairs:
+  - {social: port healing, formal: ruang santai}
+  - {social: vibe santai, formal: suasana santai}
+  - {social: OOTD corner, formal: sudut bergambar}
+  - {social: lepak, formal: berkumpul / bersantai}
+  - {social: best untuk event, formal: sesuai untuk majlis}
+hard_limits:
+  never_use_in_formal_copy: [best giler, healing korporat, lepak dengan boss, port meeting rasmi, OOTD rasmi]

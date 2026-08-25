@@ -1,0 +1,40 @@
+schema_version: 0.1
+artifact: corporate-event-register-corpus
+role: source_of_truth
+core_principle: "Corporate-event copy should sound credible, organized and purposeful. Retain English for acronyms, business formats, brand programmes, technical concepts and market-familiar terms."
+registers:
+  corporate_refined: {tone: [formal_but_accessible, organized, business_aware, warm_enough_for_SME, not_ministry_stiff]}
+  institutional_light: {tone: [BM_dominant, structured, official, purpose_led, low_slang]}
+  sme_business_friendly: {tone: [practical, friendly, credible, direct, semi_formal]}
+event_type_grammar:
+  sesi: {compatible_with: [sesi taklimat, sesi penerangan, sesi perbincangan, sesi dialog, sesi latihan, sesi perkongsian ilmu, sesi networking], avoid: [sesi makan-makan rasmi, sesi healing]}
+  majlis: {compatible_with: [majlis perasmian, majlis pelancaran, majlis penghargaan, majlis apresiasi, majlis makan malam anugerah, majlis menandatangani MoU, majlis tertutup, majlis kecil], avoid: [majlis lepak, majlis healing, majlis vibe]}
+  program: {compatible_with: [program latihan, program CSR, program pembangunan usahawan, program pendigitalan, program komuniti, program kesedaran, program tanggungjawab sosial korporat]}
+  bengkel: {compatible_with: [bengkel dalaman, bengkel latihan, bengkel kolaborasi strategik, bengkel penambahbaikan, bengkel pengurusan risiko, bengkel perancangan]}
+  taklimat: {compatible_with: [sesi taklimat, taklimat tender, taklimat program, taklimat pelaksanaan, taklimat vendor, taklimat keselamatan]}
+  luncheon: {compatible_with: [luncheon korporat, business luncheon, SME luncheon, client luncheon, appreciation luncheon], Malay_alternatives: [jamuan tengah hari, jamuan korporat, jamuan penghargaan]}
+  networking: {compatible_with: [sesi networking, jaringan perniagaan, business networking, sesi jaringan, sesi pemadanan perniagaan], more_formal: [jaringan perniagaan, pemadanan perniagaan]}
+corporate_phrase_families:
+  objective_language: [bertujuan, diadakan bagi, bertujuan memberi penerangan, membuka ruang perbincangan, memperkukuh kerjasama, memperluas jaringan, mengiktiraf sumbangan, meraikan pencapaian, memupuk hubungan, menyokong pembangunan, memperkasakan, meningkatkan kefahaman, memudah cara, menghimpunkan peserta]
+  stakeholder_language: [peserta, tetamu jemputan, warga kerja, pelanggan, vendor, rakan niaga, rakan strategik, pihak berkepentingan, wakil syarikat, ahli jawatankuasa, ahli persatuan, usahawan PMKS, komuniti perniagaan]
+  business_development_language: [pembangunan kapasiti, akses pasaran, pemadanan perniagaan, jaringan perniagaan, khidmat nasihat perniagaan, latihan keusahawanan, pembiayaan, pembiayaan operasi, pendigitalan, transformasi digital, penyelesaian digital, platform digital, inovasi, ekosistem, kolaborasi, kerjasama strategik, rakan strategik]
+  recognition_language: [majlis penghargaan, majlis apresiasi, mengiktiraf prestasi, menghargai sumbangan, meraikan pencapaian, warga kerja, rakan niaga, vendor, pelanggan, penyampaian anugerah, majlis makan malam anugerah]
+  formal_venue_language: [ruang perbincangan tertutup, ruang taklimat, ruang seminar kecil, ruang bengkel, ruang majlis tertutup, ruang jamuan korporat, suasana lebih privasi, ruang acara berskala kecil, kemudahan untuk sesi separuh hari, susun atur mesyuarat]
+retained_english_terms:
+  acronyms: [SME, MSME, PMKS, PKS, GLC, CSR, MoU, CEO, CFO, COO, HR, ESG, KPI, SOP, CPD]
+  business_event_formats: [luncheon, networking, business matching, offsite, retreat, team building, workshop, townhall, roadshow, webinar, vendor briefing, client briefing]
+  digital_business_terms: [digital, platform, ekosistem, transformasi, inovasi, kolaborasi, data, transaksi, teknologi, automasi]
+copy_patterns:
+  institutional_announcement:
+    examples:
+      - "Sesi ini bertujuan memberi penerangan kepada peserta serta membuka ruang perbincangan bersama pihak berkepentingan."
+      - "Majlis ini diadakan bagi mengiktiraf sumbangan warga kerja serta meraikan pencapaian sepanjang tahun."
+      - "Program ini menghimpunkan usahawan PMKS bagi memperluas jaringan perniagaan dan akses pasaran."
+  corporate_venue_positioning:
+    examples:
+      - "Ruang tertutup untuk sesi taklimat, bengkel dan luncheon korporat berskala kecil."
+      - "Sesuai untuk SME, vendor dan pasukan kecil yang memerlukan suasana lebih privasi daripada restoran biasa."
+wrong_register_repairs:
+  - {bad: "Port meeting untuk SME healing weekday.", repair: "Ruang tertutup untuk mesyuarat SME, sesi perbincangan dan luncheon korporat pada hari bekerja."}
+  - {bad: "Corporate staycation untuk vendor briefing.", repair: "Ruang tempahan hari bekerja untuk vendor briefing, sesi taklimat dan jamuan korporat kecil."}
+  - {bad: "Business lepak bersama client.", repair: "Sesi networking bersama pelanggan dan rakan niaga."}

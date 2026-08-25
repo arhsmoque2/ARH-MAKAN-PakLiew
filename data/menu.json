@@ -1,0 +1,297 @@
+{
+  "categories": [
+    {
+      "id": "live-stalls",
+      "name": "Kuali Panas & Live Wok (Malam)",
+      "chineseSub": "热炒活食档",
+      "subtitle": "Dimasak Panas Terus dari Kuali Berapi (Sesi Makan Malam)",
+      "badge": "Dinner (5pm-10pm)",
+      "emoji": "🔥"
+    },
+    {
+      "id": "lunch-mains",
+      "name": "Lauk Tengah Hari (Lunch Mains)",
+      "chineseSub": "午市招牌正餐",
+      "subtitle": "Aneka Hidangan Tradisi Nanyang Cina Muslim",
+      "badge": "Lunch (12pm-4pm)",
+      "emoji": "🍤"
+    },
+    {
+      "id": "dinner-mains",
+      "name": "Lauk Utama Malam (Dinner Mains)",
+      "chineseSub": "晚市精选热菜",
+      "subtitle": "Pilihan Lauk Panas Chinese Muslim & Western",
+      "badge": "Dinner (5pm-10pm)",
+      "emoji": "🍲"
+    },
+    {
+      "id": "breakfast-mains",
+      "name": "Sarapan Pagi (Breakfast Mains)",
+      "chineseSub": "周末清晨早点",
+      "subtitle": "Sabtu & Ahad Sahaja (6am-11am)",
+      "badge": "Hujung Minggu",
+      "emoji": "🍳"
+    },
+    {
+      "id": "dimsum-buns",
+      "name": "Dim Sum, Pau & Mantou Kukus",
+      "chineseSub": "清真点心蒸包",
+      "subtitle": "Kukus Panas Segar & Aneka Dim Sum Halal",
+      "badge": "Semua Sesi",
+      "emoji": "🥟"
+    },
+    {
+      "id": "desserts-drinks",
+      "name": "Pencuci Mulut & Aiskrim",
+      "chineseSub": "甜品雪糕冷饮",
+      "subtitle": "Free Flow Pencuci Mulut, Buah & 5 Perisa Aiskrim",
+      "badge": "Tanpa Had",
+      "emoji": "🍨"
+    },
+    {
+      "id": "foodpanda-sets",
+      "name": "Pilihan Delivery FoodPanda (4.9 ⭐)",
+      "chineseSub": "外卖精选套餐",
+      "subtitle": "Set Nasi & Mee Individu untuk Penghantaran Terus",
+      "badge": "FoodPanda Direct",
+      "emoji": "🐼"
+    }
+  ],
+  "items": [
+    {
+      "id": "live-ckt",
+      "categoryId": "live-stalls",
+      "name": "Char Koay Teow (Wok Hei Panas)",
+      "chineseName": "炒粿条",
+      "session": "dinner",
+      "badge": "Pilihan Utama",
+      "isSpicy": true,
+      "description": "Koay teow digoreng panas atas kuali besar dengan aroma 'wok hei' harum, telur, taugeh segar & udang manis.",
+      "image": "./images/snap-dinner-buffet.jpg"
+    },
+    {
+      "id": "live-ckk",
+      "categoryId": "live-stalls",
+      "name": "Char Koay Kak (Fried Radish Cake)",
+      "chineseName": "炒萝卜糕",
+      "session": "dinner",
+      "badge": "Tradisi Nanyang",
+      "description": "Kek lobak putih dipotong dadu dan digoreng garing bersama kicap pekat wangi, telur dan daun bawang.",
+      "image": "./images/snap-dinner-buffet.jpg"
+    },
+    {
+      "id": "live-ccf",
+      "categoryId": "live-stalls",
+      "name": "Fried Chee Cheong Fun",
+      "chineseName": "炒猪肠粉 (Halal)",
+      "session": "dinner",
+      "badge": "Kegemaran Ramai",
+      "description": "Chee Cheong Fun lembut yang digoreng bersama sos karamel hitam pekat, biji bijan wangi dan sambal pedas manis.",
+      "image": "./images/snap-dinner-buffet.jpg"
+    },
+    {
+      "id": "live-satay",
+      "categoryId": "live-stalls",
+      "name": "Satay Ayam Bakar & Kuah Kacang",
+      "chineseName": "沙爹鸡肉串",
+      "session": "dinner",
+      "badge": "Sajian Panas",
+      "description": "Satay ayam bakar beraroma serai dan rempah ratus, dihidang bersama kuah kacang pekat wangi, timun & bawang.",
+      "image": "./images/snap-dinner-buffet.jpg"
+    },
+    {
+      "id": "live-garlic-soup",
+      "categoryId": "live-stalls",
+      "name": "Sup Cendawan & Roti Bawang Putih",
+      "chineseName": "蘑菇浓汤配蒜香面包",
+      "session": "dinner",
+      "badge": "Western Corner",
+      "description": "Sup cendawan berkrim pekat dihidang bersama roti bawang putih rangup yang dibakar panas.",
+      "image": "./images/snap-dinner-buffet.jpg"
+    },
+    {
+      "id": "main-udang-nestum",
+      "categoryId": "lunch-mains",
+      "name": "Udang Goreng Nestum Emas",
+      "chineseName": "麦片脆皮虾",
+      "session": "lunch",
+      "badge": "Chef Signature",
+      "description": "Udang segar digoreng garing bersalut nestum wangi, daun kari segar dan cili padi bersusu.",
+      "image": "./images/snap-lunch-mains.jpg"
+    },
+    {
+      "id": "main-daging-black-pepper",
+      "categoryId": "lunch-mains",
+      "name": "Daging Masak Lada Hitam (Black Pepper Beef)",
+      "chineseName": "黑椒嫩牛肉",
+      "session": "lunch",
+      "badge": "Lauk Hangat",
+      "isSpicy": true,
+      "description": "Daging lembu lembut ditumis bersama sos lada hitam Sarawak, bawang holland dan lada benggala rangup.",
+      "image": "./images/snap-dishes-lunch.jpg"
+    },
+    {
+      "id": "main-sweet-sour-fish",
+      "categoryId": "lunch-mains",
+      "name": "Ikan Masak Masam Manis (Sweet & Sour)",
+      "chineseName": "糖醋香脆鱼片",
+      "session": "lunch",
+      "badge": "Klasik Cina",
+      "description": "Kepingan isi ikan dori digoreng rangup dan disalut kuah masam manis pekat bersama nenas dan tomato.",
+      "image": "./images/snap-dishes-lunch.jpg"
+    },
+    {
+      "id": "main-ayam-gepuk",
+      "categoryId": "lunch-mains",
+      "name": "Ayam Gepuk Sambal Gesek",
+      "chineseName": "印尼风味炸鸡",
+      "session": "lunch",
+      "badge": "Lauk Pedas Padu",
+      "isSpicy": true,
+      "description": "Ayam goreng garing panas dihidang bersama sambal cili padi gesek pedas membakar dan tauhu tempe.",
+      "image": "./images/snap-lunch-buffet.jpg"
+    },
+    {
+      "id": "main-nyonya-curry",
+      "categoryId": "lunch-mains",
+      "name": "Kari Sayur Campur Nyonya",
+      "chineseName": "娘惹咖喱什菜",
+      "session": "lunch",
+      "badge": "Kuah Sayur",
+      "description": "Kubis, terung, kacang panjang dan fucuk dimasak dalam kuah santan kari Nyonya harum berempah.",
+      "image": "./images/snap-dishes-lunch.jpg"
+    },
+    {
+      "id": "main-salted-egg-chicken",
+      "categoryId": "dinner-mains",
+      "name": "Ayam Goreng Telur Masin (Salted Egg)",
+      "chineseName": "咸蛋黄炸鸡",
+      "session": "dinner",
+      "badge": "Istimewa Malam",
+      "description": "Ayam berketul rangup disalut sos telur masin berkrim, daun kari dan cili padi wangi.",
+      "image": "./images/snap-lunch-mains.jpg"
+    },
+    {
+      "id": "main-beef-ginger-scallion",
+      "categoryId": "dinner-mains",
+      "name": "Daging Halia & Daun Bawang",
+      "chineseName": "姜葱炒牛肉",
+      "session": "dinner",
+      "badge": "Gaya Kantonis",
+      "description": "Hirisan daging lembut ditumis pantas bersama halia muda, daun bawang segar dan minyak bijan wangi.",
+      "image": "./images/snap-dishes-lunch.jpg"
+    },
+    {
+      "id": "bf-nasi-lemak",
+      "categoryId": "breakfast-mains",
+      "name": "Nasi Lemak Pandan Kukus & Sambal Bilis",
+      "chineseName": "香兰椰浆饭",
+      "session": "breakfast",
+      "badge": "Sarapan Asli",
+      "description": "Nasi lemak santan harum daun pandan, sambal tumis pedas manis, kacang bilis rangup dan timun.",
+      "image": "./images/snap-breakfast-buffet.jpg"
+    },
+    {
+      "id": "bf-ayam-rendang",
+      "categoryId": "breakfast-mains",
+      "name": "Ayam Rendang Tok Berempah",
+      "chineseName": "香浓仁当鸡",
+      "session": "breakfast",
+      "badge": "Resipi Tradisi",
+      "description": "Ayam empuk dimasak bersama kerisik kelapa sangai, daun kunyit dan rempah ratus warisan.",
+      "image": "./images/snap-breakfast-buffet.jpg"
+    },
+    {
+      "id": "bf-mee-kari",
+      "categoryId": "breakfast-mains",
+      "name": "Mee Kari Nyonya Santan Pekat",
+      "chineseName": "娘惹浓香咖喱面",
+      "session": "breakfast",
+      "badge": "Kuah Panas",
+      "isSpicy": true,
+      "description": "Mee kuning dengan kuah kari santan pekat beraroma, tauhu pok, telur rebus dan sambal pes.",
+      "image": "./images/snap-breakfast-buffet.jpg"
+    },
+    {
+      "id": "dimsum-siew-mai",
+      "categoryId": "dimsum-buns",
+      "name": "Siew Mai Ayam & Udang Halal (Kukus)",
+      "chineseName": "清真鸡肉虾烧麦",
+      "session": "all",
+      "badge": "Dim Sum Asli",
+      "description": "Dumpling isi ayam dan udang cincang berjus, dibalut kulit wantan nipis dan dikukus segar.",
+      "image": "./images/snap-dinner-buffet.jpg"
+    },
+    {
+      "id": "dimsum-mini-pau",
+      "categoryId": "dimsum-buns",
+      "name": "Pau Kukus Gebu (Kaya / Kacang Merah / BBQ)",
+      "chineseName": "松软蒸包",
+      "session": "all",
+      "badge": "Kukus Panas",
+      "description": "Pau mini gebu putih diisi inti kaya manis pandan, pes kacang merah halus atau ayam BBQ.",
+      "image": "./images/snap-breakfast-buffet.jpg"
+    },
+    {
+      "id": "dimsum-mantou",
+      "categoryId": "dimsum-buns",
+      "name": "Mantou Kukus & Buttermilk Dip",
+      "chineseName": "奶香蒸馒头",
+      "session": "all",
+      "badge": "Manisan Roti",
+      "description": "Mantou putih lembut dikukus panas, enak dicicah bersama sos buttermilk manis berkrim.",
+      "image": "./images/snap-breakfast-buffet.jpg"
+    },
+    {
+      "id": "dessert-ice-cream",
+      "categoryId": "desserts-drinks",
+      "name": "5 Perisa Aiskrim & Topping Coklat",
+      "chineseName": "五味雪糕",
+      "session": "all",
+      "badge": "Free Flow",
+      "description": "Aiskrim sejuk pelbagai perisa (Coklat, Vanilla, Strawberi, Jagung, Kelapa) dengan taburan kacang & sos coklat.",
+      "image": "./images/snap-lunch-buffet.jpg"
+    },
+    {
+      "id": "dessert-buah",
+      "categoryId": "desserts-drinks",
+      "name": "Potongan Buah-buahan Segar",
+      "chineseName": "新鲜切片水果",
+      "session": "all",
+      "badge": "Segar Dingin",
+      "description": "Tembikai merah manis, tembikai susu dan betik segar dipotong rapi dan disejukkan.",
+      "image": "./images/snap-dishes-lunch.jpg"
+    },
+    {
+      "id": "fp-salted-egg-rice",
+      "categoryId": "foodpanda-sets",
+      "name": "Set Nasi Salted Egg Chicken + Telur Mata",
+      "chineseName": "咸蛋鸡肉饭",
+      "session": "all",
+      "badge": "Top Delivery 4.9⭐",
+      "description": "Nasi putih panas, ayam goreng rangup berkuah telur masin berkrim, cili padi & telur mata goreng.",
+      "image": "./images/snap-lunch-mains.jpg"
+    },
+    {
+      "id": "fp-buttermilk-rice",
+      "categoryId": "foodpanda-sets",
+      "name": "Set Nasi Buttermilk Chicken + Telur Mata",
+      "chineseName": "奶油鸡肉饭",
+      "session": "all",
+      "badge": "Top Delivery 4.9⭐",
+      "description": "Nasi putih panas dihidang bersama ayam goreng bersalut sos mentega susu harum wangi & daun kari.",
+      "image": "./images/snap-lunch-mains.jpg"
+    },
+    {
+      "id": "fp-dry-chili-panmee",
+      "categoryId": "foodpanda-sets",
+      "name": "Dry Chili Pan Mee (Mee Halus Hakka)",
+      "chineseName": "干辣椒板面",
+      "session": "all",
+      "badge": "Top Delivery 4.9⭐",
+      "isSpicy": true,
+      "description": "Mee gandum kenyal digaul sos kicap istimewa, ikan bilis rangup, ayam cincang, telur separuh masak & pes cili kering pedas.",
+      "image": "./images/snap-dishes-lunch.jpg"
+    }
+  ]
+}

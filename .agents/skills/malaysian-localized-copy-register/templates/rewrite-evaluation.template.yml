@@ -1,0 +1,11 @@
+evaluation:
+  register_fit: {score: 0, notes: ""}
+  phrase_compatibility: {score: 0, notes: ""}
+  local_naturalness: {score: 0, notes: ""}
+  truthfulness_scale: {score: 0, notes: ""}
+  loanword_control: {score: 0, notes: ""}
+  slang_gating: {score: 0, notes: ""}
+  benefit_and_proof: {score: 0, notes: ""}
+  surface_action: {score: 0, notes: ""}
+  brownfield_repair_discipline: {score: 0, notes: ""}
+  overall: {grade: "Pass | Risk | Fail", summary: ""}

@@ -1,0 +1,40 @@
+# Manifest
+
+```text
+malaysian-localized-copy-register/
+  README.md
+  SKILL.md
+  MANIFEST.md
+  runtime-handbook/
+    agent-runtime-handbook.md
+    register-routing-quickmap.md
+    phrase-repair-cheatsheet.md
+    pressure-debug-cards.md
+  corpus/
+    hospitality-register-corpus.yml
+    loanword-collocation-corpus.yml
+    social-caption-register-corpus.yml
+    forbidden-and-gated-phrases.yml
+    weekday-event-register-corpus.yml
+    corporate-event-register-corpus.yml
+    register-router.yml
+    source-register-map.md
+  examples/
+    before-after-rewrites.md
+    weekday-event-copy-examples.md
+    corporate-event-announcement-examples.md
+    social-caption-examples.md
+  templates/
+    copy-intake.template.yml
+    register-decision.template.yml
+    phrase-compatibility.template.yml
+    rewrite-evaluation.template.yml
+  tests/
+    compatibility-checklist.md
+    wrong-register-test-cases.md
+    agent-evaluation-rubric.md
+  references/
+    source-notes.md
+    terminology-notes.md
+    evidence-map.md
+```
