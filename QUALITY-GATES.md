@@ -106,6 +106,7 @@ npm run doctor:render
      - Light/Dark Ambience mode toggle switching `html[data-mode]`.
   5. **Automated Accessibility Audit:** Executes `axe-core` across `index.html` and `guide.html`, enforcing WCAG 2.1 / 2.2 AA standards (color contrast >= 4.5:1, button accessible names, landmark structure).
   6. **Asset Network Integrity:** Asserts that rendered image elements load with non-zero natural dimensions (`naturalWidth > 0`) and zero 404 HTTP errors.
+  7. **`[hidden]` Attribute Integrity (regression guard):** Asserts every `[hidden]` element in the DOM actually computes to `display: none`, and that the element sitting at the exact viewport center on load is real page content — not a stray full-screen overlay. Deterministic, no visual baseline required; directly catches the CSS-specificity-overrides-`[hidden]` bug class (see §4.3) regardless of which selector or property causes it next time.
 * **Direct Command:** `npm test` or `npm run doctor:render`
 
 ---
@@ -119,8 +120,9 @@ npm run doctor:render
    *Symptom:* Non-200 responses previously emitted `console.warn` without failing the gate.  
    *Fix:* Updated `doctor-edge.mjs` to set `failed = true` and `process.exit(1)` on any non-200 status.
 3. **Modal Backdrop CSS Specificity Overriding `[hidden]`:**  
-   *Symptom:* In `styles.css`, `.modal-backdrop { display: flex; position: fixed; inset: 0 }` had higher specificity than the user agent `[hidden] { display: none }`, leaving an invisible overlay intercepting all user clicks.  
-   *Fix:* Added explicit `[hidden] { display: none !important; }` and `.modal-backdrop[hidden] { display: none !important; }`.
+   *Symptom:* In `styles.css`, `.modal-backdrop { display: flex; position: fixed; inset: 0 }` overrode the user agent `[hidden] { display: none }` default (author styles win regardless of specificity ties), leaving a full-screen `rgba(0,0,0,0.75)` + `blur(8px)` overlay rendering on every page load and intercepting all clicks — this shipped to production undetected because no gate rendered the page at all until Gate 6 existed.  
+   *Fix:* Added explicit `[hidden] { display: none !important; }` and `.modal-backdrop[hidden] { display: none !important; }`.  
+   *Regression guard:* `tests/dom-and-rendering.spec.mjs` → *"No `[hidden]` element renders visibly or intercepts pointer events on initial load"* (Gate 6, check 7) — asserts computed `display` for every `[hidden]` element and that viewport-center hit-testing lands on real content, so this bug class fails CI deterministically next time, on any selector.
 4. **Mobile 375px Button Overflow:**  
    *Symptom:* Buttons with long text (`.button-whatsapp`) had `white-space: nowrap`, overflowing 375px screens.  
    *Fix:* Added `white-space: normal; text-align: center;` under `@media (max-width: 600px)` in `styles.css`.

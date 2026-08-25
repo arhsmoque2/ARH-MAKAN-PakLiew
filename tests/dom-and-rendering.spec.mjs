@@ -48,6 +48,36 @@ test.describe('Pak Liew Storefront — DOM Rendering & Interactive Verification'
     expect(isLoaded).toBe(true);
   });
 
+  test('No [hidden] element renders visibly or intercepts pointer events on initial load', async ({ page }) => {
+    // Regression guard for the modal-backdrop bug: `.modal-backdrop { display: flex }`
+    // silently overrode the native [hidden] attribute's `display: none`, so the backdrop
+    // (rgba(0,0,0,0.75) + blur(8px)) rendered full-screen on every load and ate all clicks,
+    // even though the element correctly carried the `hidden` attribute in markup. A
+    // full-page screenshot diff would eventually have caught this, but this check is
+    // deterministic (no baseline needed) and pinpoints the exact broken selector.
+    await page.goto('/');
+
+    const offenders = await page.evaluate(() => {
+      const bad = [];
+      for (const el of document.querySelectorAll('[hidden]')) {
+        const style = getComputedStyle(el);
+        if (style.display !== 'none') {
+          bad.push({ selector: el.tagName + (el.id ? `#${el.id}` : '') + (el.className ? `.${String(el.className).replace(/\s+/g, '.')}` : ''), display: style.display });
+        }
+      }
+      return bad;
+    });
+    expect(offenders, `[hidden] elements rendering despite the attribute: ${JSON.stringify(offenders)}`).toEqual([]);
+
+    // Belt-and-suspenders: whatever sits at the exact viewport center on load must be
+    // real page content, not a stray full-screen overlay swallowing clicks.
+    const centerEl = await page.evaluate(() => {
+      const el = document.elementFromPoint(window.innerWidth / 2, window.innerHeight / 2);
+      return el ? el.className : null;
+    });
+    expect(centerEl).not.toMatch(/modal-backdrop/);
+  });
+
   test('Category filtering updates visible items correctly', async ({ page }) => {
     await page.goto('/');
 
