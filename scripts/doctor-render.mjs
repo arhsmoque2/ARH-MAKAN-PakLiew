@@ -5,8 +5,11 @@ console.log('\x1b[36m[RENDER-DOCTOR]\x1b[0m Auditing Browser Rendering, DOM Hydr
 
 const ROOT = process.cwd();
 
-// Run Playwright test suite headlessly across configured viewports
-const testRun = spawnSync('npx', ['playwright', 'test'], {
+// Run Playwright test suite headlessly across configured viewports.
+// --grep-invert excludes tests/visual-regression.spec.mjs (Gate 7's job — it needs
+// a human-approved baseline to mean anything, and stays out of Gate 6 so Gate 6
+// keeps being fast and always-meaningful even before a baseline exists).
+const testRun = spawnSync('npx', ['playwright', 'test', '--grep-invert=@visual-regression'], {
   cwd: ROOT,
   stdio: 'inherit',
   shell: true,

@@ -3,7 +3,7 @@
 **Governing System:** ARH Quality Gate Standard & Continuous Assurance Suite  
 **Harness Entrypoint:** `node scripts/quality-gate.mjs` (or `npm run doctor`)  
 **CI/CD Pipeline:** `.github/workflows/ci.yml` (GitHub Actions on push/PR to `main`)  
-**Current Gate Count:** 6 Active Automated Doctors  
+**Current Gate Count:** 7 Active Automated Doctors (Gate 7 activates once a baseline is approved — see below)  
 **Overall Status:** 🟢 100% GREEN (Passing all contracts)  
 
 ---
@@ -18,7 +18,7 @@ The Pak Liew Chinese Muslim Restaurant PWA uses an automated multi-stage Quality
 * **Zero Mocking In Production Gates:** Real network probes, actual data schema validations, and live headless browser executions are enforced.
 
 ```powershell
-# Run the complete unified 6-Gate Quality Doctor suite:
+# Run the complete unified 7-Gate Quality Doctor suite:
 node scripts/quality-gate.mjs
 
 # Or run individual gates directly:
@@ -28,6 +28,7 @@ npm run doctor:ui
 npm run doctor:secrets
 npm run doctor:edge
 npm run doctor:render
+npm run doctor:visual
 ```
 
 ---
@@ -42,6 +43,7 @@ npm run doctor:render
 | **Gate 4** | **Security & Zero-Plaintext Doctor** | `scripts/doctor-secrets.mjs` | Secret scanner auditing for plaintext `.env` files, private keys, Cloudflare tokens, GitHub PATs, and Age secret keys. | Presence of `.env` files or regex matches for secret/token patterns in tracked files. |
 | **Gate 5** | **Cloudflare Workers Edge Preflight** | `scripts/doctor-edge.mjs` | Cloudflare Workers asset binding validation (`wrangler.toml`), edge router presence (`worker.mjs`), and live edge endpoint HTTP 200 health probe. | Missing `[assets]` binding; missing `worker.mjs`; live HTTP probe returning non-200 or network error. |
 | **Gate 6** | **Headless Browser, DOM & Viewport Doctor** | `scripts/doctor-render.mjs` | Playwright multi-viewport headless execution across Desktop (1440x900), Tablet (768x1024), and Mobile (375x667), zero console errors, dynamic data hydration, interactive search/modal/pax calculator, horizontal layout containment, and `@axe-core/playwright` WCAG 2.1 AA accessibility. | Thrown JS runtime errors; failed asset loads (404); unrendered DOM cards; modal pointer interception; horizontal layout overflow (`scrollWidth > clientWidth`); WCAG 2.1 AA accessibility violations. |
+| **Gate 7** | **Visual Regression Doctor** | `scripts/doctor-visual.mjs` | Full-page pixel diff (`toHaveScreenshot`) against a human-approved baseline per viewport, masking only explicitly human-marked exception regions. **No-op (passes without checking anything) until a baseline has been promoted** — see `BASELINE-REVIEW-WORKFLOW.md`. | Any pixel difference outside a masked exception region, beyond a 1% diff-pixel-ratio tolerance. |
 
 ---
 
@@ -108,6 +110,15 @@ npm run doctor:render
   6. **Asset Network Integrity:** Asserts that rendered image elements load with non-zero natural dimensions (`naturalWidth > 0`) and zero 404 HTTP errors.
   7. **`[hidden]` Attribute Integrity (regression guard):** Asserts every `[hidden]` element in the DOM actually computes to `display: none`, and that the element sitting at the exact viewport center on load is real page content — not a stray full-screen overlay. Deterministic, no visual baseline required; directly catches the CSS-specificity-overrides-`[hidden]` bug class (see §4.3) regardless of which selector or property causes it next time.
 * **Direct Command:** `npm test` or `npm run doctor:render`
+
+### Gate 7: Visual Regression Doctor (`doctor-visual.mjs`)
+* **Objective:** Catch pixel-level UI drift and brand-consistency regressions that Gate 6's assertions don't (and structurally can't) express — layout composition, spacing, actual rendered color, anything a human eye judges as "correct" rather than a discrete assertion.
+* **Harness:** `tests/visual-regression.spec.mjs`, tagged `@visual-regression` so it's explicitly excluded from Gate 6's run (`--grep-invert`) and explicitly included in Gate 7's (`--grep`) — two gates, one shared config, no double-running.
+* **Activation state:** Reads `tests/visual-baselines/storefront-<project>.png`. If absent for a project, that project's test is `test.skip()`-ed with a printed reason — this is a **documented no-op**, distinct from a pass on a verified page. Gate 7 only becomes a real enforcing check once `scripts/promote-baseline.mjs` has committed a baseline (see `BASELINE-REVIEW-WORKFLOW.md`).
+* **Determinism:** Both baseline capture and every subsequent gate run pin the page clock to `tests/fixed-time.mjs`'s `BASELINE_FIXED_TIME` via Playwright's `context.clock.setFixedTime()`. Without this, `app.js`'s `renderLiveStatus()` (real wall-clock session banner) would make every comparison flake independent of any real UI change.
+* **Exceptions, not bypasses:** `tests/baseline-exceptions.json` lists human-marked regions (selector or bounding box, each with a reason and timestamp) passed to `toHaveScreenshot({ mask })`. A masked region is excluded from pixel comparison **only inside its own box** — the gate still runs and still diffs everything else, every time. Never hand-edit this file; it's written exclusively by `scripts/promote-baseline.mjs` from a human-reviewed export, which is what gives every entry a checkable provenance trail.
+* **Direct Command:** `npm run doctor:visual`
+* **Baseline lifecycle:** `BASELINE-REVIEW-WORKFLOW.md` is the full spec — candidate generation (`workflow_dispatch` on `ci.yml` → `scripts/capture-baseline-candidates.mjs` → `scripts/generate-baseline-review.mjs`), offline human review (`baseline-review.html`: per-viewport approve/reject, tap-to-pin issue tags, tap-or-drag exception marking), and promotion (`scripts/promote-baseline.mjs`, which refuses to write anything unless every viewport is approved, and logs a hash-verifiable entry to `tests/BASELINE-APPROVALS.md`).
 
 ---
 

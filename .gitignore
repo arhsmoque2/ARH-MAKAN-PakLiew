@@ -5,3 +5,10 @@ Thumbs.db
 *.log
 playwright-report/
 test-results/
+
+# Baseline review scratch — never committed. Only scripts/promote-baseline.mjs
+# writes into tests/visual-baselines/, tests/baseline-exceptions.json, and
+# tests/baseline-approval-records/, and only after a human-approved export.
+baseline-review-data/
+baseline-review*.html
+baseline-decisions*.json

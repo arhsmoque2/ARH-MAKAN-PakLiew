@@ -5,6 +5,12 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'Branch/commit to screenshot for baseline candidates (defaults to the branch this is run from)'
+        required: false
+        type: string
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -36,7 +42,7 @@ jobs:
       - name: Install Playwright Browsers (Chromium + WebKit)
         run: pnpm exec playwright install --with-deps chromium webkit
 
-      - name: Run Unified Quality Gate (6-Gate Suite)
+      - name: Run Unified Quality Gate (7-Gate Suite)
         run: node scripts/quality-gate.mjs
 
       - name: Upload Playwright Test Report & Artifacts
@@ -48,6 +54,51 @@ jobs:
             playwright-report/
             test-results/
           retention-days: 7
+
+  generate-baseline-candidates:
+    name: Generate Visual Baseline Candidates
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.ref }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9.15.9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright Browsers (Chromium + WebKit)
+        run: pnpm exec playwright install --with-deps chromium webkit
+
+      # This intentionally does NOT commit anything — tests/visual-baselines/ gets
+      # overwritten in this disposable checkout only, purely to build the review
+      # bundle below. Nothing here reaches the repo until a human approves it via
+      # scripts/promote-baseline.mjs (see BASELINE-REVIEW-WORKFLOW.md).
+      - name: Capture candidate screenshots & element bounding boxes
+        run: node scripts/capture-baseline-candidates.mjs
+
+      - name: Build self-contained offline review page
+        run: node scripts/generate-baseline-review.mjs
+
+      - name: Upload review bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: baseline-review
+          path: baseline-review.html
+          retention-days: 30
 
   deploy-edge:
     name: Deploy to Cloudflare Workers

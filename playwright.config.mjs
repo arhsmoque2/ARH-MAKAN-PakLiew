@@ -12,6 +12,10 @@ export default defineConfig({
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
   },
+  // Flat, predictable baseline path — no platform suffix (CI's Linux runner is the
+  // only environment that ever writes or reads these) and no duplicate project
+  // segment, since tests/visual-regression.spec.mjs already names the arg per project.
+  snapshotPathTemplate: '{testDir}/visual-baselines/{arg}{ext}',
   projects: [
     {
       name: 'desktop-chrome',

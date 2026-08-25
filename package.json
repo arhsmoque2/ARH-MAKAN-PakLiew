@@ -11,9 +11,12 @@
     "doctor:code": "node scripts/doctor-code.mjs",
     "doctor:ui": "node scripts/doctor-ui.mjs",
     "doctor:render": "node scripts/doctor-render.mjs",
+    "doctor:visual": "node scripts/doctor-visual.mjs",
     "doctor:secrets": "node scripts/doctor-secrets.mjs",
     "doctor:edge": "node scripts/doctor-edge.mjs",
     "test": "playwright test",
+    "baseline:candidates": "node scripts/capture-baseline-candidates.mjs",
+    "baseline:promote": "node scripts/promote-baseline.mjs",
     "deploy": "wrangler deploy",
     "preview": "node scripts/preview.mjs"
   },

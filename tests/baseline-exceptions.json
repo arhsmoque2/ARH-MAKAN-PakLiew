@@ -1,0 +1,4 @@
+{
+  "_comment": "Scoped visual-diff masks, never a gate bypass. Entries here are excluded from pixel comparison ONLY inside their own bounding box — everything else on the page is still diffed on every run. Populated exclusively by scripts/promote-baseline.mjs from a human-reviewed decision export (see BASELINE-REVIEW-WORKFLOW.md). Never hand-edit: an exception added here without going through the review tool has no provenance record and defeats the point.",
+  "exceptions": []
+}
