@@ -38,10 +38,18 @@ try {
   const res = await fetch(LIVE_URL);
   if (res.status === 200) {
     console.log(`  \x1b[32m✓\x1b[0m Live Edge Probe: HTTP ${res.status} OK`);
-    console.log('\x1b[32m[EDGE-DOCTOR PASSED]\x1b[0m Cloudflare Edge Ingress operational.\n');
   } else {
-    console.warn(`  \x1b[33m! Warning: Live endpoint returned HTTP ${res.status}\x1b[0m`);
+    console.error(`  \x1b[31m✗ Live endpoint returned HTTP ${res.status} (expected 200)\x1b[0m`);
+    failed = true;
   }
 } catch (err) {
-  console.warn(`  \x1b[33m! Warning: Could not probe live endpoint (${err.message})\x1b[0m`);
+  console.error(`  \x1b[31m✗ Could not probe live endpoint (${err.message})\x1b[0m`);
+  failed = true;
+}
+
+if (failed) {
+  console.error('\x1b[31m[EDGE-DOCTOR FAILED]\x1b[0m Cloudflare Edge configuration or ingress is broken.');
+  process.exit(1);
+} else {
+  console.log('\x1b[32m[EDGE-DOCTOR PASSED]\x1b[0m Cloudflare Edge Ingress operational.\n');
 }

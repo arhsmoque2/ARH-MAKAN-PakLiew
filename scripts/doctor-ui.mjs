@@ -8,13 +8,13 @@ let failed = false;
 
 // 1. Forbidden Hype Adjectives Check (from malaysian-localized-copy-register)
 const FORBIDDEN_WORDS = [
-  '\bpadu\b',
-  '\bgiler\b',
-  '\bgila\b',
-  '\bterpaling\b',
-  '\bmantul\b',
-  '\bkaw-kaw\b',
-  '\bpower\b'
+  '\\bpadu\\b',
+  '\\bgiler\\b',
+  '\\bgila\\b',
+  '\\bterpaling\\b',
+  '\\bmantul\\b',
+  '\\bkaw-kaw\\b',
+  '\\bpower\\b'
 ];
 
 const html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
