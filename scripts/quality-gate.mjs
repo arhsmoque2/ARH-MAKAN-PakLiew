@@ -11,7 +11,9 @@ const GATES = [
   { name: 'Gate 2: Codebase Hygiene & Data Schema Doctor', script: 'scripts/doctor-code.mjs' },
   { name: 'Gate 3: Malaysian Copy Register & UI Doctor', script: 'scripts/doctor-ui.mjs' },
   { name: 'Gate 4: Security & Zero-Plaintext Doctor', script: 'scripts/doctor-secrets.mjs' },
-  { name: 'Gate 5: Cloudflare Workers Edge Preflight', script: 'scripts/doctor-edge.mjs' }
+  { name: 'Gate 5: Cloudflare Workers Edge Preflight', script: 'scripts/doctor-edge.mjs' },
+  { name: 'Gate 6: Headless Browser, DOM & Viewport Doctor', script: 'scripts/doctor-render.mjs' },
+  { name: 'Gate 7: Visual Regression Doctor (approved baseline)', script: 'scripts/doctor-visual.mjs' }
 ];
 
 let allPassed = true;
