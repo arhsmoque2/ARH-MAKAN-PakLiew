@@ -7,7 +7,6 @@ test.describe('Pak Liew Storefront — Accessibility (WCAG 2.1 AA) Audit', () =>
 
     const accessibilityScanResults = await new AxeBuilder({ page })
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
-      .disableRules(['color-contrast']) // Some image background overlays dynamically calculated; audited separately
       .analyze();
 
     expect(accessibilityScanResults.violations).toEqual([]);
