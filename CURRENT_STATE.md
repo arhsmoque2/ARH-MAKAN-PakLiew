@@ -11,7 +11,7 @@
 
 | Ingress Target | URI / URL | Status | Response |
 | :--- | :--- | :--- | :--- |
-| **Cloudflare Edge (Global)** | `https://arh-makan-pakliew.arh-homelab.workers.dev` | 🔴 Broken | `HTTP 403` — verified 2026-08-25, likely a Cloudflare Access/WAF policy on the `workers.dev` subdomain; needs dashboard access to diagnose, `wrangler.toml`/`worker.mjs` show no app-level auth gate |
+| **Cloudflare Edge (Global)** | `https://arh-makan-pakliew.arh-homelab.workers.dev` | 🟢 Active | `HTTP/2 200 OK` — verified via CI's edge probe (GitHub Actions runner) 2026-08-25. Probing from some third-party sandboxed environments returns `HTTP 403`, most likely a Cloudflare WAF/bot rule scoped to certain outbound IP ranges rather than an app-level auth gate (`worker.mjs` has none) — not a real outage |
 | **Local Preview** | `http://localhost:8091` | 🟢 Active | `HTTP/1.1 200 OK` |
 | **Tailscale Network** | `http://100.85.219.219:8091` | 🟢 Active | `HTTP/1.1 200 OK` |
 
