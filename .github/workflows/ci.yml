@@ -33,8 +33,8 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Install Playwright Chromium Browser
-        run: pnpm exec playwright install --with-deps chromium
+      - name: Install Playwright Browsers (Chromium + WebKit)
+        run: pnpm exec playwright install --with-deps chromium webkit
 
       - name: Run Unified Quality Gate (6-Gate Suite)
         run: node scripts/quality-gate.mjs
