@@ -56,6 +56,9 @@ ARH-MAKAN-PakLiew/
 ├── data/
 │   ├── store.json      # Verified contact, hours, location, Waze, FoodPanda (4.9⭐) & pricing matrix
 │   └── menu.json       # Nanyang Chinese-Muslim dishes (Live Wok, Dim Sum, Mains, FoodPanda sets)
+├── .github/workflows/
+│   ├── ci.yml          # Continuous Integration quality gate runner
+│   └── arh-ui-media.yml # GitHub Actions remote sandbox media optimizer
 ├── .agents/skills/     # Antigravity/Gemini agent skills (malaysian-localized-copy-register)
 ├── .claude/skills/     # Claude Code agent skills (malaysian-localized-copy-register)
 └── images/             # 5 High-resolution authentic photographic snapshots

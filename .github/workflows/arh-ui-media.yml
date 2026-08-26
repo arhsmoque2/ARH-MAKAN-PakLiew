@@ -1,0 +1,54 @@
+name: ARH UI/UX Media Pipeline
+
+on:
+  workflow_dispatch:
+    inputs:
+      input_video:
+        description: 'Path to source video inside repo or URL'
+        required: true
+        default: 'videos/hero-raw.mp4'
+      output_dir:
+        description: 'Output directory for web-ready assets'
+        required: true
+        default: 'images/hero'
+      max_width:
+        description: 'Maximum width in pixels'
+        required: false
+        default: '1920'
+
+permissions:
+  contents: write
+
+jobs:
+  optimize-ui-media:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+
+      - name: Set up FFmpeg with SVT-AV1
+        uses: FedericoCarboni/setup-ffmpeg@v3
+        with:
+          ffmpeg-version: release
+
+      - name: Run ARH UI/UX DevTool Hero Pipeline
+        run: |
+          uvx --from git+https://github.com/arhsmoque2/ARH-AGENT-OS.git#subdirectory=_AGENT-CAPABILITIES/arh-ui-ux-devtool arh-ui-dev hero \
+            --input "${{ github.event.inputs.input_video }}" \
+            --output "${{ github.event.inputs.output_dir }}" \
+            --width "${{ github.event.inputs.max_width }}" \
+            --json
+
+      - name: Upload Optimized Media Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-hero-assets
+          path: ${{ github.event.inputs.output_dir }}
