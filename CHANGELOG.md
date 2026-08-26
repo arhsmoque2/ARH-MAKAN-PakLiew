@@ -2,6 +2,40 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.0] - 2026-08-26
+### Added
+- Ambient hero background rotator (`.hero-rotator`): a real storefront still
+  (Ken Burns drift) crossfading with a real dining-room/buffet clip, same
+  mechanism as Woodfire Premium's hero. Muted, looped, `prefers-reduced-motion`
+  stops it from starting at all.
+- `ui.md` §0: `situation_scan`/`resolved_design` classification per the
+  `fnb-taste-palette-design` skill (previously absent -- the doc went
+  straight to color tokens). §1.4: written accessibility/motion floor.
+
+### Changed
+- Retoned `--pl-amber`/`--pl-amber-bright`/`--pl-pine-border`/`--pl-amber-glow`
+  to the calmer gold `ui.md` already specified, replacing the more neon
+  values the implementation had drifted to.
+- Hero CTA row: Waze/FoodPanda buttons (solid brand-colour fills) -> quiet
+  outline buttons, so one gold primary CTA carries the row instead of three
+  competing brand hues. `pill-green` badge: neon mint -> neutral/quiet.
+- Added Cinzel (serif) to `h1`/`h2`/`h3`/`.brand-name` per `ui.md`'s
+  already-documented headline face; `h4` keeps `Plus Jakarta Sans`.
+
+### Fixed
+- `.qty-stepper input` (pax count, group booking calculator) had
+  `outline: none` with no `:focus-visible` replacement -- keyboard users
+  got no focus indicator on a real order-path control.
+- Missing `@media (prefers-reduced-motion: reduce)` block (present in
+  Woodfire Premium's stylesheet, absent here) -- added, covers the new
+  hero rotator.
+- Hero headline/subtitle/badge/button text went dark-on-dark in light
+  ambience mode once the hero background was pinned dark (a photo/video
+  backdrop can't sensibly flip with a light/dark toggle) -- pinned those
+  specific elements to their dark-mode colour; card-based hero content
+  (`.hero-showcase-card`, `.live-status-card`) was already correct since
+  background and text flip together there.
+
 ## [1.1.0] - 2026-08-26
 ### Added
 - Gate 6: Headless Browser, DOM & Viewport Doctor (`scripts/doctor-render.mjs`) powered by Playwright.

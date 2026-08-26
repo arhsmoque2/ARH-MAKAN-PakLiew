@@ -7,6 +7,41 @@
 
 ---
 
+## 0. Design Skill Compliance (`fnb-taste-palette-design`)
+
+This document originally went straight to color tokens under a single
+philosophy tag line, without the skill's `situation_scan` step -- the skill's
+first rule is "do not start from colors." That's how the implementation
+drifted into a candy-bright CTA row dressed up as "high-end gastronomy" (see
+`CHANGELOG.md` / PR #2 for the fix): the philosophy was asserted, not
+derived from what Pak Liew actually is. Recording the classification here so
+future changes have it to check against, instead of re-asserting a vibe.
+
+```yaml
+situation_scan:
+  store_type: family_casual          # high-volume AYCE buffet, not fine dining
+  customer_rhythm: order_set_or_package  # 3 fixed buffet sessions/day, not a la carte browsing
+  menu_size: large                   # 23 items across 7 categories (data/menu.json)
+  order_path: whatsapp                # group booking dispatch + walk-in; FoodPanda for delivery
+  media_quality: strong_photos_and_videos  # real storefront/interior photos + a real dining-room clip (2026-08-26)
+  customer_group: families            # walk-in families/groups, Chinese-Muslim heritage customers
+  desired_vibe: "calmer heritage-premium -- restrained, not neon/candy"
+  failure_risk: "restraint read as generic SaaS instead of premium if overcorrected"
+
+resolved_design:
+  customer_vibe: heritage_premium_editorial
+  palette_id: nanyang-jade-ember       # own jade/gold/seal family, muted -- not Woodfire's palette copied
+  typography_id: cinzel-headline-jakarta-body  # Cinzel serif for h1/h2/h3 + wordmark, Plus Jakarta Sans for body/UI
+  layout_archetype: two-column-hero-with-status-card  # unchanged from the original build
+  menu_density: large-grid-with-search-and-filters
+  media_policy: hero_ambient_background_single_video  # one background rotator: real still + real clip, not per-card autoplay
+  motion_level: gentle                # Ken Burns drift on the still, crossfade between layers, no fast/attention-grabbing motion
+  contrast_policy: wcag_aa_minimum
+  validation_required: true
+```
+
+---
+
 ## 1. Design Token System
 
 ### 1.1 Color Tokens
@@ -29,7 +64,11 @@ The visual identity is anchored on the natural palette of Chinese-Muslim culinar
 
   /* Culinary Accent (Chef Picks & Live Wok Badges) */
   --pl-red: #C2392A;              /* Chili / Nyonya Accent */
-  --pl-green-live: #00E676;       /* Live open status pulse */
+  --pl-green-live: #10B981;       /* Live open status pulse -- a small (12px) functional
+                                      status dot, not a second accent colour; deliberately
+                                      a notch calmer than a pure neon green (was #00E676
+                                      in an earlier draft of this doc) to match the classy
+                                      rule's "controlled accents" -- see §1.4. */
 
   /* Typography & Ink Tokens */
   --pl-ink: #FAF7F2;              /* Primary text (Warm porcelain white) */
@@ -82,6 +121,41 @@ html[data-mode="light"] {
 
 ---
 
+### 1.4 Accessibility & Motion Floor (non-negotiable)
+
+Not previously written down; adding it now rather than leaving it implicit,
+so a future change can check against it instead of re-deriving it (or
+missing it, the way it got missed the first time -- see below).
+
+* **Contrast:** body text and CTA text must clear WCAG AA against whatever
+  they actually render on. This isn't automatic just because a token is
+  named `--pl-ink*`: `--pl-ink`/`--pl-ink-muted` flip between light and
+  dark ambience mode, so anything sitting on a surface that does **not**
+  flip with them (the hero's photo/video backdrop, see §2.2) needs a
+  pinned colour instead, or the pairing breaks in one of the two modes.
+  Caught live on 2026-08-26: the hero headline, subtitle, the "100% Halal"
+  pill and the Waze/FoodPanda hero buttons all went dark-on-dark in light
+  ambience mode once the hero background stopped flipping -- fixed by
+  pinning those specific elements to their dark-mode colour (`styles.css`,
+  `.hero-title`/`.hero-subtitle`/`.pill-green`/`.hero-cta-group .button-waze`/
+  `.hero-cta-group .button-foodpanda`). Card-based content (`.hero-showcase-card`,
+  `.live-status-card`, `.price-chip`) is unaffected: those are self-contained
+  opaque surfaces where background and text flip together correctly.
+* **Focus visibility:** any `outline: none` must ship with a replacement
+  `:focus-visible` state. Caught live on the same pass: `.qty-stepper input`
+  (the pax count in the group-booking calculator -- a real order-path
+  control) had `outline: none` with nothing standing in for it; fixed with
+  a `:focus-visible` outline. `.search-box input` already did this correctly
+  and was the template for the fix.
+* **Reduced motion:** `@media (prefers-reduced-motion: reduce)` must exist
+  and must stop the hero rotator's Ken Burns drift and crossfade (both the
+  CSS animation and the JS timer that starts it). Not present before
+  2026-08-26; added alongside the hero rotator itself (`styles.css`, end of
+  file; `app.js`'s `initHeroRotator()` checks the media query before
+  starting anything).
+
+---
+
 ## 2. Component UI Specifications
 
 ### 2.1 Header & Brand Wordmark
@@ -91,9 +165,22 @@ html[data-mode="light"] {
 * **Actions:** Ambient Day/Night mode button (`data-ambience-toggle`) + direct Table Reservation button (`.button-gold-sm`).
 
 ### 2.2 Ambient Hero Section
-* **Visual Layer:** Multi-layer ambient background cross-fader (`.hero-bg-img`) rotating between authentic photographic snapshots (Dinner live wok, Lunch spread, Weekend breakfast).
-* **Overlay:** 3-stop vertical gradient scrim guaranteeing 100% WCAG 2.2 AA text contrast over background imagery.
-* **Hero Content:** Dual badges (`BUFFET PALING PADU DI KL` & `ALL-YOU-CAN-EAT HALAL`), high-impact headline with gold gradient clipping, and triple action buttons (Menu jump, Google Maps, Waze).
+* **Visual Layer (shipped 2026-08-26, `.hero-rotator`/`.hero-layer`):** crossfades
+  a real still of the storefront signage (Ken Burns drift, `data-hero-still`)
+  with a real clip of the dining room and buffet counter -- same rotator
+  mechanism as Woodfire Premium's hero (`arh-fnb-tier-showroom/premium`):
+  a video's own `ended` event drives the advance, a still holds 6s, and
+  `prefers-reduced-motion` stops the rotator from starting at all (§1.4).
+  `aria-hidden` + empty `alt`: decorative only, the hero text below carries
+  the real content. Media policy: this is the one sanctioned ambient
+  background loop for the whole page -- menu/item cards stay grid-autoplay
+  forbidden per the skill's floor.
+* **Overlay:** a flat, fairly dark scrim (not a directional one -- this
+  hero's content isn't bottom-anchored the way Woodfire's is) that
+  deliberately does not flip with the light/dark ambience toggle, same as
+  Woodfire's: a photo/video backdrop doesn't have a "light mode." See §1.4
+  for what that means for the text sitting on top of it.
+* **Hero Content:** Dual badges (`CITA RASA CINA MUSLIM NANYANG` & `100% HALAL & BERSIH`), serif headline (Cinzel, §1.2) with a gold second line, and a gold primary CTA (view buffet sessions) alongside quiet outlined secondary actions (Waze, FoodPanda) -- one accent colour carrying the row instead of each action in its own brand colour.
 
 ### 2.3 Live Session Floating Card (`.live-status-card`)
 * **Real-time Status Pill:** Glowing green pulse dot (`animation: pulse-glow 2s infinite`) paired with active session label (Breakfast / Lunch / Dinner / Closed Friday).

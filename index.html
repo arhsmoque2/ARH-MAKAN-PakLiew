@@ -7,7 +7,7 @@
     <title>Pak Liew Chinese Muslim Restaurant | 柏刘清真餐厅 • Titiwangsa Sentral KL</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Noto+Serif+SC:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body class="customer-page">
@@ -48,6 +48,21 @@
     <main id="top">
       <!-- Hero Showcase Section (2-Column Architecture) -->
       <section class="hero">
+        <!-- Ambient background: real storefront still (Ken Burns drift)
+             crossfading with a real clip of the dining room/buffet counter.
+             aria-hidden + empty alt/no captions: decorative only, the hero
+             text below carries the real content -- same rotator mechanism
+             as Woodfire Premium's hero. -->
+        <div class="hero-rotator" data-hero-rotator aria-hidden="true">
+          <img class="hero-layer is-active" data-hero-layer data-hero-still src="./images/hero-storefront.jpg" alt="" fetchpriority="high" />
+          <!-- webm first: Chrome/Firefox/Edge pick it (smaller); Safari/iOS
+               don't support webm and fall through to the mp4. -->
+          <video class="hero-layer" data-hero-layer muted playsinline preload="metadata" poster="./images/hero-video-1-poster.jpg">
+            <source src="./images/hero-video-1.webm" type="video/webm" />
+            <source src="./images/hero-video-1.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <div class="hero-scrim"></div>
         <div class="frame hero-layout">
           <div class="hero-content">
             <div class="hero-badges">
