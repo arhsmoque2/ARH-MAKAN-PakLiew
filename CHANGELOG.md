@@ -2,6 +2,52 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.0] - 2026-08-26
+### Changed
+- Replaced the emoji used throughout the page (hero badges/CTAs, session
+  card icons, category chips, price calculator, WhatsApp button, location
+  card, live-status labels, menu card badges) with a single inline SVG
+  icon sprite (`#icon-check`, `#icon-clock`, `#icon-pin`, `#icon-phone`,
+  `#icon-chat`, `#icon-nav`, `#icon-map`, `#icon-search`, `#icon-sun`,
+  `#icon-moon`, `#icon-sunrise`, `#icon-star`, `#icon-calc`) defined once
+  at the top of `index.html` and referenced via `<use>` -- emoji read as a
+  WhatsApp-chat/toy register rather than a restaurant brand, and don't
+  take the surrounding text colour the way `stroke: currentColor` icons
+  do. Category chips and calculator `<option>`s dropped their emoji
+  outright instead of getting an icon (not every label needs one).
+  `.session-icon` went from a bare emoji glyph to a proper 44px circular
+  icon badge tinted `var(--pl-amber-glow)`.
+- Hero clip's own footage slowed further, 0.55x -> 0.4x playback rate
+  (`app.js`): the previous pass's 0.55x still read as a fast-forward
+  handheld pan next to the now-calm still. The clip's CSS Ken Burns pan
+  was also split off the still's shared keyframe onto its own, smaller-
+  amplitude one (`pl-hero-drift-clip`, was reusing `pl-hero-drift`'s
+  1.04->1.09 range at 34s) so the CSS pan stops compounding with the
+  slowed-down footage into something that reads faster than either alone.
+- Card makeover, closer to the rounded/glass card + photo-hover-reveal
+  pattern of the reference sites this pass was checked against
+  (mythikana.vercel.app, themelooper.com/html/foodpoint, verde-resturant.
+  netlify.app -- all three blocked by this session's network egress, so
+  the makeover follows the well-established version of that pattern
+  rather than each site's exact CSS): `.menu-item-card`, `.session-card`,
+  `.location-card`, and `.location-map-wrap` corner radius bumped
+  `--radius-md` (14px) -> `--radius-lg` (24px). `.hero-showcase-card`
+  (the one card sitting directly on the hero's photo/video canvas) moved
+  from an opaque panel to real frosted glass (translucent fill +
+  `backdrop-filter: blur(20px) saturate(140%)`), with its text pinned to
+  fixed light-on-dark values the same way `.hero-title` already was (see
+  `ui.md` §1.4 for why). Menu-card and showcase-card photos now reveal a
+  soft dark gradient on hover in addition to the existing zoom, and
+  `.menu-item-card`/`.session-card` hover states pick up the amber border
+  + `--shadow-md` treatment `.session-card.is-highlight` already used.
+  `.visual-card`'s single booking-section photo gained the same hover
+  zoom the other photo cards have.
+- `ui.md` updated in the same pass: the icon system, the video-pacing
+  follow-up, and the card-glass treatment (with an explicit note that
+  `.hero-showcase-card` no longer belongs in §1.4's "self-contained
+  opaque surface" list now that it's glass on the hero's non-flipping
+  canvas).
+
 ## [1.3.0] - 2026-08-26
 ### Changed
 - Palette moved from a dark forest-green + gold night canvas to a pastel,

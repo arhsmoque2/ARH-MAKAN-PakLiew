@@ -128,6 +128,24 @@ h1, h2, h3, .brand-name {
   margin: 0 auto;
 }
 
+/* Line-icon system (replaces the emoji set formerly scattered through the
+   page -- see the sprite in index.html's <body>). currentColor-tinted so
+   each icon inherits whatever text colour it sits in instead of carrying
+   its own baked-in colour the way emoji do; that's most of why the emoji
+   read as a toy/chat-app register in the first place. */
+.icon {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+  display: inline-block;
+  vertical-align: -0.125em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 /* Demo & Notice Header */
 .demo-banner {
   background: var(--pl-pine);
@@ -356,6 +374,9 @@ h1, h2, h3, .brand-name {
 }
 
 .ambience-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   background: var(--pl-pine-surface);
   border: 1px solid var(--pl-pine-border-subtle);
   color: var(--pl-ink-muted);
@@ -408,19 +429,30 @@ h1, h2, h3, .brand-name {
    already moves (slowed further via playbackRate in app.js), so it gets the
    gentler/slower of the two -- a second, faster drift on top would read as
    fidgety rather than calm. 2026-08-26: both durations lengthened and the
-   crossfade above slowed from 1.6s -- the rotator was pacy, not indie-calm. */
+   crossfade above slowed from 1.6s -- the rotator was pacy, not indie-calm.
+   Second pass same day: the clip's own footage (slowed to 0.4x in app.js
+   now, was 0.55x) still had a second source of "fast forward" -- this CSS
+   pan compounding on top of it. Split the video onto its own, smaller-
+   amplitude keyframe (was reusing the still's 1.04->1.09 range at 34s) so
+   the two motions don't stack into something faster than either alone. */
 .hero-layer[data-hero-still] {
-  animation: pl-hero-drift 26s ease-in-out infinite alternate;
+  animation: pl-hero-drift-still 26s ease-in-out infinite alternate;
 }
 
 .hero-layer:not([data-hero-still]) {
-  animation: pl-hero-drift 34s ease-in-out infinite alternate;
+  animation: pl-hero-drift-clip 46s ease-in-out infinite alternate;
 }
 
-@keyframes pl-hero-drift {
+@keyframes pl-hero-drift-still {
   0% { transform: scale(1.04) translate(0, 0); }
   50% { transform: scale(1.09) translate(-1.2%, -0.8%); }
   100% { transform: scale(1.04) translate(0, 0); }
+}
+
+@keyframes pl-hero-drift-clip {
+  0% { transform: scale(1.02) translate(0, 0); }
+  50% { transform: scale(1.045) translate(-0.6%, -0.4%); }
+  100% { transform: scale(1.02) translate(0, 0); }
 }
 
 .hero-scrim {
@@ -588,19 +620,56 @@ h1, h2, h3, .brand-name {
   color: var(--pl-amber-bright);
 }
 
-/* Hero Showcase Card (Right Column) */
+/* Hero Showcase Card (Right Column) -- sits directly on the hero's photo/
+   video canvas, so it's the one card on the page with something worth
+   blurring behind it: real frosted glass (translucent fill + backdrop
+   blur+saturate) rather than an opaque card, plus a hover lift so the
+   whole card, not just the photo, responds like the reference sites'
+   rounded/glass tiles. */
 .hero-showcase-card {
-  background: var(--pl-pine-card);
-  border: 1px solid var(--pl-pine-border);
+  background: rgba(23, 30, 26, 0.42);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: var(--shadow-lg);
   position: relative;
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.hero-showcase-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 48px rgba(20, 24, 22, 0.28);
 }
 
 .showcase-media {
   position: relative;
   aspect-ratio: 4 / 3;
+  overflow: hidden;
+  transition: transform var(--transition-normal);
+}
+
+/* Hover lift matches .menu-item-card's split pattern below: the ambient
+   Ken Burns drift stays on the img itself, the hover scale goes on the
+   wrapper, so the two transforms don't fight on one element. A soft
+   gradient reveals on hover too, the same "photo answers back" cue as the
+   reference sites' card hovers -- not just a flat zoom. */
+.hero-showcase-card:hover .showcase-media {
+  transform: scale(1.035);
+}
+
+.showcase-media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(20, 26, 22, 0) 55%, rgba(20, 26, 22, 0.55) 100%);
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.hero-showcase-card:hover .showcase-media::after {
+  opacity: 1;
 }
 
 .showcase-media img {
@@ -636,20 +705,25 @@ h1, h2, h3, .brand-name {
   margin-bottom: 6px;
 }
 
+/* Pinned, same reasoning as .hero-title/.pill-amber above: the card is now
+   frosted glass over the hero's non-flipping photo/video canvas (not an
+   opaque, flipping var(--pl-pine-card) panel), so its text needs to stay
+   legible against that dark backdrop in both light and dark ambience. */
 .showcase-title {
   font-size: 1.15rem;
   font-weight: 700;
+  color: #F7FAF8;
 }
 
 .showcase-price {
-  color: var(--pl-amber-bright);
+  color: #F0B849;
   font-weight: 800;
   font-size: 1.1rem;
 }
 
 .showcase-desc {
   font-size: 0.88rem;
-  color: var(--pl-ink-muted);
+  color: rgba(247, 250, 248, 0.72);
   margin-bottom: 14px;
 }
 
@@ -658,7 +732,7 @@ h1, h2, h3, .brand-name {
   gap: 12px;
   flex-wrap: wrap;
   font-size: 0.8rem;
-  color: var(--pl-ink-muted);
+  color: rgba(247, 250, 248, 0.72);
 }
 
 .showcase-features span {
@@ -716,17 +790,18 @@ h1, h2, h3, .brand-name {
 .session-card {
   background: var(--pl-pine-surface);
   border: 1px solid var(--pl-pine-border-subtle);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   padding: 28px 24px;
   display: flex;
   flex-direction: column;
-  transition: transform var(--transition-normal), border-color var(--transition-normal);
+  transition: transform var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal);
   position: relative;
 }
 
 .session-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--pl-pine-border);
+  transform: translateY(-6px);
+  border-color: var(--pl-amber);
+  box-shadow: var(--shadow-md);
 }
 
 .session-card.is-highlight {
@@ -755,7 +830,20 @@ h1, h2, h3, .brand-name {
 }
 
 .session-icon {
-  font-size: 1.8rem;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--pl-amber-glow);
+  color: var(--pl-amber-bright);
+}
+
+.session-icon .icon {
+  width: 22px;
+  height: 22px;
+  stroke-width: 1.8;
 }
 
 .session-tag {
@@ -822,9 +910,18 @@ h1, h2, h3, .brand-name {
 }
 
 .session-highlights li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
   font-size: 0.85rem;
   color: var(--pl-ink-muted);
   margin-bottom: 6px;
+}
+
+.session-highlights li .icon {
+  flex-shrink: 0;
+  margin-top: 3px;
+  color: var(--pl-amber-bright);
 }
 
 /* ==========================================================================
@@ -911,17 +1008,18 @@ h1, h2, h3, .brand-name {
 .menu-item-card {
   background: var(--pl-pine-surface);
   border: 1px solid var(--pl-pine-border-subtle);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   overflow: hidden;
   display: flex;
   flex-direction: column;
   cursor: pointer;
-  transition: transform var(--transition-fast), border-color var(--transition-fast);
+  transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .menu-item-card:hover {
-  transform: translateY(-3px);
-  border-color: var(--pl-pine-border);
+  transform: translateY(-5px);
+  border-color: var(--pl-amber);
+  box-shadow: var(--shadow-md);
 }
 
 .card-media {
@@ -952,6 +1050,22 @@ h1, h2, h3, .brand-name {
 
 .menu-item-card:hover .card-media {
   transform: scale(1.06);
+}
+
+/* Same hover-reveal gradient as .showcase-media -- a soft dark wash lifts
+   in from the bottom rather than the photo just zooming with nothing else
+   happening, the cue the reference glass/rounded cards use. */
+.card-media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(20, 26, 22, 0) 60%, rgba(20, 26, 22, 0.45) 100%);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.menu-item-card:hover .card-media::after {
+  opacity: 1;
 }
 
 @keyframes pl-card-kenburns {
@@ -1020,6 +1134,9 @@ h1, h2, h3, .brand-name {
 }
 
 .all-you-can-eat {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   color: var(--pl-amber-bright);
   font-weight: 700;
 }
@@ -1173,6 +1290,11 @@ h1, h2, h3, .brand-name {
   aspect-ratio: 4 / 3;
   object-fit: cover;
   display: block;
+  transition: transform var(--transition-normal);
+}
+
+.visual-card:hover img {
+  transform: scale(1.04);
 }
 
 .visual-badge {
@@ -1182,6 +1304,9 @@ h1, h2, h3, .brand-name {
 }
 
 .visual-badge strong {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-size: 0.95rem;
   color: var(--pl-amber-bright);
 }
@@ -1208,7 +1333,7 @@ h1, h2, h3, .brand-name {
 .location-card {
   background: var(--pl-pine-surface);
   border: 1px solid var(--pl-pine-border-subtle);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   padding: 28px;
   display: flex;
   flex-direction: column;
@@ -1217,6 +1342,9 @@ h1, h2, h3, .brand-name {
 .loc-header h3 {
   font-size: 1.3rem;
   margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .landmark-text {
@@ -1240,6 +1368,9 @@ h1, h2, h3, .brand-name {
 }
 
 .loc-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-weight: 700;
   color: var(--pl-ink);
   min-width: 130px;
@@ -1263,7 +1394,7 @@ h1, h2, h3, .brand-name {
 }
 
 .location-map-wrap {
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   overflow: hidden;
   border: 1px solid var(--pl-pine-border-subtle);
   min-height: 320px;

@@ -49,9 +49,12 @@ resolved_design:
   layout_archetype: two-column-hero-with-status-card  # unchanged from the original build
   menu_density: large-grid-with-search-and-filters
   media_policy: hero_ambient_background_single_video_plus_card_kenburns  # hero rotator (real still + real
-                                        # clip, both Ken Burns'd, clip playback slowed 0.55x) + the same ambient
-                                        # Ken Burns ported onto every menu/lightbox/showcase photo (pattern:
-                                        # arh-fnb Beelal Coffee's .item-media, index-v2.html)
+                                        # clip, both Ken Burns'd, clip playback slowed 0.55x -> 0.4x 2026-08-26
+                                        # since 0.55x still read as a fast-forward handheld pan, plus the clip's
+                                        # own CSS Ken Burns split onto a smaller-amplitude keyframe so it stops
+                                        # compounding with the slowed footage) + the same ambient Ken Burns
+                                        # ported onto every menu/lightbox/showcase photo (pattern: arh-fnb
+                                        # Beelal Coffee's .item-media, index-v2.html)
   motion_level: gentle_and_slow        # was: gentle -- hold/crossfade/drift durations all lengthened 2026-08-26;
                                         # the first pass was calmer than the original but still paced quickly
   contrast_policy: wcag_aa_minimum
@@ -185,10 +188,17 @@ missing it, the way it got missed the first time -- see below).
   paper-safe gold in light mode specifically for AA text-on-cream
   elsewhere on the page -- exactly the value that goes low-contrast on the
   hero's dark canvas, so this class of bug will keep recurring for any new
-  gold-accented hero element unless it's pinned the same way. Card-based
-  content (`.hero-showcase-card`, `.live-status-card`, `.price-chip`) is
-  unaffected: those are self-contained opaque surfaces where background
-  and text flip together correctly.
+  gold-accented hero element unless it's pinned the same way. `.live-status-card`
+  and `.price-chip` are unaffected: self-contained opaque surfaces where
+  background and text flip together correctly. `.hero-showcase-card` is no
+  longer in that safe category as of the 2026-08-26 card-glass pass below --
+  it moved from an opaque, flipping `var(--pl-pine-card)` panel to frosted
+  glass (translucent fill + `backdrop-filter: blur`) over the same
+  non-flipping photo/video canvas as the hero text, so `.showcase-title`,
+  `.showcase-desc`, `.showcase-price`, and `.showcase-features` are now
+  pinned to fixed light-on-dark values the same way `.hero-title` is. Any
+  future glass treatment applied to a card sitting on the hero canvas needs
+  the same pin, not the flipping ink tokens.
 * **Focus visibility:** any `outline: none` must ship with a replacement
   `:focus-visible` state. Caught live on the same pass: `.qty-stepper input`
   (the pax count in the group-booking calculator -- a real order-path
@@ -210,7 +220,7 @@ missing it, the way it got missed the first time -- see below).
 * **Structure:** Fixed sticky header with dynamic blur (`backdrop-filter: blur(16px)`).
 * **Logo Badge (`.seal-stamp`, restyled 2026-08-26):** a soft circular monogram in the clay accent, showing the Chinese surname logogram `刘` (*Liew*). Was a hard-cornered red chop-stamp box with a glowing red shadow -- the "official Chinese seal" visual cliché; a plain circular mark in the restrained clay tone reads as a boutique badge instead, closer to how a Western indie cafe would present a founder's initial than to government-document iconography. No emoji border -- an earlier draft of this doc described a hot-pot-emoji border that was never actually built, and would itself be another decorative food-emoji cliché if added now.
 * **Wordmark:** `PAK LIEW` in the Fraunces headline serif (§1.2), paired with bilingual descriptor `CHINESE MUSLIM RESTAURANT • 柏刘清真餐厅`.
-* **Actions:** Ambient Day/Night mode button (`data-ambience-toggle`; light/`☀️ Cerah` is the default as of 2026-08-26) + direct Table Reservation button (`.button-primary.button-sm`).
+* **Actions:** Ambient Day/Night mode button (`data-ambience-toggle`; light/"Cerah" is the default as of 2026-08-26, `#icon-sun`/`#icon-moon` from the icon sprite rather than an emoji) + direct Table Reservation button (`.button-primary.button-sm`).
 
 ### 2.2 Ambient Hero Section
 * **Visual Layer (`.hero-rotator`/`.hero-layer`, shipped 2026-08-26, paced
@@ -250,7 +260,8 @@ missing it, the way it got missed the first time -- see below).
 ### 2.5 Menu Controls & Card Grid
 * **Search Input:** Rounded pill search bar with instant client-side filtering.
 * **Category Chip Rail:** Horizontally scrollable chip bar supporting active state highlighting.
-* **Menu Cards:** Aspect-ratio locked media container, category badge, dual language name (Malay + Chinese), dish description, session tag, and `TANPA HAD ✓` badge. Photo motion (2026-08-26, ported from the arh-fnb Beelal Coffee storefront's `.item-media` pattern, `index-v2.html`): every dish photo carries a continuous ambient Ken Burns drift (`pl-card-kenburns`, 16s), not just a hover effect, so the grid reads as quietly alive rather than static tiles; hovering the card adds a `scale(1.06)` lift on top of that (on `.card-media`, the wrapper -- not the animated `img` itself, since animating and hover-transitioning the same property on one element fights). Same pattern applied to the hero showcase card's photo and the item-detail lightbox's photo (§2.7). `prefers-reduced-motion` stops all of it (§1.4's global rule, not scoped per-component).
+* **Menu Cards:** Aspect-ratio locked media container, category badge, dual language name (Malay + Chinese), dish description, session tag, and a `TANPA HAD` badge (`#icon-check` from the icon sprite, not the `✓` glyph inline with it). Photo motion (2026-08-26, ported from the arh-fnb Beelal Coffee storefront's `.item-media` pattern, `index-v2.html`): every dish photo carries a continuous ambient Ken Burns drift (`pl-card-kenburns`, 16s), not just a hover effect, so the grid reads as quietly alive rather than static tiles; hovering the card adds a `scale(1.06)` lift on top of that (on `.card-media`, the wrapper -- not the animated `img` itself, since animating and hover-transitioning the same property on one element fights), plus (added in the same 2026-08-26 card-glass pass as the rest of this section) a soft dark gradient that fades in over the photo on hover so the card visibly "answers back" rather than just zooming. Card corner radius bumped `--radius-md` (14px) -> `--radius-lg` (24px) in the same pass, along with `.session-card`/`.location-card`/`.location-map-wrap`, for the rounder, softer silhouette the redesign was going for. Same media pattern applied to the hero showcase card's photo (now also frosted glass, see §1.4 above) and the item-detail lightbox's photo (§2.7). `prefers-reduced-motion` stops all of it (§1.4's global rule, not scoped per-component).
+* **Icon system (added 2026-08-26):** a single inline `<svg>` sprite of `<symbol>` defs at the top of `index.html`'s `<body>` (`#icon-check`, `#icon-clock`, `#icon-pin`, `#icon-phone`, `#icon-chat`, `#icon-nav`, `#icon-map`, `#icon-search`, `#icon-sun`, `#icon-moon`, `#icon-sunrise`, `#icon-star`, `#icon-calc`), referenced everywhere via `<svg class="icon"><use href="#icon-..."></use></svg>`. Replaces the emoji that were previously scattered through the hero badges/CTAs, session-card icons, category chips, the price calculator, the WhatsApp button, and the location card -- emoji read as a WhatsApp-chat/toy register rather than a restaurant brand, and (being raster-colour glyphs) don't take the surrounding text colour the way `.icon`'s `stroke: currentColor` does. `.session-icon` (breakfast/lunch/dinner) went from a bare emoji glyph at `font-size: 1.8rem` to a proper icon badge: a 44px circle tinted `var(--pl-amber-glow)` with the sprite icon centred inside at 22px. Session-highlight bullets (`✓ ...`) and the visual/quality-guarantee badges became `<svg class="icon">` + text the same way. Category chips and calculator `<option>`s dropped their emoji outright rather than getting an icon -- not every label needs one, and a chip rail of plain text reads calmer than one of mismatched food emoji.
 
 ### 2.6 Group Booking & Pax Calculator Card
 * **Interactive Steppers:** Plus/minus buttons for adults and children count.
