@@ -63,7 +63,7 @@ function renderLiveStatus() {
     chipChild.textContent = 'RM 15.90';
   } else if (timeNum >= 17 && timeNum < 22) {
     // Dinner
-    sessionLabel.textContent = '🟢 BUFET MALAM & LIVE WOK SEDANG DIBUKA';
+    sessionLabel.textContent = '🟢 BUFET MALAM & STESEN LIVE SEDANG DIBUKA';
     sessionHours.textContent = 'Dibuka sehingga 10:00 PM (Char Koay Teow Panas)';
     chipAdult.textContent = 'RM 19.90';
     chipChild.textContent = 'RM 15.90';
@@ -129,7 +129,7 @@ function renderMenuGrid() {
 
 function getSessionBadge(session, categoryId) {
   if (categoryId === 'foodpanda-sets') return '🐼 FoodPanda 4.9⭐';
-  if (session === 'dinner') return '🌙 Malam (Live Wok)';
+  if (session === 'dinner') return '🌙 Malam (Stesen Live)';
   if (session === 'lunch') return '☀️ Tengah Hari';
   if (session === 'breakfast') return '🌅 Sarapan Weekend';
   return '🌟 Semua Sesi Bufet';
@@ -224,7 +224,7 @@ function setupCalculator() {
 
   const prices = {
     lunch: { adult: 19.90, child: 15.90, label: 'Bufet Makan Tengah Hari' },
-    dinner: { adult: 19.90, child: 15.90, label: 'Bufet Malam & Live Wok' },
+    dinner: { adult: 19.90, child: 15.90, label: 'Bufet Malam & Stesen Live' },
     breakfast: { adult: 15.90, child: 12.90, label: 'Bufet Sarapan Pagi' }
   };
 
@@ -289,7 +289,7 @@ function setupAmbienceToggle() {
 
   btn.addEventListener('click', () => {
     const html = document.documentElement;
-    const current = html.getAttribute('data-mode') || 'dark';
+    const current = html.getAttribute('data-mode') || 'light';
     const next = current === 'dark' ? 'light' : 'dark';
     html.setAttribute('data-mode', next);
     btn.textContent = next === 'dark' ? '🌙 Gelap' : '☀️ Cerah';
@@ -310,7 +310,13 @@ function initHeroRotator() {
   if (!layers.length) return;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  const STILL_HOLD_MS = 6000;
+  // Lengthened from 6000ms and the clip below slowed to 0.55x -- the
+  // rotator read as pacy rather than the calm, unhurried indie pace this
+  // pass is going for (2026-08-26).
+  const STILL_HOLD_MS = 9000;
+  const CLIP_PLAYBACK_RATE = 0.55;
+  layers.forEach((layer) => { if (layer.tagName === 'VIDEO') layer.playbackRate = CLIP_PLAYBACK_RATE; });
+
   let activeIndex = Math.max(0, layers.findIndex((el) => el.classList.contains('is-active')));
   let holdTimer = null;
 
@@ -326,6 +332,7 @@ function initHeroRotator() {
     if (previous.tagName === 'VIDEO') { previous.pause(); previous.currentTime = 0; }
     if (next.tagName === 'VIDEO') {
       next.currentTime = 0;
+      next.playbackRate = CLIP_PLAYBACK_RATE; // some browsers reset this on currentTime=0 -- reassert it
       next.play().catch(advance); // couldn't play (e.g. still decoding) -- skip on rather than stall the rotation
     } else {
       holdTimer = setTimeout(advance, STILL_HOLD_MS);

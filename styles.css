@@ -4,31 +4,44 @@
    Cultural Persona: Nanyang Malaysian Chinese-Muslim Culinary Heritage
    ========================================================================== */
 
+/* Palette redesign, 2026-08-26: moved away from the dark forest-green +
+   gold + alarm-red "Chinese restaurant" formula (deep jade night canvas,
+   red chop-stamp emblem, fire/wok CTA language) toward an indie, pastel,
+   Nordic-editorial register -- same two anchor hues (sage jade + gold),
+   softened, on a warm paper canvas by default. Dark mode is now the
+   secondary, toggled state (see html[data-mode="dark"] below), retuned to
+   a soft charcoal-sage rather than the previous near-black. Contrast
+   re-verified against WCAG AA for every text/surface pairing below (see
+   PR description / commit message for the numbers). */
 :root {
-  /* Nanyang Pine Jade & Culinary Flame Palette */
-  --pl-pine-deep: #081C15;
-  --pl-pine: #0E2E23;
-  --pl-pine-surface: #143A2D;
-  --pl-pine-card: #184435;
-  --pl-pine-border: rgba(212, 155, 42, 0.22);
-  --pl-pine-border-subtle: rgba(255, 255, 255, 0.08);
+  /* Warm paper canvas & sage-tinted surfaces (default / light) */
+  --pl-pine-deep: #FAF5EC;
+  --pl-pine: #F1E9DA;
+  --pl-pine-surface: #FFFFFF;
+  --pl-pine-card: #F6F0E4;
+  --pl-pine-border: rgba(62, 91, 76, 0.20);
+  --pl-pine-border-subtle: rgba(46, 42, 34, 0.08);
 
-  /* Imperial Warm Gold / Saffron Accents (restrained -- single accent hue,
-     not the candy-bright amber the storefront drifted to; see ui.md 1.1) */
-  --pl-amber: #D49B2A;
-  --pl-amber-bright: #F0B849;
-  --pl-amber-hover: #B9821F;
-  --pl-terracotta: #C2410C;
-  --pl-amber-glow: rgba(212, 155, 42, 0.16);
+  /* Pastel oat-gold accent -- one accent hue, restrained; --pl-amber-bright
+     is the TEXT-safe (AA on paper) value, --pl-amber-hover is a fill-only
+     hover state (not used for text, so it doesn't need the same headroom).
+     Both get re-brightened in dark mode below, where the pairing flips. */
+  --pl-amber: #C9A15C;
+  --pl-amber-bright: #7D5D28;
+  --pl-amber-hover: #B88A45;
+  --pl-terracotta: #BE8468;
+  --pl-amber-glow: rgba(201, 161, 92, 0.20);
 
-  /* Traditional Seal Stamp (印章) */
-  --pl-seal: #991B1B;
-  --pl-seal-border: #DC2626;
+  /* Emblem fill (see .seal-stamp) -- dusty clay, not the previous alarm-red
+     chop-stamp colour; only ever used as a background/border, never text,
+     so it doesn't need a dark-mode override. */
+  --pl-seal: #A8674C;
+  --pl-seal-border: #8F5038;
 
-  /* Typography Inks */
-  --pl-ink: #F7FAF8;
-  --pl-ink-muted: #A3B8B0;
-  --pl-ink-subtle: #6E887E;
+  /* Typography inks */
+  --pl-ink: #2E2A22;
+  --pl-ink-muted: #6B6355;
+  --pl-ink-subtle: #8A8272;
 
   /* Geometry & Elevation */
   --radius-xs: 4px;
@@ -36,30 +49,36 @@
   --radius-md: 14px;
   --radius-lg: 24px;
   --radius-full: 9999px;
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
-  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
-  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.45);
+  --shadow-sm: 0 2px 8px rgba(46, 42, 34, 0.07);
+  --shadow-md: 0 8px 24px rgba(46, 42, 34, 0.09);
+  --shadow-lg: 0 16px 40px rgba(46, 42, 34, 0.13);
 
   /* Transitions */
   --transition-fast: 0.18s ease;
   --transition-normal: 0.28s ease;
 }
 
-html[data-mode="light"] {
-  --pl-pine-deep: #F6F4EF;
-  --pl-pine: #ECE8DE;
-  --pl-pine-surface: #FFFFFF;
-  --pl-pine-card: #FFFFFF;
-  --pl-pine-border: rgba(14, 46, 35, 0.14);
-  --pl-pine-border-subtle: rgba(14, 46, 35, 0.06);
+html[data-mode="dark"] {
+  --pl-pine-deep: #232D28;
+  --pl-pine: #2B3530;
+  --pl-pine-surface: #333F38;
+  --pl-pine-card: #3A473F;
+  --pl-pine-border: rgba(243, 239, 230, 0.14);
+  --pl-pine-border-subtle: rgba(255, 255, 255, 0.07);
 
-  --pl-ink: #10261E;
-  --pl-ink-muted: #486256;
-  --pl-ink-subtle: #799488;
+  /* --pl-amber-bright must re-brighten here: it's a deep, AA-on-paper gold
+     in light mode, which would read as dark-on-dark once the canvas
+     flips -- same class of bug the hero text had before (see ui.md 1.4). */
+  --pl-amber-bright: #F0B849;
+  --pl-amber-hover: #DFAC3D;
 
-  --shadow-sm: 0 2px 8px rgba(14, 46, 35, 0.06);
-  --shadow-md: 0 8px 24px rgba(14, 46, 35, 0.08);
-  --shadow-lg: 0 16px 36px rgba(14, 46, 35, 0.12);
+  --pl-ink: #F3EFE6;
+  --pl-ink-muted: #B8C2BB;
+  --pl-ink-subtle: #93A399;
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.22);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.30);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.40);
 }
 
 /* Base Resets */
@@ -70,7 +89,7 @@ html[data-mode="light"] {
 }
 
 body {
-  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background-color: var(--pl-pine-deep);
   color: var(--pl-ink);
   line-height: 1.6;
@@ -79,19 +98,22 @@ body {
 }
 
 h4 {
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--pl-ink);
   line-height: 1.25;
 }
 
-/* Display serif for hero title, section headers & brand wordmark -- the
-   restrained "heritage meets high-end gastronomy" voice ui.md already
-   specified (1.2), which the sans-only implementation had drifted from. */
+/* Display serif for hero title, section headers & brand wordmark. Fraunces
+   replaces Cinzel (2026-08-26): Cinzel's Roman/imperial letterforms read as
+   a generic "premium fine-dining" signifier borrowed wholesale from
+   Woodfire's own register; Fraunces is a softer, warmer editorial serif --
+   the indie/Nordic register this pass is going for -- and gives Pak Liew
+   its own typographic identity instead of a reskin of Woodfire's. */
 h1, h2, h3, .brand-name {
-  font-family: 'Cinzel', 'Noto Serif SC', serif;
-  font-weight: 700;
+  font-family: 'Fraunces', 'Noto Serif SC', serif;
+  font-weight: 600;
   letter-spacing: -0.01em;
   color: var(--pl-ink);
   line-height: 1.25;
@@ -159,19 +181,23 @@ h1, h2, h3, .brand-name {
   color: inherit;
 }
 
-/* Seal Stamp (印章) Emblem */
+/* Surname monogram (刘). Was a hard-cornered red chop-stamp box with a
+   glowing red shadow -- the "official Chinese seal" visual cliché; a soft
+   circular monogram in the same restrained clay tone reads as a boutique
+   mark instead, closer to how a Western indie cafe would badge a
+   founder's initial than to government-document iconography. */
 .seal-stamp {
   width: 44px;
   height: 44px;
   background: var(--pl-seal);
-  border: 2px solid var(--pl-seal-border);
-  border-radius: 8px;
+  border: 1px solid var(--pl-seal-border);
+  border-radius: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #FFF;
-  box-shadow: 0 2px 10px rgba(153, 27, 27, 0.4);
+  color: #FAF5EC;
+  box-shadow: var(--shadow-sm);
   flex-shrink: 0;
 }
 
@@ -250,7 +276,7 @@ h1, h2, h3, .brand-name {
 }
 
 .button-primary:hover {
-  background: var(--pl-amber-bright);
+  background: var(--pl-amber-hover);
   transform: translateY(-1px);
 }
 
@@ -371,28 +397,37 @@ h1, h2, h3, .brand-name {
   object-position: 50% 50%;
   opacity: 0;
   filter: saturate(0.85) contrast(1.05) brightness(0.92);
-  transition: opacity 1.6s ease;
+  transition: opacity 2.6s ease;
 }
 
 .hero-layer.is-active {
   opacity: 1;
 }
 
+/* Ken Burns on both layers, not just the still: the clip's own handheld pan
+   already moves (slowed further via playbackRate in app.js), so it gets the
+   gentler/slower of the two -- a second, faster drift on top would read as
+   fidgety rather than calm. 2026-08-26: both durations lengthened and the
+   crossfade above slowed from 1.6s -- the rotator was pacy, not indie-calm. */
 .hero-layer[data-hero-still] {
-  animation: pl-hero-drift 18s ease-in-out infinite alternate;
+  animation: pl-hero-drift 26s ease-in-out infinite alternate;
+}
+
+.hero-layer:not([data-hero-still]) {
+  animation: pl-hero-drift 34s ease-in-out infinite alternate;
 }
 
 @keyframes pl-hero-drift {
-  0% { transform: scale(1.05) translate(0, 0); }
-  50% { transform: scale(1.11) translate(-1.4%, -1%); }
-  100% { transform: scale(1.05) translate(0, 0); }
+  0% { transform: scale(1.04) translate(0, 0); }
+  50% { transform: scale(1.09) translate(-1.2%, -0.8%); }
+  100% { transform: scale(1.04) translate(0, 0); }
 }
 
 .hero-scrim {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: linear-gradient(180deg, rgba(8, 28, 21, 0.72) 0%, rgba(8, 28, 21, 0.86) 100%);
+  background: linear-gradient(180deg, rgba(35, 45, 40, 0.72) 0%, rgba(35, 45, 40, 0.86) 100%);
 }
 
 .hero-layout {
@@ -422,9 +457,13 @@ h1, h2, h3, .brand-name {
   letter-spacing: 0.02em;
 }
 
+/* Pinned, not var(--pl-amber-bright): only used in the hero, which sits on
+   the non-flipping dark video canvas (see .hero-title's note above) --
+   the light-mode value of that token is a deep, paper-safe gold that would
+   go low-contrast against the dark hero backdrop. */
 .pill-amber {
   background: var(--pl-amber-glow);
-  color: var(--pl-amber-bright);
+  color: #F0B849;
   border: 1px solid var(--pl-pine-border);
 }
 
@@ -453,8 +492,10 @@ h1, h2, h3, .brand-name {
   color: #F7FAF8;
 }
 
+/* Pinned for the same reason as .pill-amber above: only used in the hero,
+   which stays on the non-flipping dark canvas. */
 .amber-gradient {
-  color: var(--pl-amber-bright);
+  color: #F0B849;
 }
 
 .hero-subtitle {
@@ -567,13 +608,14 @@ h1, h2, h3, .brand-name {
   height: 100%;
   object-fit: cover;
   display: block;
+  animation: pl-card-kenburns 16s ease-in-out infinite;
 }
 
 .showcase-overlay-tag {
   position: absolute;
   top: 14px;
   left: 14px;
-  background: rgba(8, 28, 21, 0.85);
+  background: rgba(35, 45, 40, 0.85);
   backdrop-filter: blur(8px);
   border: 1px solid var(--pl-pine-border);
   padding: 6px 14px;
@@ -885,20 +927,44 @@ h1, h2, h3, .brand-name {
 .card-media {
   position: relative;
   aspect-ratio: 16 / 10;
+  overflow: hidden;
+  transition: transform 0.28s ease;
 }
 
+/* Continuous ambient Ken Burns + a hover lift on top -- ported from the
+   arh-fnb Beelal Coffee storefront's .item-media pattern (index-v2.html):
+   every dish photo gets a slow always-on drift, not just a hover effect,
+   so the menu grid reads as quietly alive rather than static tiles. The
+   hover scale is a second transform on the wrapper (not the img itself),
+   same split Beelal uses -- animating and hover-transitioning the same
+   property on one element fights (the animation's per-frame value wins
+   over a plain :hover transform), so the drift stays on the img and the
+   lift goes on .card-media around it. Clipped by .menu-item-card's own
+   overflow:hidden. */
 .card-media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+  animation: pl-card-kenburns 16s ease-in-out infinite;
+  will-change: transform;
+}
+
+.menu-item-card:hover .card-media {
+  transform: scale(1.06);
+}
+
+@keyframes pl-card-kenburns {
+  0%   { transform: scale(1.06) translate(0, 0); }
+  50%  { transform: scale(1.12) translate(-1.5%, -1%); }
+  100% { transform: scale(1.06) translate(0, 0); }
 }
 
 .card-badge-top {
   position: absolute;
   top: 10px;
   left: 10px;
-  background: rgba(8, 28, 21, 0.85);
+  background: rgba(35, 45, 40, 0.85);
   backdrop-filter: blur(6px);
   border: 1px solid var(--pl-pine-border);
   color: var(--pl-amber-bright);
@@ -1258,11 +1324,18 @@ h1, h2, h3, .brand-name {
   z-index: 10;
 }
 
+.modal-media {
+  overflow: hidden;
+}
+
+/* Same ambient Ken Burns as the menu grid (Beelal's pattern also runs it in
+   the photo lightbox, not just the grid thumbnails). */
 .modal-media img {
   width: 100%;
   aspect-ratio: 16 / 10;
   object-fit: cover;
   display: block;
+  animation: pl-card-kenburns 16s ease-in-out infinite;
 }
 
 .modal-info {

@@ -3,7 +3,7 @@
 **Project:** Pak Liew Chinese Muslim Restaurant PWA  
 **Tier:** Premium Storefront (Decoupled Fork)  
 **Target Device Profile:** Mobile-First Responsive (PWA) with Tablet/Desktop adaptations  
-**Design Philosophy:** Traditional Chinese-Muslim Heritage meets Modern High-End Gastronomy  
+**Design Philosophy:** Nanyang Chinese-Muslim Heritage, Told Subtly -- Indie, Pastel, Editorial  
 
 ---
 
@@ -13,9 +13,19 @@ This document originally went straight to color tokens under a single
 philosophy tag line, without the skill's `situation_scan` step -- the skill's
 first rule is "do not start from colors." That's how the implementation
 drifted into a candy-bright CTA row dressed up as "high-end gastronomy" (see
-`CHANGELOG.md` / PR #2 for the fix): the philosophy was asserted, not
-derived from what Pak Liew actually is. Recording the classification here so
-future changes have it to check against, instead of re-asserting a vibe.
+`CHANGELOG.md` / the palette-de-childify pass for that fix): the philosophy
+was asserted, not derived from what Pak Liew actually is.
+
+That first fix (below, struck through) was itself still leaning on visual
+shorthand for "Chinese restaurant" -- a dark forest-green night canvas, a red
+chop-stamp emblem, fire/wok CTA language -- borrowed from Woodfire's own
+premium-lounge register rather than derived fresh. Superseded 2026-08-26:
+same two anchor hues (sage jade + gold), moved to pastel and paper-light by
+default, cliché iconography (the red seal, fire emoji, "berapi"/"wok hei"
+language) replaced with subtler cues, motion slowed down and Ken-Burns'd
+throughout. Recording each classification as it's revised, rather than
+overwriting silently, so the next pass has the actual history to check
+against instead of a single assertion.
 
 ```yaml
 situation_scan:
@@ -25,17 +35,25 @@ situation_scan:
   order_path: whatsapp                # group booking dispatch + walk-in; FoodPanda for delivery
   media_quality: strong_photos_and_videos  # real storefront/interior photos + a real dining-room clip (2026-08-26)
   customer_group: families            # walk-in families/groups, Chinese-Muslim heritage customers
-  desired_vibe: "calmer heritage-premium -- restrained, not neon/candy"
-  failure_risk: "restraint read as generic SaaS instead of premium if overcorrected"
+  desired_vibe: "indie, pastel, Nordic-editorial -- origin shown subtly, not through cliché iconography"
+  failure_risk: "pastel read as washed-out/low-energy if contrast or accent weight is undercooked"
 
 resolved_design:
-  customer_vibe: heritage_premium_editorial
-  palette_id: nanyang-jade-ember       # own jade/gold/seal family, muted -- not Woodfire's palette copied
-  typography_id: cinzel-headline-jakarta-body  # Cinzel serif for h1/h2/h3 + wordmark, Plus Jakarta Sans for body/UI
+  customer_vibe: indie_nordic_pastel_editorial   # was: heritage_premium_editorial (struck 2026-08-26)
+  palette_id: nanyang-pastel-sage       # was: nanyang-jade-ember -- same two anchor hues (sage jade + gold),
+                                        # softened to pastel, paper-light by default; alarm-red seal -> dusty clay
+  typography_id: fraunces-headline-dmsans-body  # was: cinzel-headline-jakarta-body -- Cinzel read as a
+                                        # Roman/imperial "premium fine-dining" signifier borrowed from Woodfire's
+                                        # own register; Fraunces is warmer/editorial and gives Pak Liew its own
+                                        # identity. DM Sans replaces Plus Jakarta Sans for the same reason.
   layout_archetype: two-column-hero-with-status-card  # unchanged from the original build
   menu_density: large-grid-with-search-and-filters
-  media_policy: hero_ambient_background_single_video  # one background rotator: real still + real clip, not per-card autoplay
-  motion_level: gentle                # Ken Burns drift on the still, crossfade between layers, no fast/attention-grabbing motion
+  media_policy: hero_ambient_background_single_video_plus_card_kenburns  # hero rotator (real still + real
+                                        # clip, both Ken Burns'd, clip playback slowed 0.55x) + the same ambient
+                                        # Ken Burns ported onto every menu/lightbox/showcase photo (pattern:
+                                        # arh-fnb Beelal Coffee's .item-media, index-v2.html)
+  motion_level: gentle_and_slow        # was: gentle -- hold/crossfade/drift durations all lengthened 2026-08-26;
+                                        # the first pass was calmer than the original but still paced quickly
   contrast_policy: wcag_aa_minimum
   validation_required: true
 ```
@@ -46,57 +64,70 @@ resolved_design:
 
 ### 1.1 Color Tokens
 
-The visual identity is anchored on the natural palette of Chinese-Muslim culinary culture: deep forest jade/emerald, imperial warm gold, and vibrant Nyonya red accents.
+Two anchor hues carried through every revision so far: a sage/jade green and
+a warm gold, now softened to pastel on a warm paper canvas by default (light
+is the default ambience as of 2026-08-26; dark is the secondary, toggled
+state, retuned to a soft charcoal-sage rather than near-black). The token
+names below are the actual `:root`/`html[data-mode="dark"]` names in
+`styles.css` -- this section previously used a different naming scheme
+(`--pl-emerald*`/`--pl-gold*`/`--pl-red`) that never matched the shipped CSS
+(`--pl-pine*`/`--pl-amber*`/`--pl-seal`); reconciled here rather than left to
+drift further.
 
 ```css
 :root {
-  /* Chinese-Muslim Emerald Heritage (Backgrounds, Cards & Structural Surfaces) */
-  --pl-emerald: #123B2A;          /* Canonical Brand Green */
-  --pl-emerald-deep: #0A2218;     /* Background canvas (Dark mode) */
-  --pl-emerald-surface: #102E21;  /* Modals & Elevated surfaces */
-  --pl-emerald-card: #15392B;     /* Card background */
+  /* Warm paper canvas & sage-tinted surfaces (default / light) */
+  --pl-pine-deep: #FAF5EC;         /* Page canvas -- warm ivory, not stark white */
+  --pl-pine: #F1E9DA;              /* Section-alt background */
+  --pl-pine-surface: #FFFFFF;      /* Header / elevated surfaces */
+  --pl-pine-card: #F6F0E4;         /* Card background */
+  --pl-pine-border: rgba(62, 91, 76, 0.20);        /* Sage-tinted divider */
+  --pl-pine-border-subtle: rgba(46, 42, 34, 0.08); /* Neutral subtle border */
 
-  /* Imperial Warm Gold / Saffron (Accents, CTAs, Highlights & Wordmarks) */
-  --pl-gold: #D49B2A;             /* Primary Gold */
-  --pl-gold-bright: #F0B849;      /* Hover & Focus Gold */
-  --pl-gold-hover: #DFAC3D;       /* Interactive active states */
-  --pl-gold-foil: #E5A93C;        /* Gradient midpoint */
+  /* Pastel oat-gold accent -- one accent hue */
+  --pl-amber: #C9A15C;             /* Fill (CTAs, chip backgrounds) */
+  --pl-amber-bright: #7D5D28;      /* TEXT use -- AA-safe on the paper canvas (~5.5:1) */
+  --pl-amber-hover: #B88A45;       /* Fill-only hover state (not used for text) */
+  --pl-amber-glow: rgba(201, 161, 92, 0.20);
 
-  /* Culinary Accent (Chef Picks & Live Wok Badges) */
-  --pl-red: #C2392A;              /* Chili / Nyonya Accent */
-  --pl-green-live: #10B981;       /* Live open status pulse -- a small (12px) functional
-                                      status dot, not a second accent colour; deliberately
-                                      a notch calmer than a pure neon green (was #00E676
-                                      in an earlier draft of this doc) to match the classy
-                                      rule's "controlled accents" -- see §1.4. */
+  /* Emblem fill (see §2.1's monogram) -- dusty clay, background/border only, never text */
+  --pl-seal: #A8674C;
+  --pl-seal-border: #8F5038;
 
-  /* Typography & Ink Tokens */
-  --pl-ink: #FAF7F2;              /* Primary text (Warm porcelain white) */
-  --pl-ink-muted: #B8C7C0;        /* Secondary supporting text */
-  
-  /* Borders & Transparencies */
-  --pl-border: rgba(212, 155, 42, 0.22);       /* Subtle gold divider */
-  --pl-border-light: rgba(255, 255, 255, 0.1);  /* Card container border */
-  --pl-shadow: 0 12px 32px rgba(0, 0, 0, 0.45); /* Elevation depth */
+  /* Typography inks */
+  --pl-ink: #2E2A22;               /* Primary text -- warm near-black, not pure black */
+  --pl-ink-muted: #6B6355;         /* Secondary text -- warm taupe */
 
   /* Geometry Tokens */
-  --radius-sm: 6px;               /* Buttons & Badges */
-  --radius-md: 12px;              /* Item cards & Inputs */
-  --radius-lg: 20px;              /* Hero containers & Modals */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 24px;
 }
 
-/* Light / Day Ambience Mode Override */
-html[data-mode="light"] {
-  --pl-emerald-deep: #F7F5F0;     /* Cream canvas */
-  --pl-emerald-surface: #FFFFFF;  /* Crisp white surface */
-  --pl-emerald-card: #FFFFFF;     /* White card container */
-  --pl-ink: #14241C;              /* Deep dark green ink */
-  --pl-ink-muted: #536B60;        /* Mid-tone slate ink */
-  --pl-border: rgba(18, 59, 42, 0.15);
-  --pl-border-light: rgba(18, 59, 42, 0.08);
-  --pl-shadow: 0 8px 24px rgba(18, 59, 42, 0.08);
+/* Dark ambience (secondary, toggled) -- soft charcoal-sage, not near-black */
+html[data-mode="dark"] {
+  --pl-pine-deep: #232D28;
+  --pl-pine: #2B3530;
+  --pl-pine-surface: #333F38;
+  --pl-pine-card: #3A473F;
+  --pl-pine-border: rgba(243, 239, 230, 0.14);
+  --pl-pine-border-subtle: rgba(255, 255, 255, 0.07);
+
+  /* Must re-brighten here: --pl-amber-bright is a deep, paper-safe gold in
+     light mode, which would go dark-on-dark once the canvas flips -- see
+     §1.4's contrast note. */
+  --pl-amber-bright: #F0B849;
+  --pl-amber-hover: #DFAC3D;
+
+  --pl-ink: #F3EFE6;
+  --pl-ink-muted: #B8C2BB;
 }
 ```
+
+Elements that sit directly on the hero's photo/video backdrop (which does
+**not** flip with ambience -- see §2.2) are pinned to fixed hex values
+instead of these tokens, for the same reason the dark-mode override above
+exists: see §1.4.
 
 ---
 
@@ -104,10 +135,18 @@ html[data-mode="light"] {
 
 | Role | Font Family | Weight | Scale / Size | Line Height | Usage |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Headline Display** | `Cinzel`, serif | 700, 800 | `clamp(2.4rem, 5vw, 4.2rem)` | `1.15` | Hero title, section headers, brand wordmark |
-| **Body & UI Text** | `Plus Jakarta Sans`, sans-serif | 400, 500, 600, 700 | `0.85rem – 1.05rem` | `1.6` | Paragraphs, descriptions, stepper inputs, buttons |
+| **Headline Display** | `Fraunces`, serif | 500, 600, 700 | `clamp(2.4rem, 5vw, 4.2rem)` | `1.15` | Hero title, section headers, brand wordmark |
+| **Body & UI Text** | `DM Sans`, sans-serif | 400, 500, 600, 700, 800 | `0.85rem – 1.05rem` | `1.6` | Paragraphs, descriptions, stepper inputs, buttons |
 | **Chinese Logograms** | `Noto Serif SC`, serif | 600, 700 | `0.76rem – 1.4rem` | `1.0` | Chinese menu subtitles (`炒粿条`, `麦片虾`, `点心`) |
-| **Eyebrows & Badges** | `Plus Jakarta Sans` | 800 | `0.68rem – 0.76rem` | `1.0` | Uppercase section indicators, pricing chips |
+| **Eyebrows & Badges** | `DM Sans` | 800 | `0.68rem – 0.76rem` | `1.0` | Uppercase section indicators, pricing chips |
+
+Fraunces replaces Cinzel (2026-08-26): Cinzel's Roman/imperial letterforms
+read as a generic "premium fine-dining" signifier, borrowed wholesale from
+Woodfire Premium's own register rather than derived for Pak Liew. Fraunces
+is a softer, warmer editorial serif -- the indie/Nordic register this pass
+is going for -- and gives Pak Liew its own typographic identity instead of
+a reskin of Woodfire's. DM Sans replaces Plus Jakarta Sans for the same
+reason (and matches the arh-fnb Beelal Coffee storefront's body font).
 
 ---
 
@@ -133,14 +172,23 @@ missing it, the way it got missed the first time -- see below).
   dark ambience mode, so anything sitting on a surface that does **not**
   flip with them (the hero's photo/video backdrop, see §2.2) needs a
   pinned colour instead, or the pairing breaks in one of the two modes.
-  Caught live on 2026-08-26: the hero headline, subtitle, the "100% Halal"
-  pill and the Waze/FoodPanda hero buttons all went dark-on-dark in light
-  ambience mode once the hero background stopped flipping -- fixed by
-  pinning those specific elements to their dark-mode colour (`styles.css`,
-  `.hero-title`/`.hero-subtitle`/`.pill-green`/`.hero-cta-group .button-waze`/
-  `.hero-cta-group .button-foodpanda`). Card-based content (`.hero-showcase-card`,
-  `.live-status-card`, `.price-chip`) is unaffected: those are self-contained
-  opaque surfaces where background and text flip together correctly.
+  Caught live on 2026-08-26 (twice, across two passes the same day): the
+  hero headline, subtitle, both hero badge pills (`CITA RASA...` and
+  `100% Halal`), the amber accent line in the headline, and the Waze/
+  FoodPanda hero buttons all went dark-on-dark in one ambience mode or the
+  other once the hero background was pinned to the non-flipping video
+  canvas -- fixed by pinning those specific elements to fixed hex values
+  instead of the ambience-flipping tokens (`styles.css`: `.hero-title`,
+  `.hero-subtitle`, `.pill-amber`, `.pill-green`, `.amber-gradient`,
+  `.hero-cta-group .button-waze`, `.hero-cta-group .button-foodpanda`).
+  The second pass's palette redesign made `--pl-amber-bright` a *deep*,
+  paper-safe gold in light mode specifically for AA text-on-cream
+  elsewhere on the page -- exactly the value that goes low-contrast on the
+  hero's dark canvas, so this class of bug will keep recurring for any new
+  gold-accented hero element unless it's pinned the same way. Card-based
+  content (`.hero-showcase-card`, `.live-status-card`, `.price-chip`) is
+  unaffected: those are self-contained opaque surfaces where background
+  and text flip together correctly.
 * **Focus visibility:** any `outline: none` must ship with a replacement
   `:focus-visible` state. Caught live on the same pass: `.qty-stepper input`
   (the pax count in the group-booking calculator -- a real order-path
@@ -160,27 +208,35 @@ missing it, the way it got missed the first time -- see below).
 
 ### 2.1 Header & Brand Wordmark
 * **Structure:** Fixed sticky header with dynamic blur (`backdrop-filter: blur(16px)`).
-* **Logo Badge:** Circular gradient medallion (`#D49B2A` to `#8E6010`) displaying the Chinese surname logogram `刘` (*Liew*) bordered with a hot pot emoji `🍲`.
-* **Wordmark:** Primary serif `PAK LIEW` with gold gradient, paired with bilingual descriptor `CHINESE MUSLIM RESTAURANT • 柏刘清真餐厅`.
-* **Actions:** Ambient Day/Night mode button (`data-ambience-toggle`) + direct Table Reservation button (`.button-gold-sm`).
+* **Logo Badge (`.seal-stamp`, restyled 2026-08-26):** a soft circular monogram in the clay accent, showing the Chinese surname logogram `刘` (*Liew*). Was a hard-cornered red chop-stamp box with a glowing red shadow -- the "official Chinese seal" visual cliché; a plain circular mark in the restrained clay tone reads as a boutique badge instead, closer to how a Western indie cafe would present a founder's initial than to government-document iconography. No emoji border -- an earlier draft of this doc described a hot-pot-emoji border that was never actually built, and would itself be another decorative food-emoji cliché if added now.
+* **Wordmark:** `PAK LIEW` in the Fraunces headline serif (§1.2), paired with bilingual descriptor `CHINESE MUSLIM RESTAURANT • 柏刘清真餐厅`.
+* **Actions:** Ambient Day/Night mode button (`data-ambience-toggle`; light/`☀️ Cerah` is the default as of 2026-08-26) + direct Table Reservation button (`.button-primary.button-sm`).
 
 ### 2.2 Ambient Hero Section
-* **Visual Layer (shipped 2026-08-26, `.hero-rotator`/`.hero-layer`):** crossfades
-  a real still of the storefront signage (Ken Burns drift, `data-hero-still`)
+* **Visual Layer (`.hero-rotator`/`.hero-layer`, shipped 2026-08-26, paced
+  slower 2026-08-26):** crossfades a real still of the storefront signage
   with a real clip of the dining room and buffet counter -- same rotator
-  mechanism as Woodfire Premium's hero (`arh-fnb-tier-showroom/premium`):
-  a video's own `ended` event drives the advance, a still holds 6s, and
-  `prefers-reduced-motion` stops the rotator from starting at all (§1.4).
-  `aria-hidden` + empty `alt`: decorative only, the hero text below carries
-  the real content. Media policy: this is the one sanctioned ambient
-  background loop for the whole page -- menu/item cards stay grid-autoplay
-  forbidden per the skill's floor.
+  mechanism as Woodfire Premium's hero (`arh-fnb-tier-showroom/premium`): a
+  video's own `ended` event drives the advance, and `prefers-reduced-motion`
+  stops the rotator from starting at all (§1.4). Both layers now carry the
+  Ken Burns drift (previously only the still did) at slow, staggered
+  durations (26s / 34s), the still holds 9s (was 6s -- read as pacy), the
+  crossfade itself is slower (2.6s, was 1.6s), and the clip's own playback
+  is slowed to 0.55x in `app.js` -- the handheld pan itself was the "too
+  fast" complaint, not just the rotator's pacing. `aria-hidden` + empty
+  `alt`: decorative only, the hero text below carries the real content.
+  Media policy: this is the one sanctioned ambient background loop for the
+  whole page -- menu/item cards get the same Ken Burns treatment (§2.5) but
+  never autoplaying video, which stays grid-autoplay forbidden per the
+  skill's floor.
 * **Overlay:** a flat, fairly dark scrim (not a directional one -- this
   hero's content isn't bottom-anchored the way Woodfire's is) that
   deliberately does not flip with the light/dark ambience toggle, same as
-  Woodfire's: a photo/video backdrop doesn't have a "light mode." See §1.4
-  for what that means for the text sitting on top of it.
-* **Hero Content:** Dual badges (`CITA RASA CINA MUSLIM NANYANG` & `100% HALAL & BERSIH`), serif headline (Cinzel, §1.2) with a gold second line, and a gold primary CTA (view buffet sessions) alongside quiet outlined secondary actions (Waze, FoodPanda) -- one accent colour carrying the row instead of each action in its own brand colour.
+  Woodfire's: a photo/video backdrop doesn't have a "light mode." Retinted
+  2026-08-26 from a cold near-black-green to a warmer charcoal, matching
+  the new dark-ambience tokens (§1.1). See §1.4 for what the non-flipping
+  canvas means for the text sitting on top of it.
+* **Hero Content:** Dual badges (`CITA RASA CINA MUSLIM NANYANG` & `100% HALAL & BERSIH`), serif headline (Fraunces, §1.2) with a gold second line, and a gold primary CTA (view buffet sessions) alongside quiet outlined secondary actions (Waze, FoodPanda) -- one accent colour carrying the row instead of each action in its own brand colour. Copy softened 2026-08-26: "Sajian Kuali Panas Berapi" ("Fire-Hot Wok Dish") and the "(Wok Hei)" fire-mythology framing replaced with "Bufet Segar, Setiap Sesi" / "Warisan Nanyang Cina Muslim" -- the live-cooking value proposition ("cooked fresh in front of you") is kept, the fire/wok imagery specifically is not; same change applied to the showcase card, session cards, category filter chip, and `data/menu.json`'s live-stalls category and Char Koay Teow item.
 
 ### 2.3 Live Session Floating Card (`.live-status-card`)
 * **Real-time Status Pill:** Glowing green pulse dot (`animation: pulse-glow 2s infinite`) paired with active session label (Breakfast / Lunch / Dinner / Closed Friday).
@@ -194,7 +250,7 @@ missing it, the way it got missed the first time -- see below).
 ### 2.5 Menu Controls & Card Grid
 * **Search Input:** Rounded pill search bar with instant client-side filtering.
 * **Category Chip Rail:** Horizontally scrollable chip bar supporting active state highlighting.
-* **Menu Cards:** Aspect-ratio locked media container with zoom on hover (`transform: scale(1.06)`), category badge, dual language name (Malay + Chinese), dish description, session tag, and `ALL YOU CAN EAT ✓` badge.
+* **Menu Cards:** Aspect-ratio locked media container, category badge, dual language name (Malay + Chinese), dish description, session tag, and `TANPA HAD ✓` badge. Photo motion (2026-08-26, ported from the arh-fnb Beelal Coffee storefront's `.item-media` pattern, `index-v2.html`): every dish photo carries a continuous ambient Ken Burns drift (`pl-card-kenburns`, 16s), not just a hover effect, so the grid reads as quietly alive rather than static tiles; hovering the card adds a `scale(1.06)` lift on top of that (on `.card-media`, the wrapper -- not the animated `img` itself, since animating and hover-transitioning the same property on one element fights). Same pattern applied to the hero showcase card's photo and the item-detail lightbox's photo (§2.7). `prefers-reduced-motion` stops all of it (§1.4's global rule, not scoped per-component).
 
 ### 2.6 Group Booking & Pax Calculator Card
 * **Interactive Steppers:** Plus/minus buttons for adults and children count.

@@ -1,14 +1,22 @@
 <!doctype html>
-<html lang="ms" data-mode="dark">
+<html lang="ms" data-mode="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Panduan Operasi Restoran • Pak Liew Chinese Muslim</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Noto+Serif+SC:wght@600;700;800&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="./styles.css" />
     <style>
+      /* Token names fixed 2026-08-26: these referenced --pl-emerald-card/
+         --pl-border/--pl-gold-bright, which have never existed in
+         styles.css (the real names are --pl-pine-card/--pl-pine-border/
+         --pl-amber-bright) -- this page's own cards have been rendering
+         with unset background/border/heading colour since it was written. */
       .guide-body { max-width: 800px; margin: 40px auto; padding: 0 20px; }
-      .guide-card { background: var(--pl-emerald-card); border: 1px solid var(--pl-border); border-radius: var(--radius-md); padding: 32px; margin-bottom: 24px; }
-      .guide-card h2 { color: var(--pl-gold-bright); margin-bottom: 16px; font-size: 1.4rem; }
+      .guide-card { background: var(--pl-pine-card); border: 1px solid var(--pl-pine-border); border-radius: var(--radius-md); padding: 32px; margin-bottom: 24px; }
+      .guide-card h2 { color: var(--pl-amber-bright); margin-bottom: 16px; font-size: 1.4rem; }
       .guide-card ol, .guide-card ul { margin-left: 20px; color: var(--pl-ink-muted); }
       .guide-card li { margin-bottom: 10px; }
     </style>

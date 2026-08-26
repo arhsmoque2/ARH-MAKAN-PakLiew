@@ -2,6 +2,54 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.0] - 2026-08-26
+### Changed
+- Palette moved from a dark forest-green + gold night canvas to a pastel,
+  paper-light-by-default register: same two anchor hues (sage jade + gold),
+  softened, warm cream `--pl-pine-deep` canvas as the default ambience;
+  dark mode retuned to a softer charcoal-sage (was near-black) and kept as
+  the secondary, toggled state. Alarm-red `--pl-seal` -> dusty clay.
+- Typography: Cinzel -> Fraunces (headline), Plus Jakarta Sans -> DM Sans
+  (body) -- Cinzel's Roman/imperial letterforms read as a generic
+  "premium fine-dining" signifier borrowed from Woodfire's own register;
+  Fraunces is warmer/editorial and gives Pak Liew its own identity.
+- Logo badge (`.seal-stamp`): hard-cornered red chop-stamp box with a
+  glowing red shadow -> soft circular clay monogram -- the "official
+  Chinese seal" visual cliché replaced with a boutique-badge treatment.
+- Copy: removed "berapi"/"wok hei"/🔥 fire-wok framing throughout
+  (`index.html`, `app.js`, `data/menu.json`, `data/store.json`) --
+  "Sajian Kuali Panas Berapi" -> "Bufet Segar, Setiap Sesi"; "Live Wok" ->
+  "Stesen Live" wherever it appeared as a label. The live-cooking value
+  proposition ("cooked fresh in front of you") is kept; the fire/wok
+  iconography specifically is not.
+- Hero rotator paced slower: crossfade 1.6s -> 2.6s, still-hold 6s -> 9s,
+  drift durations lengthened (18s -> 26s/34s); the clip's own playback
+  slowed to 0.55x (`app.js`) since the handheld pan itself, not just the
+  rotator's timing, was the "too fast" complaint. Both hero layers now
+  carry Ken Burns (previously only the still did).
+- `ui.md` updated in the same pass -- palette/typography tables, the
+  hero/logo-badge component descriptions, and §1.4's accessibility notes
+  now match what's actually shipped (also reconciled a long-standing
+  mismatch: §1.1 documented `--pl-emerald*`/`--pl-gold*` token names that
+  never matched the real `--pl-pine*`/`--pl-amber*` names in `styles.css`).
+
+### Added
+- Ambient Ken Burns on every menu-grid photo, the hero showcase card's
+  photo, and the item-detail lightbox's photo -- ported from the arh-fnb
+  Beelal Coffee storefront's `.item-media` pattern (`index-v2.html`):
+  continuous slow drift, not just a hover effect, plus a `scale(1.06)`
+  hover lift on the wrapper (kept separate from the animated `img` itself,
+  since animating and hover-transitioning the same property on one
+  element fights).
+
+### Fixed
+- Two more instances of the hero-canvas contrast bug from the previous
+  release (`.pill-amber`, `.amber-gradient`): both used
+  `var(--pl-amber-bright)`, which the palette redesign turned into a deep,
+  paper-safe gold for light-mode text-on-cream elsewhere on the page --
+  exactly the value that goes low-contrast on the hero's non-flipping dark
+  canvas. Pinned to a fixed bright gold, same fix as the previous release.
+
 ## [1.2.0] - 2026-08-26
 ### Added
 - Ambient hero background rotator (`.hero-rotator`): a real storefront still

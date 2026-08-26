@@ -165,18 +165,21 @@ test.describe('Pak Liew Storefront — DOM Rendering & Interactive Verification'
   test('Ambience toggle switches theme mode between dark and light', async ({ page }) => {
     await page.goto('/');
 
+    // Light is the default ambience (2026-08-26 pastel/indie redesign) --
+    // was dark before that pass.
     const toggle = page.locator('[data-ambience-toggle]');
-    await expect(page.locator('html')).toHaveAttribute('data-mode', 'dark');
-
-    // Switch to Light Mode
-    await toggle.click();
     await expect(page.locator('html')).toHaveAttribute('data-mode', 'light');
     await expect(toggle).toContainText('Cerah');
 
-    // Switch back to Dark Mode
+    // Switch to Dark Mode
     await toggle.click();
     await expect(page.locator('html')).toHaveAttribute('data-mode', 'dark');
     await expect(toggle).toContainText('Gelap');
+
+    // Switch back to Light Mode
+    await toggle.click();
+    await expect(page.locator('html')).toHaveAttribute('data-mode', 'light');
+    await expect(toggle).toContainText('Cerah');
   });
 
   test('Operator & Customer Guide page loads with zero errors', async ({ page }) => {
