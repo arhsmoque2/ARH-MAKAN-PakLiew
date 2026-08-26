@@ -3,7 +3,7 @@
     "slug": "pak-liew-chinese-muslim",
     "name": "Pak Liew Chinese Muslim Restaurant",
     "chineseName": "柏刘清真餐厅",
-    "tagline": "Bufet Kulinari Cina Muslim & Masakan Kuali Panas Berapi • Titiwangsa Sentral KL",
+    "tagline": "Bufet Warisan Nanyang Cina Muslim • Titiwangsa Sentral KL",
     "phone": "+60162493449",
     "whatsapp": "60162493449",
     "address": "60, Jalan Lumut, Titiwangsa Sentral, 50400 Kuala Lumpur",
@@ -47,14 +47,14 @@
       },
       {
         "id": "dinner",
-        "name": "Bufet Makan Malam & Live Wok (Dinner Buffet)",
+        "name": "Bufet Makan Malam & Stesen Live (Dinner Buffet)",
         "chineseSub": "晚市热炒锅气自助",
         "badge": "Sabtu – Khamis (Cuti Jumaat)",
         "days": "Saturday - Thursday",
         "timeRange": "5:00 PM - 10:00 PM",
         "priceAdult": 19.9,
         "priceChild": 15.9,
-        "description": "Live cooking stations: Char Koay Teow kuali berapi wok hei, Char Koay Kak, Chee Cheong Fun goreng, Satay ayam bakar & kuah kacang, sup cendawan & aiskrim."
+        "description": "Live cooking stations: Char Koay Teow segar, Char Koay Kak, Chee Cheong Fun goreng, Satay ayam bakar & kuah kacang, sup cendawan & aiskrim."
       }
     ]
   }

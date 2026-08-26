@@ -2,11 +2,11 @@
   "categories": [
     {
       "id": "live-stalls",
-      "name": "Kuali Panas & Live Wok (Malam)",
+      "name": "Stesen Live & Sesi Malam",
       "chineseSub": "热炒活食档",
-      "subtitle": "Dimasak Panas Terus dari Kuali Berapi (Sesi Makan Malam)",
+      "subtitle": "Dimasak Segar di Hadapan Anda (Sesi Makan Malam)",
       "badge": "Dinner (5pm-10pm)",
-      "emoji": "🔥"
+      "emoji": "🍜"
     },
     {
       "id": "lunch-mains",
@@ -61,12 +61,12 @@
     {
       "id": "live-ckt",
       "categoryId": "live-stalls",
-      "name": "Char Koay Teow (Wok Hei Panas)",
+      "name": "Char Koay Teow Segar",
       "chineseName": "炒粿条",
       "session": "dinner",
       "badge": "Pilihan Utama",
       "isSpicy": true,
-      "description": "Koay teow digoreng panas atas kuali besar dengan aroma 'wok hei' harum, telur, taugeh segar & udang manis.",
+      "description": "Koay teow digoreng segar di stesen live, bersama telur, taugeh segar & udang manis.",
       "image": "./images/snap-dinner-buffet.jpg"
     },
     {
