@@ -13,7 +13,8 @@ const GATES = [
   { name: 'Gate 4: Security & Zero-Plaintext Doctor', script: 'scripts/doctor-secrets.mjs' },
   { name: 'Gate 5: Cloudflare Workers Edge Preflight', script: 'scripts/doctor-edge.mjs' },
   { name: 'Gate 6: Headless Browser, DOM & Viewport Doctor', script: 'scripts/doctor-render.mjs' },
-  { name: 'Gate 7: Visual Regression Doctor (approved baseline)', script: 'scripts/doctor-visual.mjs' }
+  { name: 'Gate 7: Visual Regression Doctor (approved baseline)', script: 'scripts/doctor-visual.mjs' },
+  { name: 'Gate 8: Hero Media & Video Asset Doctor', script: 'scripts/doctor-media.mjs' }
 ];
 
 let allPassed = true;

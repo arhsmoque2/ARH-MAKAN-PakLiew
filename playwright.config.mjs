@@ -27,16 +27,18 @@ export default defineConfig({
     {
       name: 'tablet-ipad',
       use: {
-        ...devices['iPad Mini'],
-        viewport: { width: 768, height: 1024 }
+        ...devices['Desktop Chrome'],
+        viewport: { width: 768, height: 1024 },
+        hasTouch: true,
       },
     },
     {
       name: 'mobile-iphone',
       use: {
-        ...devices['iPhone SE'],
+        ...devices['Desktop Chrome'],
         viewport: { width: 375, height: 667 },
-        isMobile: true
+        isMobile: true,
+        hasTouch: true,
       },
     },
   ],

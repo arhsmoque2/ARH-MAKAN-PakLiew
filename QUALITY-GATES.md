@@ -3,14 +3,14 @@
 **Governing System:** ARH Quality Gate Standard & Continuous Assurance Suite  
 **Harness Entrypoint:** `node scripts/quality-gate.mjs` (or `npm run doctor`)  
 **CI/CD Pipeline:** `.github/workflows/ci.yml` (GitHub Actions on push/PR to `main`)  
-**Current Gate Count:** 7 Active Automated Doctors (Gate 7 activates once a baseline is approved — see below)  
+**Current Gate Count:** 8 Active Automated Doctors (Gate 7 activates once a baseline is approved)  
 **Overall Status:** 🟢 100% GREEN (Passing all contracts)  
 
 ---
 
 ## 1. Overview & Operational Contract
 
-The Pak Liew Chinese Muslim Restaurant PWA uses an automated multi-stage Quality Doctor Suite to prevent regression, linguistic drift, security breaches, broken runtime rendering, and mobile layout blowouts before any commit reaches production.
+The Pak Liew Chinese Muslim Restaurant PWA uses an automated multi-stage Quality Doctor Suite to prevent regression, linguistic drift, security breaches, broken runtime rendering, video layout jitter, and mobile layout blowouts before any commit reaches production.
 
 ### Execution Model
 * **Atomic Execution:** `scripts/quality-gate.mjs` orchestrates all doctor gates sequentially via synchronous child processes.
@@ -18,7 +18,7 @@ The Pak Liew Chinese Muslim Restaurant PWA uses an automated multi-stage Quality
 * **Zero Mocking In Production Gates:** Real network probes, actual data schema validations, and live headless browser executions are enforced.
 
 ```powershell
-# Run the complete unified 7-Gate Quality Doctor suite:
+# Run the complete unified 8-Gate Quality Doctor suite:
 node scripts/quality-gate.mjs
 
 # Or run individual gates directly:
@@ -29,6 +29,8 @@ npm run doctor:secrets
 npm run doctor:edge
 npm run doctor:render
 npm run doctor:visual
+npm run doctor:media
+npm run doctor:perf
 ```
 
 ---
@@ -42,8 +44,9 @@ npm run doctor:visual
 | **Gate 3** | **Malaysian Copy Register & UI Doctor** | `scripts/doctor-ui.mjs` | Malaysian Proof-Led Copy Register enforcement (no unapproved hype words), CSS token existence (`--pl-pine`, `--pl-amber`), >=44px touch targets. | Presence of forbidden hype adjectives (`padu`, `giler`, `terpaling`); missing brand color tokens or minimum touch rules. |
 | **Gate 4** | **Security & Zero-Plaintext Doctor** | `scripts/doctor-secrets.mjs` | Secret scanner auditing for plaintext `.env` files, private keys, Cloudflare tokens, GitHub PATs, and Age secret keys. | Presence of `.env` files or regex matches for secret/token patterns in tracked files. |
 | **Gate 5** | **Cloudflare Workers Edge Preflight** | `scripts/doctor-edge.mjs` | Cloudflare Workers asset binding validation (`wrangler.toml`), edge router presence (`worker.mjs`), and live edge endpoint HTTP 200 health probe. | Missing `[assets]` binding; missing `worker.mjs`; live HTTP probe returning non-200 or network error. |
-| **Gate 6** | **Headless Browser, DOM & Viewport Doctor** | `scripts/doctor-render.mjs` | Playwright multi-viewport headless execution across Desktop (1440x900), Tablet (768x1024), and Mobile (375x667), zero console errors, dynamic data hydration, interactive search/modal/pax calculator, horizontal layout containment, and `@axe-core/playwright` WCAG 2.1 AA accessibility. | Thrown JS runtime errors; failed asset loads (404); unrendered DOM cards; modal pointer interception; horizontal layout overflow (`scrollWidth > clientWidth`); WCAG 2.1 AA accessibility violations. |
-| **Gate 7** | **Visual Regression Doctor** | `scripts/doctor-visual.mjs` | Full-page pixel diff (`toHaveScreenshot`) against a human-approved baseline per viewport, masking only explicitly human-marked exception regions. **No-op (passes without checking anything) until a baseline has been promoted** — see `BASELINE-REVIEW-WORKFLOW.md`. | Any pixel difference outside a masked exception region, beyond a 1% diff-pixel-ratio tolerance. |
+| **Gate 6** | **Headless Browser, DOM & Viewport Doctor** | `scripts/doctor-render.mjs` | Playwright multi-viewport headless execution across Desktop (1440x900), Tablet (768x1024), and Mobile (375x667), zero console errors, dynamic data hydration, interactive search/modal/pax calculator, horizontal layout containment, PerformanceObserver layout shift (CLS <= 0.05), and `@axe-core/playwright` WCAG 2.1 AA accessibility. | Thrown JS runtime errors; failed asset loads (404); unrendered DOM cards; modal pointer interception; horizontal layout overflow (`scrollWidth > clientWidth`); CLS > 0.05; WCAG 2.1 AA accessibility violations. |
+| **Gate 7** | **Visual Regression Doctor** | `scripts/doctor-visual.mjs` | Full-page pixel diff (`toHaveScreenshot`) against a human-approved baseline per viewport, masking only explicitly human-marked exception regions. **No-op until a baseline has been promoted** — see `BASELINE-REVIEW-WORKFLOW.md`. | Any pixel difference outside a masked exception region, beyond a 1% diff-pixel-ratio tolerance. |
+| **Gate 8** | **Hero Media & Video Asset Doctor** | `scripts/doctor-media.mjs` | Audits video stream payloads (`<= 2.5MB`), hero poster stills (`<= 150KB`), HTML5 `<video>` autoplay/performance contracts (`muted`, `playsinline`, `preload`, `poster`). | Video payload > 2.5MB; missing poster frame; missing muted/playsinline/preload attributes; broken `<source>` targets. |
 
 ---
 
@@ -119,6 +122,15 @@ npm run doctor:visual
 * **Exceptions, not bypasses:** `tests/baseline-exceptions.json` lists human-marked regions (selector or bounding box, each with a reason and timestamp) passed to `toHaveScreenshot({ mask })`. A masked region is excluded from pixel comparison **only inside its own box** — the gate still runs and still diffs everything else, every time. Never hand-edit this file; it's written exclusively by `scripts/promote-baseline.mjs` from a human-reviewed export, which is what gives every entry a checkable provenance trail.
 * **Direct Command:** `npm run doctor:visual`
 * **Baseline lifecycle:** `BASELINE-REVIEW-WORKFLOW.md` is the full spec — candidate generation (`workflow_dispatch` on `ci.yml` → `scripts/capture-baseline-candidates.mjs` → `scripts/generate-baseline-review.mjs`), offline human review (`baseline-review.html`: per-viewport approve/reject, tap-to-pin issue tags, tap-or-drag exception marking), and promotion (`scripts/promote-baseline.mjs`, which refuses to write anything unless every viewport is approved, and logs a hash-verifiable entry to `tests/BASELINE-APPROVALS.md`).
+
+### Gate 8: Hero Media & Video Asset Doctor (`doctor-media.mjs`)
+* **Objective:** Enforce payload budgets, layout stability, zero-jitter streaming attributes, and valid poster framing across all hero video assets.
+* **Checks:**
+  1. **Video Stream Payloads:** Validates that `hero-video-1.mp4` and `hero-video-1.webm` remain strictly under the 2.5MB payload budget (`<= 2.5 MB`).
+  2. **Hero Poster & Still Framing:** Asserts that `hero-storefront.jpg` and `hero-video-1-poster.jpg` are present and lightweight (`<= 150 KB`).
+  3. **Zero-Jank HTML5 Autoplay Contract:** Audits `index.html` to guarantee all `<video>` elements declare `muted`, `playsinline`, `preload="metadata"`, and explicit `poster` attributes to eliminate blank flashes and iOS fullscreen popups.
+  4. **Continuous Layout Shift Verification:** Paired with Playwright's `tests/performance-vitals.spec.mjs`, asserting in-browser layout shift (`CLS <= 0.05`) during simultaneous video loading and page scrolling.
+* **Direct Command:** `npm run doctor:media` (or `npm run doctor:perf`)
 
 ---
 
