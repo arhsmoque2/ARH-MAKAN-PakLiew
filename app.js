@@ -296,4 +296,45 @@ function setupAmbienceToggle() {
   });
 }
 
+/* Hero background rotator: crossfades the storefront still (Ken Burns drift,
+   CSS-driven) with the dining-room/buffet clip. Same mechanism as Woodfire
+   Premium's initHeroRotator() (arh-fnb-tier-showroom/premium/app.js) --
+   a video's own "ended" event drives the advance, not a guessed timer, and
+   prefers-reduced-motion skips starting it at all (CSS backstops this too,
+   see styles.css). Independent of initApp()'s data fetch so the ambient
+   background still runs even if store/menu data fails to load. */
+function initHeroRotator() {
+  const root = $('[data-hero-rotator]');
+  if (!root) return;
+  const layers = [...root.querySelectorAll('[data-hero-layer]')];
+  if (!layers.length) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const STILL_HOLD_MS = 6000;
+  let activeIndex = Math.max(0, layers.findIndex((el) => el.classList.contains('is-active')));
+  let holdTimer = null;
+
+  function advance() { activate((activeIndex + 1) % layers.length); }
+
+  function activate(index) {
+    const previous = layers[activeIndex];
+    const next = layers[index];
+    next.classList.add('is-active');
+    previous.classList.remove('is-active');
+    activeIndex = index;
+    clearTimeout(holdTimer);
+    if (previous.tagName === 'VIDEO') { previous.pause(); previous.currentTime = 0; }
+    if (next.tagName === 'VIDEO') {
+      next.currentTime = 0;
+      next.play().catch(advance); // couldn't play (e.g. still decoding) -- skip on rather than stall the rotation
+    } else {
+      holdTimer = setTimeout(advance, STILL_HOLD_MS);
+    }
+  }
+
+  layers.forEach((layer) => { if (layer.tagName === 'VIDEO') layer.addEventListener('ended', advance); });
+  holdTimer = setTimeout(advance, STILL_HOLD_MS);
+}
+
 document.addEventListener('DOMContentLoaded', initApp);
+document.addEventListener('DOMContentLoaded', initHeroRotator);
