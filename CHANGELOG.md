@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.5.0] - 2026-08-26
+### Added
+- **Performance Profiling & Layout Jitter Gate (`tests/performance-vitals.spec.mjs`)**: Playwright test suite capturing browser `PerformanceObserver` layout shifts during hydration and scroll lifecycle (`CLS <= 0.05`), ensuring zero visual jitter from video banner rendering.
+- **Gate 8: Hero Media & Video Asset Doctor (`scripts/doctor-media.mjs`)**: Automated payload budget auditor verifying video streams (`<= 2.5MB`), ambient posters (`<= 150KB`), zero-jank HTML5 video contracts (`muted`, `playsinline`, `preload="metadata"`, explicit `poster`).
+- **NPM Quality Scripts**: Added `doctor:media` and `doctor:perf` entrypoints to `package.json`.
+- **Quality Gate Suite Extension**: Upgraded `scripts/quality-gate.mjs` and `QUALITY-GATES.md` to the unified 8-Gate Continuous Assurance standard.
+
 ## [1.4.0] - 2026-08-26
 ### Changed
 - Replaced the emoji used throughout the page (hero badges/CTAs, session

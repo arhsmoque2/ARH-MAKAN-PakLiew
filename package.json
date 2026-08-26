@@ -12,6 +12,8 @@
     "doctor:ui": "node scripts/doctor-ui.mjs",
     "doctor:render": "node scripts/doctor-render.mjs",
     "doctor:visual": "node scripts/doctor-visual.mjs",
+    "doctor:media": "node scripts/doctor-media.mjs",
+    "doctor:perf": "playwright test tests/performance-vitals.spec.mjs",
     "doctor:secrets": "node scripts/doctor-secrets.mjs",
     "doctor:edge": "node scripts/doctor-edge.mjs",
     "test": "playwright test",
