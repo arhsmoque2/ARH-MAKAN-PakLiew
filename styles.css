@@ -10,15 +10,16 @@
   --pl-pine: #0E2E23;
   --pl-pine-surface: #143A2D;
   --pl-pine-card: #184435;
-  --pl-pine-border: rgba(217, 119, 6, 0.22);
+  --pl-pine-border: rgba(212, 155, 42, 0.22);
   --pl-pine-border-subtle: rgba(255, 255, 255, 0.08);
 
-  /* Wok Flame & Warm Amber Accents */
-  --pl-amber: #D97706;
-  --pl-amber-bright: #F59E0B;
-  --pl-amber-hover: #B45309;
+  /* Imperial Warm Gold / Saffron Accents (restrained -- single accent hue,
+     not the candy-bright amber the storefront drifted to; see ui.md 1.1) */
+  --pl-amber: #D49B2A;
+  --pl-amber-bright: #F0B849;
+  --pl-amber-hover: #B9821F;
   --pl-terracotta: #C2410C;
-  --pl-amber-glow: rgba(217, 119, 6, 0.16);
+  --pl-amber-glow: rgba(212, 155, 42, 0.16);
 
   /* Traditional Seal Stamp (印章) */
   --pl-seal: #991B1B;
@@ -77,10 +78,21 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, .brand-name {
+h4 {
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-weight: 700;
   letter-spacing: -0.02em;
+  color: var(--pl-ink);
+  line-height: 1.25;
+}
+
+/* Display serif for hero title, section headers & brand wordmark -- the
+   restrained "heritage meets high-end gastronomy" voice ui.md already
+   specified (1.2), which the sans-only implementation had drifted from. */
+h1, h2, h3, .brand-name {
+  font-family: 'Cinzel', 'Noto Serif SC', serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
   color: var(--pl-ink);
   line-height: 1.25;
 }
@@ -253,36 +265,47 @@ h1, h2, h3, h4, .brand-name {
   color: var(--pl-amber-bright);
 }
 
+/* WhatsApp is the standalone primary action of the group booking card, so
+   it stays filled -- but a step deeper than the sticker-bright brand green,
+   to sit calmer against the rest of the warm, restrained palette. */
 .button-whatsapp {
-  background: #25D366;
+  background: #1FA855;
   color: #000;
   font-weight: 700;
 }
 
 .button-whatsapp:hover {
-  background: #20BA5A;
+  background: #1A8F49;
   transform: translateY(-1px);
 }
 
+/* FoodPanda and Waze are secondary discovery actions sitting next to the
+   primary gold CTA in the hero -- quiet outline like .button-outline keeps
+   one accent voice instead of a row of competing brand-colour stickers;
+   the brand colour still shows up on hover so each stays recognisable. */
 .button-foodpanda {
-  background: #D70F64;
-  color: #FFF;
+  background: transparent;
+  color: var(--pl-ink);
+  border: 1px solid var(--pl-pine-border);
   font-weight: 700;
 }
 
 .button-foodpanda:hover {
-  background: #B80D55;
+  border-color: #D70F64;
+  color: #FF4D94;
   transform: translateY(-1px);
 }
 
 .button-waze {
-  background: #33CCFF;
-  color: #000;
+  background: transparent;
+  color: var(--pl-ink);
+  border: 1px solid var(--pl-pine-border);
   font-weight: 700;
 }
 
 .button-waze:hover {
-  background: #1ABCFE;
+  border-color: #33CCFF;
+  color: #33CCFF;
   transform: translateY(-1px);
 }
 
@@ -347,10 +370,12 @@ h1, h2, h3, h4, .brand-name {
   border: 1px solid var(--pl-pine-border);
 }
 
+/* Neutral, not a second competing bright hue -- gold stays the hero's one
+   accent colour (Woodfire's restraint: one accent against a quiet canvas). */
 .pill-green {
-  background: rgba(16, 185, 129, 0.12);
-  color: #34D399;
-  border: 1px solid rgba(16, 185, 129, 0.25);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--pl-ink-muted);
+  border: 1px solid var(--pl-pine-border-subtle);
 }
 
 .hero-title {
