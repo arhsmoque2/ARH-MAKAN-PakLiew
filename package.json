@@ -18,7 +18,12 @@
     "baseline:candidates": "node scripts/capture-baseline-candidates.mjs",
     "baseline:promote": "node scripts/promote-baseline.mjs",
     "deploy": "wrangler deploy",
-    "preview": "node scripts/preview.mjs"
+    "preview": "node scripts/preview.mjs",
+    "ui:probe": "uv run --project D:/_ARH-AGENT-OS/_AGENT-CAPABILITIES/arh-ui-ux-devtool arh-ui-dev probe",
+    "ui:hero": "uv run --project D:/_ARH-AGENT-OS/_AGENT-CAPABILITIES/arh-ui-ux-devtool arh-ui-dev hero",
+    "ui:image": "uv run --project D:/_ARH-AGENT-OS/_AGENT-CAPABILITIES/arh-ui-ux-devtool arh-ui-dev image",
+    "ui:clip": "uv run --project D:/_ARH-AGENT-OS/_AGENT-CAPABILITIES/arh-ui-ux-devtool arh-ui-dev clip",
+    "ui:component": "uv run --project D:/_ARH-AGENT-OS/_AGENT-CAPABILITIES/arh-ui-ux-devtool arh-ui-dev component"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
