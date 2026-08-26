@@ -11,6 +11,28 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body class="customer-page">
+    <!-- Line-icon sprite: replaces the emoji set used throughout the page
+         (☀️🐼🚗🍜🕒🕌 etc.) with a single, currentColor-tinted icon system --
+         emoji read as toy/WhatsApp-chat rather than restaurant-brand, so every
+         decorative glyph below is either dropped or swapped for one of these
+         <use>-referenced symbols. aria-hidden: purely decorative, the text
+         beside each icon already carries the meaning. -->
+    <svg aria-hidden="true" style="position: absolute; width: 0; height: 0; overflow: hidden;">
+      <symbol id="icon-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" /></symbol>
+      <symbol id="icon-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" /><polyline points="12 7 12 12 16 14" /></symbol>
+      <symbol id="icon-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.4 7-12a7 7 0 1 0-14 0c0 5.6 7 12 7 12z" /><circle cx="12" cy="9" r="2.4" /></symbol>
+      <symbol id="icon-phone" viewBox="0 0 24 24"><path d="M5.5 4h3.6l1.7 4.2-2.3 1.6a11.4 11.4 0 0 0 5.7 5.7l1.6-2.3 4.2 1.7v3.6a1.7 1.7 0 0 1-1.9 1.7A16 16 0 0 1 3.8 5.9 1.7 1.7 0 0 1 5.5 4z" /></symbol>
+      <symbol id="icon-chat" viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-8.4 8.4 8.3 8.3 0 0 1-3.9-.9L3 21l2-5.7a8.3 8.3 0 0 1-.9-3.9A8.4 8.4 0 0 1 12.5 3h.1a8.4 8.4 0 0 1 8.4 8.4z" /></symbol>
+      <symbol id="icon-nav" viewBox="0 0 24 24"><polygon points="3 11 22 2 13 21 11 13 3 11" /></symbol>
+      <symbol id="icon-map" viewBox="0 0 24 24"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6" /><line x1="8" y1="2" x2="8" y2="18" /><line x1="16" y1="6" x2="16" y2="22" /></symbol>
+      <symbol id="icon-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></symbol>
+      <symbol id="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2" /><line x1="12" y1="2" x2="12" y2="5" /><line x1="12" y1="19" x2="12" y2="22" /><line x1="4.2" y1="4.2" x2="6.3" y2="6.3" /><line x1="17.7" y1="17.7" x2="19.8" y2="19.8" /><line x1="2" y1="12" x2="5" y2="12" /><line x1="19" y1="12" x2="22" y2="12" /><line x1="4.2" y1="19.8" x2="6.3" y2="17.7" /><line x1="17.7" y1="6.3" x2="19.8" y2="4.2" /></symbol>
+      <symbol id="icon-moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z" /></symbol>
+      <symbol id="icon-sunrise" viewBox="0 0 24 24"><line x1="12" y1="2" x2="12" y2="8" /><line x1="4.2" y1="9.2" x2="6.3" y2="11" /><line x1="19.8" y1="9.2" x2="17.7" y2="11" /><path d="M5 18a7 7 0 0 1 14 0" /><line x1="1" y1="18" x2="23" y2="18" /></symbol>
+      <symbol id="icon-star" viewBox="0 0 24 24"><polygon points="12 2 15.1 8.6 22 9.3 16.8 14 18.3 21 12 17.3 5.7 21 7.2 14 2 9.3 8.9 8.6" /></symbol>
+      <symbol id="icon-calc" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" /><line x1="8" y1="6" x2="16" y2="6" /><line x1="8" y1="11" x2="8" y2="11" /><line x1="12" y1="11" x2="12" y2="11" /><line x1="16" y1="11" x2="16" y2="11" /><line x1="8" y1="15" x2="8" y2="15" /><line x1="12" y1="15" x2="12" y2="15" /><line x1="16" y1="15" x2="16" y2="15" /><line x1="8" y1="19" x2="8" y2="19" /><line x1="12" y1="19" x2="12" y2="19" /><line x1="16" y1="19" x2="16" y2="19" /></symbol>
+    </svg>
+
     <div class="demo-banner">
       <span class="badge-pill">PREVIEW MOCKUP</span>
       <span>Pak Liew Chinese Muslim Restaurant • 60, Jalan Lumut, Titiwangsa Sentral KL</span>
@@ -39,7 +61,7 @@
         </nav>
 
         <div class="header-actions">
-          <button class="ambience-toggle" type="button" data-ambience-toggle aria-label="Tukar mod cerah/gelap">☀️ Cerah</button>
+          <button class="ambience-toggle" type="button" data-ambience-toggle aria-label="Tukar mod cerah/gelap"><svg class="icon" data-ambience-icon><use href="#icon-sun" /></svg> Cerah</button>
           <a class="button button-primary button-sm" href="#booking">Tempah Meja</a>
         </div>
       </div>
@@ -66,8 +88,8 @@
         <div class="frame hero-layout">
           <div class="hero-content">
             <div class="hero-badges">
-              <span class="pill pill-amber">🥢 CITA RASA CINA MUSLIM NANYANG</span>
-              <span class="pill pill-green">✓ 100% HALAL & BERSIH</span>
+              <span class="pill pill-amber">CITA RASA CINA MUSLIM NANYANG</span>
+              <span class="pill pill-green"><svg class="icon" aria-hidden="true"><use href="#icon-check" /></svg> 100% HALAL & BERSIH</span>
             </div>
             <h1 class="hero-title">
               Bufet Segar, Setiap Sesi.<br />
@@ -79,8 +101,8 @@
 
             <div class="hero-cta-group">
               <a class="button button-primary" href="#sessions">Lihat Sesi & Harga Bufet</a>
-              <a class="button button-waze" href="https://waze.com/ul?q=Pak%20Liew%20Chinese%20Muslim%20Titiwangsa" target="_blank" rel="noopener">🚗 Waze ke Kedai</a>
-              <a class="button button-foodpanda" href="https://www.foodpanda.my/restaurant/n87e/pak-liew-chinese-muslim-laman-baginda" target="_blank" rel="noopener">🐼 Pesan FoodPanda (4.9⭐)</a>
+              <a class="button button-waze" href="https://waze.com/ul?q=Pak%20Liew%20Chinese%20Muslim%20Titiwangsa" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#icon-nav" /></svg> Waze ke Kedai</a>
+              <a class="button button-foodpanda" href="https://www.foodpanda.my/restaurant/n87e/pak-liew-chinese-muslim-laman-baginda" target="_blank" rel="noopener">Pesan FoodPanda <svg class="icon" aria-hidden="true"><use href="#icon-star" /></svg> 4.9</a>
             </div>
 
             <!-- Live Status Floating Strip -->
@@ -109,7 +131,7 @@
           <div class="hero-showcase-card">
             <div class="showcase-media">
               <img src="./images/snap-dinner-buffet.jpg" alt="Pak Liew Live Cooking Stations" />
-              <div class="showcase-overlay-tag">🍜 STESEN LIVE & BUFET</div>
+              <div class="showcase-overlay-tag">STESEN LIVE & BUFET</div>
             </div>
             <div class="showcase-body">
               <div class="showcase-title-row">
@@ -120,9 +142,9 @@
                 Char Koay Teow segar dari stesen live, Chee Cheong Fun goreng, Satay ayam bakar & Dim Sum kukus segar tanpa had.
               </p>
               <div class="showcase-features">
-                <span>🕒 5:00 PM – 10:00 PM</span>
-                <span>⭐ Terus Walk-In Dialu-alukan</span>
-                <span>🕌 Ruang Solat Selesa</span>
+                <span><svg class="icon" aria-hidden="true"><use href="#icon-clock" /></svg> 5:00 PM – 10:00 PM</span>
+                <span><svg class="icon" aria-hidden="true"><use href="#icon-star" /></svg> Terus Walk-In Dialu-alukan</span>
+                <span>Ruang Solat Selesa</span>
               </div>
             </div>
           </div>
@@ -142,7 +164,7 @@
             <!-- Breakfast Card -->
             <div class="session-card" data-session-card="breakfast">
               <div class="session-card-header">
-                <div class="session-icon">🌅</div>
+                <div class="session-icon"><svg class="icon" aria-hidden="true"><use href="#icon-sunrise" /></svg></div>
                 <span class="session-tag">Hujung Minggu</span>
               </div>
               <h3>Bufet Sarapan Pagi</h3>
@@ -160,10 +182,10 @@
                 </div>
               </div>
               <ul class="session-highlights">
-                <li>✓ Nasi Lemak Pandan & Ayam Rendang Tok</li>
-                <li>✓ Paru Sambal Berlado & Mee Kari Nyonya</li>
-                <li>✓ Roti Sarang Burung & Mantou Buttermilk</li>
-                <li>✓ Dim Sum Halal & Pau Mini Kukus Panas</li>
+                <li><svg class="icon" aria-hidden="true"><use href="#icon-check" /></svg> Nasi Lemak Pandan & Ayam Rendang Tok</li>
+                <li><svg class="icon" aria-hidden="true"><use href="#icon-check" /></svg> Paru Sambal Berlado & Mee Kari Nyonya</li>
+                <li><svg class="icon" aria-hidden="true"><use href="#icon-check" /></svg> Roti Sarang Burung & Mantou Buttermilk</li>
+                <li><svg class="icon" aria-hidden="true"><use href="#icon-check" /></svg> Dim Sum Halal & Pau Mini Kukus Panas</li>
               </ul>
               <button class="button button-outline button-sm button-full" type="button" data-filter-session="breakfast">Lihat Menu Sarapan</button>
             </div>
@@ -172,7 +194,7 @@
             <div class="session-card is-highlight" data-session-card="lunch">
               <div class="card-ribbon">POPULAR LUNCH</div>
               <div class="session-card-header">
-                <div class="session-icon">☀️</div>
+                <div class="session-icon"><svg class="icon" aria-hidden="true"><use href="#icon-sun" /></svg></div>
                 <span class="session-tag">Hari Biasa & Hujung Minggu</span>
               </div>
               <h3>Bufet Makan Tengah Hari</h3>
@@ -190,10 +212,10 @@
                 </div>
               </div>
               <ul class="session-highlights">
-                <li>✓ Udang Nestum Emas & Daging Black Pepper</li>
-                <li>✓ Ikan Sweet & Sour & Kari Sayur Nyonya</li>
-                <li>✓ Ayam Gepuk Sambal Gesek & Western Pastas</li>
-                <li>✓ Dim Sum Halal & 5 Perisa Aiskrim Free Flow</li>
+                <li><svg class="icon" aria-hidden="true"><use href="#icon-check" /></svg> Udang Nestum Emas & Daging Black Pepper</li>
+                <li><svg class="icon" aria-hidden="true"><use href="#icon-check" /></svg> Ikan Sweet & Sour & Kari Sayur Nyonya</li>
+                <li><svg class="icon" aria-hidden="true"><use href="#icon-check" /></svg> Ayam Gepuk Sambal Gesek & Western Pastas</li>
+                <li><svg class="icon" aria-hidden="true"><use href="#icon-check" /></svg> Dim Sum Halal & 5 Perisa Aiskrim Free Flow</li>
               </ul>
               <button class="button button-primary button-sm button-full" type="button" data-filter-session="lunch">Lihat Menu Tengah Hari</button>
             </div>
@@ -201,7 +223,7 @@
             <!-- Dinner Card -->
             <div class="session-card" data-session-card="dinner">
               <div class="session-card-header">
-                <div class="session-icon">🌙</div>
+                <div class="session-icon"><svg class="icon" aria-hidden="true"><use href="#icon-moon" /></svg></div>
                 <span class="session-tag">Live Stalls Segar</span>
               </div>
               <h3>Bufet Makan Malam & Stesen Live</h3>
@@ -219,10 +241,10 @@
                 </div>
               </div>
               <ul class="session-highlights">
-                <li>✓ Char Koay Teow Segar dari Stesen Live</li>
-                <li>✓ LIVE Char Koay Kak & Chee Cheong Fun Goreng</li>
-                <li>✓ Satay Ayam Bakar & Kuah Kacang Pekat</li>
-                <li>✓ Sup Cendawan, Roti Bawang Putih & Pencuci Mulut</li>
+                <li><svg class="icon" aria-hidden="true"><use href="#icon-check" /></svg> Char Koay Teow Segar dari Stesen Live</li>
+                <li><svg class="icon" aria-hidden="true"><use href="#icon-check" /></svg> LIVE Char Koay Kak & Chee Cheong Fun Goreng</li>
+                <li><svg class="icon" aria-hidden="true"><use href="#icon-check" /></svg> Satay Ayam Bakar & Kuah Kacang Pekat</li>
+                <li><svg class="icon" aria-hidden="true"><use href="#icon-check" /></svg> Sup Cendawan, Roti Bawang Putih & Pencuci Mulut</li>
               </ul>
               <button class="button button-outline button-sm button-full" type="button" data-filter-session="dinner">Lihat Menu Malam</button>
             </div>
@@ -242,19 +264,19 @@
           <!-- Controls: Search & Category Chips -->
           <div class="menu-controls">
             <div class="search-box">
-              <span class="search-icon">🔍</span>
+              <svg class="icon search-icon" aria-hidden="true"><use href="#icon-search" /></svg>
               <input type="search" data-search-input placeholder="Cari lauk (cth: Udang Nestum, Char Koay Teow, Dim Sum, 炒粿条)..." />
             </div>
 
             <div class="category-rail" data-category-rail>
               <button class="chip is-active" type="button" data-cat="all">Semua Kategori</button>
-              <button class="chip" type="button" data-cat="live-stalls">🍜 Stesen Live</button>
-              <button class="chip" type="button" data-cat="lunch-mains">🍤 Lauk Tengah Hari</button>
-              <button class="chip" type="button" data-cat="dinner-mains">🍲 Lauk Malam</button>
-              <button class="chip" type="button" data-cat="breakfast-mains">🍳 Sarapan Pagi</button>
-              <button class="chip" type="button" data-cat="dimsum-buns">🥟 Dim Sum & Pau</button>
-              <button class="chip" type="button" data-cat="desserts-drinks">🍨 Aiskrim & Pencuci Mulut</button>
-              <button class="chip" type="button" data-cat="foodpanda-sets">🐼 Set Delivery FoodPanda (4.9⭐)</button>
+              <button class="chip" type="button" data-cat="live-stalls">Stesen Live</button>
+              <button class="chip" type="button" data-cat="lunch-mains">Lauk Tengah Hari</button>
+              <button class="chip" type="button" data-cat="dinner-mains">Lauk Malam</button>
+              <button class="chip" type="button" data-cat="breakfast-mains">Sarapan Pagi</button>
+              <button class="chip" type="button" data-cat="dimsum-buns">Dim Sum & Pau</button>
+              <button class="chip" type="button" data-cat="desserts-drinks">Aiskrim & Pencuci Mulut</button>
+              <button class="chip" type="button" data-cat="foodpanda-sets">Set Delivery FoodPanda (4.9★)</button>
             </div>
           </div>
 
@@ -277,14 +299,14 @@
               </p>
 
               <div class="calc-box">
-                <h4>🧮 Kalkulator Anggaran Harga Bufet</h4>
+                <h4><svg class="icon" aria-hidden="true"><use href="#icon-calc" /></svg> Kalkulator Anggaran Harga Bufet</h4>
                 <div class="calc-inputs">
                   <div class="input-group">
                     <label for="pax-session">Pilih Sesi Bufet</label>
                     <select id="pax-session" data-pax-session>
-                      <option value="lunch">☀️ Bufet Tengah Hari (Dewasa RM19.90 / Kanak2 RM15.90)</option>
-                      <option value="dinner">🌙 Bufet Malam & Stesen Live (Dewasa RM19.90 / Kanak2 RM15.90)</option>
-                      <option value="breakfast">🌅 Bufet Sarapan Pagi (Dewasa RM15.90 / Kanak2 RM12.90)</option>
+                      <option value="lunch">Bufet Tengah Hari (Dewasa RM19.90 / Kanak2 RM15.90)</option>
+                      <option value="dinner">Bufet Malam & Stesen Live (Dewasa RM19.90 / Kanak2 RM15.90)</option>
+                      <option value="breakfast">Bufet Sarapan Pagi (Dewasa RM15.90 / Kanak2 RM12.90)</option>
                     </select>
                   </div>
 
@@ -314,7 +336,7 @@
                 </div>
 
                 <button class="button button-whatsapp button-full" type="button" data-send-group-wa>
-                  📲 Hantar Tempahan Meja via WhatsApp (+6016-2493449)
+                  <svg class="icon" aria-hidden="true"><use href="#icon-chat" /></svg> Hantar Tempahan Meja via WhatsApp (+6016-2493449)
                 </button>
               </div>
             </div>
@@ -323,7 +345,7 @@
               <div class="visual-card">
                 <img src="./images/snap-dishes-lunch.jpg" alt="Aneka Hidangan Tradisi Pak Liew" />
                 <div class="visual-badge">
-                  <strong>✓ 100% Halal & Resipi Asli Cina Muslim</strong>
+                  <strong><svg class="icon" aria-hidden="true"><use href="#icon-check" /></svg> 100% Halal & Resipi Asli Cina Muslim</strong>
                   <span>Suasana Selesa Berhawa Dingin & Ruang Solat Sedia Ada</span>
                 </div>
               </div>
@@ -344,40 +366,40 @@
           <div class="location-grid">
             <div class="location-card">
               <div class="loc-header">
-                <h3>📍 Alamat Restoran</h3>
+                <h3><svg class="icon" aria-hidden="true"><use href="#icon-pin" /></svg> Alamat Restoran</h3>
                 <p>60, Jalan Lumut, Titiwangsa Sentral, 50400 Kuala Lumpur</p>
-                <p class="landmark-text">📌 <em>(Sebaris Hokkaido Seafood KL, 5 minit berjalan kaki dari Stesen LRT/Monorail Titiwangsa)</em></p>
+                <p class="landmark-text"><em>(Sebaris Hokkaido Seafood KL, 5 minit berjalan kaki dari Stesen LRT/Monorail Titiwangsa)</em></p>
               </div>
 
               <div class="loc-details">
                 <div class="loc-row">
-                  <span class="loc-label">🕒 Waktu Operasi:</span>
+                  <span class="loc-label"><svg class="icon" aria-hidden="true"><use href="#icon-clock" /></svg> Waktu Operasi:</span>
                   <span>Sabtu – Khamis: 6:00 AM – 10:00 PM (Cuti Setiap Jumaat)</span>
                 </div>
                 <div class="loc-row">
-                  <span class="loc-label">🕌 Kemudahan:</span>
+                  <span class="loc-label">Kemudahan:</span>
                   <span>Ruang Solat / Surau selesa & kemudahan mesra keluarga</span>
                 </div>
                 <div class="loc-row">
-                  <span class="loc-label">📞 Hubungi:</span>
+                  <span class="loc-label"><svg class="icon" aria-hidden="true"><use href="#icon-phone" /></svg> Hubungi:</span>
                   <a href="tel:+60162493449">+6016-2493449</a>
                 </div>
                 <div class="loc-row">
-                  <span class="loc-label">💬 WhatsApp:</span>
+                  <span class="loc-label"><svg class="icon" aria-hidden="true"><use href="#icon-chat" /></svg> WhatsApp:</span>
                   <a href="https://wa.me/60162493449" target="_blank" rel="noopener">WhatsApp Direct (+6016-2493449)</a>
                 </div>
                 <div class="loc-row">
-                  <span class="loc-label">🐼 FoodPanda:</span>
-                  <a href="https://www.foodpanda.my/restaurant/n87e/pak-liew-chinese-muslim-laman-baginda" target="_blank" rel="noopener">Pak Liew - Laman Baginda (4.9 ⭐)</a>
+                  <span class="loc-label">FoodPanda:</span>
+                  <a href="https://www.foodpanda.my/restaurant/n87e/pak-liew-chinese-muslim-laman-baginda" target="_blank" rel="noopener">Pak Liew - Laman Baginda (4.9★)</a>
                 </div>
               </div>
 
               <div class="loc-actions">
                 <a class="button button-primary" href="https://maps.app.goo.gl/opNSdeX3zQ9toviQ6" target="_blank" rel="noopener">
-                  🗺️ Buka Google Maps
+                  <svg class="icon" aria-hidden="true"><use href="#icon-map" /></svg> Buka Google Maps
                 </a>
                 <a class="button button-waze" href="https://waze.com/ul?q=Pak%20Liew%20Chinese%20Muslim%20Titiwangsa" target="_blank" rel="noopener">
-                  🚗 Navigasi Waze
+                  <svg class="icon" aria-hidden="true"><use href="#icon-nav" /></svg> Navigasi Waze
                 </a>
               </div>
             </div>

@@ -42,7 +42,7 @@ function renderLiveStatus() {
 
   if (day === 5) {
     // Friday
-    sessionLabel.textContent = '⛔ CUTI HARI INI (SOLAT JUMAAT & SANITASI)';
+    sessionLabel.textContent = 'CUTI HARI INI (SOLAT JUMAAT & SANITASI)';
     sessionHours.textContent = 'Dibuka semula esok (Sabtu) seawal jam 6:00 AM';
     chipAdult.textContent = 'RM 19.90';
     chipChild.textContent = 'RM 15.90';
@@ -51,25 +51,25 @@ function renderLiveStatus() {
 
   if (timeNum >= 6 && timeNum < 11 && (day === 0 || day === 6)) {
     // Weekend Breakfast
-    sessionLabel.textContent = '🟢 BUFET SARAPAN PAGI SEDANG DIBUKA';
+    sessionLabel.textContent = 'BUFET SARAPAN PAGI SEDANG DIBUKA';
     sessionHours.textContent = 'Dibuka sehingga 11:00 AM • Terus Walk-In';
     chipAdult.textContent = 'RM 15.90';
     chipChild.textContent = 'RM 12.90';
   } else if (timeNum >= 12 && timeNum < 16) {
     // Lunch
-    sessionLabel.textContent = '🟢 BUFET MAKAN TENGAH HARI SEDANG DIBUKA';
+    sessionLabel.textContent = 'BUFET MAKAN TENGAH HARI SEDANG DIBUKA';
     sessionHours.textContent = 'Dibuka sehingga 4:00 PM • Terus Walk-In';
     chipAdult.textContent = 'RM 19.90';
     chipChild.textContent = 'RM 15.90';
   } else if (timeNum >= 17 && timeNum < 22) {
     // Dinner
-    sessionLabel.textContent = '🟢 BUFET MALAM & STESEN LIVE SEDANG DIBUKA';
+    sessionLabel.textContent = 'BUFET MALAM & STESEN LIVE SEDANG DIBUKA';
     sessionHours.textContent = 'Dibuka sehingga 10:00 PM (Char Koay Teow Panas)';
     chipAdult.textContent = 'RM 19.90';
     chipChild.textContent = 'RM 15.90';
   } else {
     // Outside direct buffet window
-    sessionLabel.textContent = '🕒 PERSIAPAN SESI SETERUSNYA';
+    sessionLabel.textContent = 'PERSIAPAN SESI SETERUSNYA';
     sessionHours.textContent = 'Tengah Hari 12pm-4pm • Malam 5pm-10pm';
     chipAdult.textContent = 'RM 19.90';
     chipChild.textContent = 'RM 15.90';
@@ -111,7 +111,7 @@ function renderMenuGrid() {
         <p class="item-desc">${item.description}</p>
         <div class="card-footer">
           <span class="session-label">${getSessionBadge(item.session, item.categoryId)}</span>
-          <span class="all-you-can-eat">${item.categoryId === 'foodpanda-sets' ? 'DELIVERY DIRECT' : 'TANPA HAD ✓'}</span>
+          <span class="all-you-can-eat">${item.categoryId === 'foodpanda-sets' ? 'DELIVERY DIRECT' : 'TANPA HAD <svg class="icon" aria-hidden="true"><use href="#icon-check"></use></svg>'}</span>
         </div>
       </div>
     </div>
@@ -128,11 +128,11 @@ function renderMenuGrid() {
 }
 
 function getSessionBadge(session, categoryId) {
-  if (categoryId === 'foodpanda-sets') return '🐼 FoodPanda 4.9⭐';
-  if (session === 'dinner') return '🌙 Malam (Stesen Live)';
-  if (session === 'lunch') return '☀️ Tengah Hari';
-  if (session === 'breakfast') return '🌅 Sarapan Weekend';
-  return '🌟 Semua Sesi Bufet';
+  if (categoryId === 'foodpanda-sets') return 'FoodPanda 4.9★';
+  if (session === 'dinner') return 'Malam (Stesen Live)';
+  if (session === 'lunch') return 'Tengah Hari';
+  if (session === 'breakfast') return 'Sarapan Weekend';
+  return 'Semua Sesi Bufet';
 }
 
 // Lightbox Modal
@@ -151,7 +151,7 @@ function openItemModal(item) {
       <p style="color: var(--pl-ink-muted); font-size: 0.95rem; margin-bottom: 16px;">${item.description}</p>
       
       <div style="background: var(--pl-pine-card); padding: 14px; border-radius: var(--radius-sm); margin-bottom: 16px; border: 1px solid var(--pl-pine-border-subtle);">
-        <div style="font-size: 0.85rem; color: var(--pl-amber-bright); font-weight: 700; margin-bottom: 4px;">✓ Jaminan Kualiti Cina Muslim:</div>
+        <div style="font-size: 0.85rem; color: var(--pl-amber-bright); font-weight: 700; margin-bottom: 4px;"><svg class="icon" aria-hidden="true"><use href="#icon-check"></use></svg> Jaminan Kualiti Cina Muslim:</div>
         <p style="font-size: 0.8rem; color: var(--pl-ink-muted);">Disediakan 100% Halal menggunakan bahan masakan segar tanpa sebarang perasa tiruan meragukan.</p>
       </div>
 
@@ -287,12 +287,18 @@ function setupAmbienceToggle() {
   const btn = $('[data-ambience-toggle]');
   if (!btn) return;
 
+  // Swap the icon's <use href> and the trailing text node in place rather
+  // than btn.textContent/innerHTML -- keeps the sun/moon <svg class="icon">
+  // markup intact instead of nuking and re-typing it as a string every click.
+  const icon = btn.querySelector('[data-ambience-icon] use');
+
   btn.addEventListener('click', () => {
     const html = document.documentElement;
     const current = html.getAttribute('data-mode') || 'light';
     const next = current === 'dark' ? 'light' : 'dark';
     html.setAttribute('data-mode', next);
-    btn.textContent = next === 'dark' ? '🌙 Gelap' : '☀️ Cerah';
+    if (icon) icon.setAttribute('href', next === 'dark' ? '#icon-moon' : '#icon-sun');
+    btn.lastChild.textContent = next === 'dark' ? ' Gelap' : ' Cerah';
   });
 }
 
@@ -312,9 +318,12 @@ function initHeroRotator() {
 
   // Lengthened from 6000ms and the clip below slowed to 0.55x -- the
   // rotator read as pacy rather than the calm, unhurried indie pace this
-  // pass is going for (2026-08-26).
+  // pass is going for (2026-08-26). 0.55x still read as a fast-forward
+  // handheld pan next to the now-calm still, so slowed further to 0.4x in
+  // the same pass -- the raw footage's own pan speed, not just the
+  // rotator's crossfade/hold timing, was still the "too fast" complaint.
   const STILL_HOLD_MS = 9000;
-  const CLIP_PLAYBACK_RATE = 0.55;
+  const CLIP_PLAYBACK_RATE = 0.4;
   layers.forEach((layer) => { if (layer.tagName === 'VIDEO') layer.playbackRate = CLIP_PLAYBACK_RATE; });
 
   let activeIndex = Math.max(0, layers.findIndex((el) => el.classList.contains('is-active')));
